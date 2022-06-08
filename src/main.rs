@@ -72,6 +72,6 @@ fn main() {
     let mut serial_output = SerialLightOutput::make(&port.unwrap());
     // serial_output.connect();
     println!("finished setup");
-    show_preview();
-    // output_loop(rekordbox_access, shows_manager, serial_output)
+    // show_preview();
+    output_loop(rekordbox_access, shows_manager, serial_output)
 }
