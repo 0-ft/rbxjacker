@@ -1,19 +1,25 @@
 {
     "shows": [
+{
+    "title": "Atlas",
+    "path": "shows/atlas.png",
+    "frameRate": 32
+},
+{
+    "title": "Demo Track 1",
+    "path": "shows/sample.png",
+    "frameRate": 64
+},
+{
+    "title": "Demo Track 2",
+    "path": "shows/dt2.png",
+    "frameRate": 64
+},
         {
-            "title": "Atlas",
-            "path": "shows/atlas.png",
-            "frameRate": 32
-        },
-        {
-            "title": "Demo Track 1",
-            "path": "shows/sample.png",
-            "frameRate": 64
-        },
-        {
-            "title": "Demo Track 2",
-            "path": "shows/dt2.png",
+            "title": "Overture",
+            "path": "shows/overture.png",
             "frameRate": 64
         }
+
     ]
 }

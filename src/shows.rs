@@ -1,11 +1,13 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use std::fs::{read_to_string};
+use std::fs::read_to_string;
 // mod rekordbox;
 // use image::GenericImageView;
 use crate::rekordbox::RekordboxUpdate;
 use image::{GenericImageView, Pixel};
 use std::time::{SystemTime, UNIX_EPOCH};
+
+use std::fmt;
 
 const GRAPH_CHARS: [char; 9] = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
 
@@ -26,6 +28,19 @@ struct LightState {
     brightness: u8,
     strobe_rate: u8,
     strobe_fraction: u8,
+}
+
+impl fmt::Display for LightState {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "(b: {})", self.brightness)
+    }
+}
+
+impl LightState {
+    pub fn to_string(&self) -> String {
+        // We don't want to disclose the secret
+        format!("(b: {})", &self.brightness)
+    }
 }
 
 struct Show {
@@ -50,8 +65,16 @@ where
         .collect()
 }
 
+pub struct FrameInfo {
+    pub track_1_title: String,
+    pub track_2_title: String,
+    pub frame: Vec<u8>,
+    // pub track_1_index: usize,
+    // pub track_2_index: usize,
+}
+
 impl ShowsManager {
-    fn load_show_file(path: &str, frame_rate: usize) -> Option<Show> {
+    fn load_show_file(path: &str, frame_rate: usize, num_lights: usize) -> Option<Show> {
         println!("{}", path);
         let img = image::open(path).ok()?;
         let pixels: Vec<LightState> = img
@@ -63,35 +86,30 @@ impl ShowsManager {
                 strobe_fraction: rgb[2],
             })
             .collect();
-        let rows: Vec<Vec<LightState>> = pixels
-            .chunks(img.width() as usize)
+        let pixel_rows: Vec<Vec<LightState>> = pixels
+            .chunks_exact(img.width() as usize)
             .map(|c| c.to_vec())
             .collect();
-        // .chunks(img.width()).collect();
-        // let (info, mut reader) = decoder.read_info().ok()?;
-        // let mut buf = vec![0; info.buffer_size()];
-        // reader.next_frame(&mut buf).ok()?;
-        // let rows: Vec<Vec<[u8; 4]>> = buf
-        //     // .chunks(4)
-        //     // .to
-        //     .chunks(info.line_size)
-        //     .map(|v| {
-        //         v.chunks(4)
-        //             .map(|rgba| &rgba[..3])
-        //             .collect()
-        //             .try_into()
-        //             .unwrap()
-        //     })
-        //     .collect();
-        let frames = transpose(&rows);
+        println!("pixel_rows {}x{}", pixel_rows.len(), pixel_rows[0].len());
+        let frames: Vec<Vec<LightState>> = pixel_rows
+            .chunks_exact(num_lights+1) // vec of vecs of pixel row vecs
+            .map(|c| c[0..num_lights].to_vec()) // remove empty pixel rows
+            .flat_map(|row_rows| transpose(&row_rows))
+            .collect();
+            // .collect::<Vec<Vec<Vec<LightState>>>>()
+            // .concat();
+        // println!("t1ransp {}, h {}", frame_rows.len(), frame_rows[0].len());
+        // let frame_rows_ext = frame_rows.concat();
+        // let frames = transpose(&frame_rows);
+        println!("show {}: {} lights, {} frames", path, frames[0].len(), frames.len());
+        // println!("transp {}, h {}", frames.len(), frames[0].len());
 
-        let lights = rows.len();
-        let length = rows[0].len() as i32;
+        let length = frames.len() as i32;
         return Some(Show {
             // data: rows,
             frames: frames,
             length: length,
-            lights: lights,
+            lights: num_lights,
             frame_rate: frame_rate,
         });
     }
@@ -149,7 +167,7 @@ impl ShowsManager {
             .map(|s| {
                 (
                     s.title,
-                    ShowsManager::load_show_file(s.path.as_str(), s.frameRate),
+                    ShowsManager::load_show_file(s.path.as_str(), s.frameRate, 13),
                 )
             })
             .filter(|(_title, show)| show.is_some())
@@ -159,8 +177,9 @@ impl ShowsManager {
         return ShowsManager { shows: shows };
     }
 
-    pub fn get_frame_for_title(&self, title: String, offset: f64) -> Option<Vec<u8>> {
-        let show = self.shows.get(&title)?;
+    pub fn get_frame_for_title(&self, title: &String, offset: f64) -> Option<Vec<u8>> {
+        // println!("'{}'", title);
+        let show = self.shows.get(title)?;
         let frame_index = (offset * show.frame_rate as f64).floor() as i32 % show.length;
         let frame = ShowsManager::get_show_frame_no_strobe(show, frame_index);
         return Some(frame);
@@ -183,13 +202,13 @@ impl ShowsManager {
         return out_frame;
     }
 
-    pub fn get_frame_from_rekordbox_update(&self, rekordbox_update: RekordboxUpdate) -> Vec<u8> {
+    pub fn get_frame_from_rekordbox_update(&self, rekordbox_update: RekordboxUpdate) -> FrameInfo {
         let track_1_frame = self.get_frame_for_title(
-            rekordbox_update.track_1_title,
+            &rekordbox_update.track_1_title,
             rekordbox_update.track_1_offset,
         );
         let track_2_frame = self.get_frame_for_title(
-            rekordbox_update.track_2_title,
+            &rekordbox_update.track_2_title,
             rekordbox_update.track_2_offset,
         );
 
@@ -200,7 +219,11 @@ impl ShowsManager {
             16,
         );
 
-        return out_frame;
+        return FrameInfo {
+            track_1_title: String::from(rekordbox_update.track_1_title),
+            track_2_title: String::from(rekordbox_update.track_2_title),
+            frame: out_frame,
+        };
     }
 }
 

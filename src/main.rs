@@ -6,8 +6,8 @@ use std::env;
 mod rekordbox;
 use rekordbox::RekordboxAccess;
 
-mod preview;
-use preview::{show_preview};
+// mod preview;
+// use preview::show_preview;
 
 mod serial;
 use serial::SerialLightOutput;
@@ -41,8 +41,12 @@ fn output_loop(
             Some(shows_manager.get_frame_from_rekordbox_update(rekordbox_update))
         });
         let frame_chars = maybe_frame.map_or(String::from("none"), |frame| {
-            serial_output.write_frame(&frame);
-            return levels_to_graph(&frame);
+            serial_output.write_frame(&frame.frame);
+            // println!(
+            //     "left show: {} (f{}), right show: {}, (f{})",
+            //     frame.track_1_title, 0, frame.track_2_title, 0
+            // );
+            return levels_to_graph(&frame.frame);
         });
 
         i += 1;
@@ -52,7 +56,7 @@ fn output_loop(
                 "serial attached: {}, rekordbox attached: {}, fps: {:?}, frame: {}",
                 serial_output.is_connected(),
                 rekordbox_access.is_attached(),
-                1000_000_000/ start.elapsed().as_micros(),
+                1000_000_000 / start.elapsed().as_micros(),
                 frame_chars
             );
             start = time::Instant::now()
@@ -65,9 +69,12 @@ fn main() {
     let shows_manager = ShowsManager::from_json("shows/shows.json");
     let rekordbox_access = RekordboxAccess::make();
     // rekordbox_access
-        // .attach()
-        // .expect("could not attach to rekordbox");
-    let port = args.get(1).and_then(|a| Some(String::from(a))).or_else(|| SerialLightOutput::prompt_port());
+    // .attach()
+    // .expect("could not attach to rekordbox");
+    let port = args
+        .get(1)
+        .and_then(|a| Some(String::from(a)))
+        .or_else(|| SerialLightOutput::prompt_port());
     // let port = SerialLightOutput::prompt_port().or(Some(String::from(&args[1]))).unwrap();
     let mut serial_output = SerialLightOutput::make(&port.unwrap());
     // serial_output.connect();
