@@ -54,8 +54,9 @@ fn output_loop(
         if i % 1000 == 0 {
             // let frame_chars: String = out_frame.map_or(String::from("none"), |frame| levels_to_graph(&frame));
             println!(
-                "serial attached: {}, rekordbox attached: {}, fps: {:?}, frame: {}",
+                "serial: {}, serial frames written: {}, rekordbox attached: {}, fps: {:?}, frame: {}",
                 serial_output.is_connected(),
+                serial_output.frames_written,
                 rekordbox_access.is_attached(),
                 1000_000_000 / start.elapsed().as_micros(),
                 frame_chars

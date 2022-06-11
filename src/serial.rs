@@ -3,7 +3,9 @@ use std::time::Duration;
 
 pub struct SerialLightOutput {
     port_name: String,
-    port: Option<Box<dyn serialport::SerialPort>>
+    port: Option<Box<dyn serialport::SerialPort>>,
+    last_frame: Vec<u8>,
+    pub frames_written: u64,
 }
 
 impl SerialLightOutput {
@@ -40,6 +42,8 @@ impl SerialLightOutput {
         return SerialLightOutput {
             port: None,
             port_name: serial_port.clone(),
+            frames_written: 0,
+            last_frame: vec![0, 0]
         };
     }
 
@@ -48,6 +52,9 @@ impl SerialLightOutput {
     }
 
     pub fn write_frame(&mut self, frame: &Vec<u8>) -> bool {
+        // if *frame == self.last_frame {
+        //     return true;
+        // }
         if let Some(ref mut port) = self.port {
             let checksum: u8 = frame.iter().sum();
             let info = ['\n' as u8, frame.len() as u8, checksum];
@@ -56,6 +63,8 @@ impl SerialLightOutput {
             if !success {
                 self.port = None;
             }
+            self.frames_written += success as u64;
+            // self.last_frame = frame.clone();
             return success;
         } else {
             self.connect();

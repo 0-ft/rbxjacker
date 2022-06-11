@@ -28,7 +28,7 @@ fn le_float(bytes: Vec<u8>) -> f32 {
     return byteorder::LittleEndian::read_f32(bytes.as_slice());
 }
 
-fn modules_by_name(pid: sysinfo::Pid) -> Vec<(String, usize)> {
+fn modules_by_name(pid: sysinfo::Pid) -> Option<Vec<(String, usize)>> {
     let mut modules = Vec::new();
     for_each_module(pid.as_u32(), |(module_base, _size), name| {
         let name = name
@@ -38,9 +38,8 @@ fn modules_by_name(pid: sysinfo::Pid) -> Vec<(String, usize)> {
             .unwrap()
             .trim_matches(char::from(0));
         modules.push((String::from(name), module_base));
-    })
-    .unwrap();
-    return modules;
+    }).ok()?;
+    return Some(modules);
 }
 
 fn open_module(name: &str, module_name: &str) -> Option<ModuleHandle> {
@@ -52,7 +51,7 @@ fn open_module(name: &str, module_name: &str) -> Option<ModuleHandle> {
 
     let pid = proc.pid();
     // println!("found process {:?}", pid);
-    let modules = modules_by_name(pid);
+    let modules = modules_by_name(pid)?;
     let module = modules.into_iter().find(|m| m.0.eq(module_name))?;
 
     // println!("found module at {:#x?}", module.1);

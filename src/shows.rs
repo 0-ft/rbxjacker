@@ -75,7 +75,6 @@ pub struct FrameInfo {
 
 impl ShowsManager {
     fn load_show_file(path: &str, frame_rate: usize, num_lights: usize) -> Option<Show> {
-        println!("{}", path);
         let img = image::open(path).ok()?;
         let pixels: Vec<LightState> = img
             .pixels()
@@ -145,26 +144,20 @@ impl ShowsManager {
             read_to_string(shows_json_path).expect("Could not read shows JSON");
         let json: ShowsJson =
             serde_json::from_str(json_content.as_str()).expect("JSON was not well-formatted");
-
+        let shows_num = json.shows.len();
         let shows: HashMap<String, Show> = json
             .shows
             .into_iter()
             .map(|s| {
-                return (
+                (
                     s.title,
                     ShowsManager::load_show_file(s.path.as_str(), s.frameRate, 13),
-                );
+                )
             })
-            .filter(|(title, show)| {
-                if show.is_none()  {
-                    println!("failed to load show for title '{}'", title);
-                    return false;
-                }
-                return true;
-            })
+            .filter(|(_title, show)| show.is_some())
             .map(|(title, show)| (title, show.unwrap()))
             .collect();
-        println!("loaded {} shows", shows.len());
+        println!("loaded {} shows, failed to load {}", shows.len(), shows_num - shows.len());
         return ShowsManager { shows: shows };
     }
 
@@ -187,8 +180,10 @@ impl ShowsManager {
         let out_frame = left_frame
             .iter()
             .zip(right_frame)
-            .map(|(a, b)| *a as f32 * crossfader + b as f32 * (1.0 - crossfader))
-            .map(|sum| if sum > 255.0 { 255 } else { sum as u8 })
+            .map(|(a, b)| *a as u16 + b as u16)
+            .map(|sum| if sum > 255 { 255 } else { sum as u8 })
+            // .map(|(a, b)| *a as f32 * crossfader + b as f32 * (1.0 - crossfader))
+            // .map(|sum| if sum > 255.0 { 255 } else { sum as u8 })
             .collect();
         return out_frame;
     }
