@@ -1,25 +1,49 @@
 {
     "shows": [
-{
-    "title": "Atlas",
-    "path": "shows/atlas.png",
-    "frameRate": 32
-},
-{
-    "title": "Demo Track 1",
-    "path": "shows/sample.png",
-    "frameRate": 64
-},
-{
-    "title": "Demo Track 2",
-    "path": "shows/dt2.png",
-    "frameRate": 64
-},
+        {
+            "title": "Atlas",
+            "path": "shows/atlas.png",
+            "frameRate": 32
+        },
+        {
+            "title": "Demo Track 1",
+            "path": "shows/sample.png",
+            "frameRate": 64
+        },
+        {
+            "title": "Demo Track 2",
+            "path": "shows/dt2.png",
+            "frameRate": 64
+        },
+        {
+            "title": "Chicken Soup",
+            "path": "shows/chickensoup.png",
+            "frameRate": 64
+        },
         {
             "title": "Overture",
             "path": "shows/overture.png",
+            "frameRate": 32
+        },
+        {
+            "title": "WANT NEED LOVE",
+            "path": "shows/wantneedlove.png",
             "frameRate": 64
+        },
+        {
+            "title": "Goliath",
+            "path": "shows/goliath.png",
+            "frameRate": 64
+        },
+        {
+            "title": "Colorblind",
+            "path": "shows/colorblind.png",
+            "frameRate": 64
+        },
+        {
+            "title": "Vortex 150",
+            "path": "shows/v150 test.png",
+            "frameRate": 32
         }
-
     ]
 }

@@ -38,6 +38,7 @@ fn output_loop(
     let mut start = time::Instant::now();
     loop {
         let maybe_frame = rekordbox_access.get_update().and_then(|rekordbox_update| {
+            // println!("got update");
             Some(shows_manager.get_frame_from_rekordbox_update(rekordbox_update))
         });
         let frame_chars = maybe_frame.map_or(String::from("none"), |frame| {

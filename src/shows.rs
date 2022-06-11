@@ -3,9 +3,9 @@ use std::collections::HashMap;
 use std::fs::read_to_string;
 // mod rekordbox;
 // use image::GenericImageView;
-use crate::rekordbox::RekordboxUpdate;
+use crate::rekordbox::{self, RekordboxUpdate};
 use image::{GenericImageView, Pixel};
-use std::time::{SystemTime, UNIX_EPOCH};
+// use std::time::{SystemTime, UNIX_EPOCH};
 
 use std::fmt;
 
@@ -90,19 +90,13 @@ impl ShowsManager {
             .chunks_exact(img.width() as usize)
             .map(|c| c.to_vec())
             .collect();
-        println!("pixel_rows {}x{}", pixel_rows.len(), pixel_rows[0].len());
+        // println!("pixel_rows {}x{}", pixel_rows.len(), pixel_rows[0].len());
         let frames: Vec<Vec<LightState>> = pixel_rows
-            .chunks_exact(num_lights+1) // vec of vecs of pixel row vecs
+            .chunks_exact(num_lights + 1) // vec of vecs of pixel row vecs
             .map(|c| c[0..num_lights].to_vec()) // remove empty pixel rows
             .flat_map(|row_rows| transpose(&row_rows))
             .collect();
-            // .collect::<Vec<Vec<Vec<LightState>>>>()
-            // .concat();
-        // println!("t1ransp {}, h {}", frame_rows.len(), frame_rows[0].len());
-        // let frame_rows_ext = frame_rows.concat();
-        // let frames = transpose(&frame_rows);
-        println!("show {}: {} lights, {} frames", path, frames[0].len(), frames.len());
-        // println!("transp {}, h {}", frames.len(), frames[0].len());
+        // println!("loaded show at '{}': {} lights, {} frames", path, frames[0].len(), frames.len());
 
         let length = frames.len() as i32;
         return Some(Show {
@@ -114,32 +108,27 @@ impl ShowsManager {
         });
     }
 
-    fn get_show_frame(show: &Show, index: i32) -> Vec<u8> {
-        if 0 <= index && index < show.length {
-            let time = SystemTime::now()
-                .duration_since(UNIX_EPOCH)
-                .unwrap()
-                .as_micros();
-            return show.frames[index as usize]
-                .iter()
-                .map(|v| {
-                    if v.strobe_rate == 0 {
-                        return v.brightness;
-                    } else {
-                        let strobe_multiplier = ((time % (v.strobe_rate as u128)) as u8)
-                            < (v.strobe_fraction * v.strobe_rate / 255);
-                        return strobe_multiplier as u8 * v.brightness;
-                    }
-                })
-                .collect();
-            // .data
-            // .iter()
-            // .map(|row| row[index as usize])
-            // .collect();
-            // return frame;
-        }
-        return vec![0; show.lights];
-    }
+    // fn get_show_frame(show: &Show, index: i32) -> Vec<u8> {
+    //     if 0 <= index && index < show.length {
+    //         let time = SystemTime::now()
+    //             .duration_since(UNIX_EPOCH)
+    //             .unwrap()
+    //             .as_micros();
+    //         return show.frames[index as usize]
+    //             .iter()
+    //             .map(|v| {
+    //                 if v.strobe_rate == 0 {
+    //                     return v.brightness;
+    //                 } else {
+    //                     let strobe_multiplier = ((time % (v.strobe_rate as u128)) as u8)
+    //                         < (v.strobe_fraction * v.strobe_rate / 255);
+    //                     return strobe_multiplier as u8 * v.brightness;
+    //                 }
+    //             })
+    //             .collect();
+    //     }
+    //     return vec![0; show.lights];
+    // }
 
     fn get_show_frame_no_strobe(show: &Show, index: i32) -> Vec<u8> {
         if 0 <= index && index < show.length {
@@ -147,11 +136,6 @@ impl ShowsManager {
                 .iter()
                 .map(|v| v.brightness)
                 .collect();
-            // .data
-            // .iter()
-            // .map(|row| row[index as usize])
-            // .collect();
-            // return frame;
         }
         return vec![0; show.lights];
     }
@@ -161,16 +145,23 @@ impl ShowsManager {
             read_to_string(shows_json_path).expect("Could not read shows JSON");
         let json: ShowsJson =
             serde_json::from_str(json_content.as_str()).expect("JSON was not well-formatted");
+
         let shows: HashMap<String, Show> = json
             .shows
             .into_iter()
             .map(|s| {
-                (
+                return (
                     s.title,
                     ShowsManager::load_show_file(s.path.as_str(), s.frameRate, 13),
-                )
+                );
             })
-            .filter(|(_title, show)| show.is_some())
+            .filter(|(title, show)| {
+                if show.is_none()  {
+                    println!("failed to load show for title '{}'", title);
+                    return false;
+                }
+                return true;
+            })
             .map(|(title, show)| (title, show.unwrap()))
             .collect();
         println!("loaded {} shows", shows.len());
@@ -203,6 +194,7 @@ impl ShowsManager {
     }
 
     pub fn get_frame_from_rekordbox_update(&self, rekordbox_update: RekordboxUpdate) -> FrameInfo {
+        // println!("{}, {}", rekordbox_update.track_1_title, rekordbox_update.track_2_title);
         let track_1_frame = self.get_frame_for_title(
             &rekordbox_update.track_1_title,
             rekordbox_update.track_1_offset,
@@ -211,14 +203,14 @@ impl ShowsManager {
             &rekordbox_update.track_2_title,
             rekordbox_update.track_2_offset,
         );
-
+        // println!("{}, {}", track_1_frame.is_some(), track_2_frame.is_some());
         let out_frame = ShowsManager::combine_frames(
             track_1_frame,
             track_2_frame,
             rekordbox_update.crossfader,
             16,
         );
-
+        // println!("made_frame");
         return FrameInfo {
             track_1_title: String::from(rekordbox_update.track_1_title),
             track_2_title: String::from(rekordbox_update.track_2_title),

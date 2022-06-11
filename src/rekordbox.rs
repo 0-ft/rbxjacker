@@ -128,11 +128,12 @@ impl RekordboxAccess {
         let track_1_title = self.track_1_title_address.get_string(&handle, false)?;
         let track_2_title = self.track_2_title_address.get_string(&handle, false)?;
 
-        let crossfader = self
-            .crossfader_address
-            .get_bytes(&handle, 4, true)
-            .and_then(|bytes| Some((le_float(bytes) + 2.5625) / 5.125))?;
-
+        // let crossfader = self
+        //     .crossfader_address
+        //     .get_bytes(&handle, 4, true)
+        //     .and_then(|bytes| Some((le_float(bytes) + 2.5625) / 5.125))?;
+        let crossfader = 0.5;
+        // println!("read values");
         return Some(RekordboxUpdate {
             track_1_title,
             track_2_title,
