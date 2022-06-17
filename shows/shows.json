@@ -7,7 +7,7 @@
         },
         {
             "title": "Demo Track 1",
-            "path": "shows/sample.png",
+            "path": "shows/test_al.png",
             "frameRate": 64
         },
         {
@@ -36,13 +36,48 @@
             "frameRate": 64
         },
         {
+            "title": "The Top (Rival Consoles Remix)",
+            "path": "shows/thetop.png",
+            "frameRate": 64
+        },
+        {
             "title": "Colorblind",
             "path": "shows/colorblind.png",
             "frameRate": 64
         },
         {
+            "title": "Long Road Home",
+            "path": "shows/longroadhome.png",
+            "frameRate": 64
+        },
+        {
+            "title": "Breathe (feat. Jem Cooke)",
+            "path": "shows/house_1.png",
+            "frameRate": 64
+        },
+        {
+            "title": "Rhymes",
+            "path": "shows/dnb_1.png",
+            "frameRate": 32
+        },
+        {
             "title": "Vortex 150",
             "path": "shows/v150 test.png",
+            "frameRate": 32
+        },
+        {
+            "title": "Solitude (Felsmann + Tiley Reinterpretation)",
+            "path": "shows/solitude.png",
+            "frameRate": 64
+        },
+        {
+            "title": "default_track_1",
+            "path": "shows/house_1.png",
+            "frameRate": 64
+        },
+        {
+            "title": "default_track_2",
+            "path": "shows/dnb_1.png",
             "frameRate": 32
         }
     ]

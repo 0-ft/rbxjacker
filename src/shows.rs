@@ -190,7 +190,7 @@ impl ShowsManager {
 
     pub fn get_frame_from_rekordbox_update(&self, rekordbox_update: RekordboxUpdate) -> FrameInfo {
         // println!("{}, {}", rekordbox_update.track_1_title, rekordbox_update.track_2_title);
-        let track_1_frame = self.get_frame_for_title(
+        let mut track_1_frame = self.get_frame_for_title(
             &rekordbox_update.track_1_title,
             rekordbox_update.track_1_offset,
         );
@@ -198,6 +198,10 @@ impl ShowsManager {
             &rekordbox_update.track_2_title,
             rekordbox_update.track_2_offset,
         );
+        if(track_1_frame.is_none() && track_2_frame.is_none()) {
+            track_1_frame = self.get_frame_for_title(&String::from("default_track_2"), rekordbox_update.track_1_offset);
+        }
+        
         // println!("{}, {}", track_1_frame.is_some(), track_2_frame.is_some());
         let out_frame = ShowsManager::combine_frames(
             track_1_frame,
@@ -205,6 +209,7 @@ impl ShowsManager {
             rekordbox_update.crossfader,
             16,
         );
+        // let out_frame = self.get_frame_for_title(&String::from("default_track_2"), rekordbox_update.track_1_offset).unwrap();
         // println!("made_frame");
         return FrameInfo {
             track_1_title: String::from(rekordbox_update.track_1_title),
