@@ -16,10 +16,16 @@ image = "0.24.2"
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 rustc-hash = "1.1.0"
-nannou = "0.17"
+# nannou = "0.17"
 serialport = "4.2.0"
+# sdl2 = "0.35.2"
+ggez = "0.7.0"
 
 [profile.release]
 # lto = true
 codegen-units = 1
 debug = false
+
+[dependencies]
+minidom = "0.15.0"
+# serde-xml-rs = "0.6.0"

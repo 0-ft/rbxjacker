@@ -1,4 +1,5 @@
 use byteorder::*;
+use minidom::Element;
 use process_list::for_each_module;
 use read_process_memory::*;
 use std::convert::TryInto;
@@ -38,7 +39,8 @@ fn modules_by_name(pid: sysinfo::Pid) -> Option<Vec<(String, usize)>> {
             .unwrap()
             .trim_matches(char::from(0));
         modules.push((String::from(name), module_base));
-    }).ok()?;
+    })
+    .ok()?;
     return Some(modules);
 }
 
@@ -90,10 +92,11 @@ pub struct RekordboxAccess {
     track_1_offset_address: CachedPointerChain,
     track_2_offset_address: CachedPointerChain,
     crossfader_address: CachedPointerChain,
+    xml_tracks: Vec<XmlTrackInfo>,
 }
 
 impl RekordboxAccess {
-    pub fn make() -> RekordboxAccess {
+    pub fn make(collection_xml_path: &String) -> RekordboxAccess {
         let rekordbox_access = RekordboxAccess {
             handle: None,
             track_1_title_address: CachedPointerChain::make(TRACK_1_TITLE.to_vec()),
@@ -101,6 +104,7 @@ impl RekordboxAccess {
             track_1_offset_address: CachedPointerChain::make(TRACK_1_OFFSET.to_vec()),
             track_2_offset_address: CachedPointerChain::make(TRACK_2_OFFSET.to_vec()),
             crossfader_address: CachedPointerChain::make(CROSSFADER.to_vec()),
+            xml_tracks: parse_rekordbox_xml(collection_xml_path).unwrap_or(Vec::new()),
         };
         return rekordbox_access;
     }
@@ -120,7 +124,7 @@ impl RekordboxAccess {
     }
 
     fn read_values(&mut self) -> Option<RekordboxUpdate> {
-        let ref mut handle= self.handle.as_ref()?;
+        let ref mut handle = self.handle.as_ref()?;
         let track_1_offset = self.track_1_offset_address.get_double(&handle, true)?;
         let track_2_offset = self.track_2_offset_address.get_double(&handle, true)?;
 
@@ -142,7 +146,7 @@ impl RekordboxAccess {
         });
     }
 
-    pub fn get_update(&mut self) -> Option<RekordboxUpdate>{
+    pub fn get_update(&mut self) -> Option<RekordboxUpdate> {
         return self.read_values().or_else(|| {
             self.handle = None;
             self.attach();
@@ -207,4 +211,76 @@ impl CachedPointerChain {
             .get_bytes(handle, 8, try_without_cache)
             .and_then(|bytes| Some(le_double(bytes)));
     }
+}
+
+#[derive(Debug)]
+pub struct XmlCueInfo {
+    pub beat_offset: f64,
+    pub comment: Option<String>,
+}
+
+#[derive(Debug)]
+pub struct XmlTrackInfo {
+    pub title: String,
+    pub artist: String,
+    pub cues: Vec<XmlCueInfo>,
+}
+
+fn parse_xml_cues(track_elem: &Element) -> Vec<XmlCueInfo> {
+    let tempo_points: Vec<(f64, f64)> = track_elem
+        .children()
+        .filter(|child| child.name() == "TEMPO")
+        .filter_map(|child| {
+            Some((
+                child.attr("Inizio")?.parse::<f64>().ok()?,
+                child.attr("Bpm")?.parse::<f64>().ok()?,
+            ))
+        })
+        .collect();
+    if let Some((start_seconds, tempo)) = tempo_points.get(0) {
+        let beats_per_second = tempo / 60.0;
+        let cues: Vec<XmlCueInfo> = track_elem
+            .children()
+            .filter(|child| child.name() == "POSITION_MARK")
+            .filter_map(|child| {
+                return Some(XmlCueInfo {
+                    comment: child.attr("Name").map(str::to_string),
+                    beat_offset: (child.attr("Start")?.parse::<f64>().ok()? - start_seconds)
+                        * beats_per_second,
+                });
+            })
+            .collect();
+        return cues;
+    }
+    return Vec::new();
+}
+
+fn parse_rekordbox_xml(path: &String) -> Option<Vec<XmlTrackInfo>> {
+    // let file_contents: String = ;
+    println!("loading rekordbox xml");
+    let root: Element = std::fs::read_to_string(path)
+        .expect("failed to load xml")
+        .parse::<Element>()
+        .expect("failed to parse xml");
+    println!("rekordbox root: {:?}", root);
+    let xml_tracks: Vec<XmlTrackInfo> = root
+        .children()
+        .find(|child| child.name() == "COLLECTION")?
+        .children()
+        .map(|track_elem| {
+            return XmlTrackInfo {
+                title: track_elem
+                    .attr("Name")
+                    .expect("could not parse track title")
+                    .to_string(),
+                artist: track_elem
+                    .attr("Artist")
+                    .expect("could not parse track artist")
+                    .to_string(),
+                cues: parse_xml_cues(track_elem),
+            };
+        })
+        .collect();
+    println!("xml tracks: {:?}", xml_tracks);
+    return Some(xml_tracks);
 }

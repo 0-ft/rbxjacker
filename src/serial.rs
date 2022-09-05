@@ -9,10 +9,13 @@ pub struct SerialLightOutput {
 }
 
 impl SerialLightOutput {
-
     pub fn prompt_port() -> Option<String> {
         let ports = serialport::available_ports().expect("No ports found!");
-        let choices: Vec<String> = ports.iter().enumerate().map(|(i, p)| format!("{}: {}", i, p.port_name)).collect();
+        let choices: Vec<String> = ports
+            .iter()
+            .enumerate()
+            .map(|(i, p)| format!("{}: {}", i, p.port_name))
+            .collect();
         if choices.len() < 1 {
             return None;
         }
@@ -32,8 +35,8 @@ impl SerialLightOutput {
         let success = self.port.is_some();
         if success {
             println!("successfully opened {}", self.port_name);
-        // } else {
-        //     println!("failed to open {}", self.port_name);
+            // } else {
+            //     println!("failed to open {}", self.port_name);
         }
         return success;
     }
@@ -43,7 +46,7 @@ impl SerialLightOutput {
             port: None,
             port_name: serial_port.clone(),
             frames_written: 0,
-            last_frame: vec![0, 0]
+            last_frame: vec![0, 0],
         };
     }
 

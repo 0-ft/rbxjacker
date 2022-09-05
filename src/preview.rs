@@ -1,3 +1,6 @@
+use std::sync::{Mutex, Arc};
+use std::thread;
+
 use nannou::prelude::*;
 
 use crate::rekordbox::{RekordboxAccess, self};
@@ -19,9 +22,9 @@ pub fn show_preview() {
 }
 
 struct Model {
-    rekordbox_access: RekordboxAccess,
-    shows_manager: ShowsManager,
-    frame: Vec<u8>,
+    // rekordbox_access: RekordboxAccess,
+    // shows_manager: ShowsManager,
+    frame: Arc<Mutex<Vec<u8>>>,
     lights: Vec<(Point3, Point3)>,
 }
 
@@ -43,8 +46,6 @@ fn point_to_screen(pos: Point3, win: Rect<f32>) -> Point2 {
 }
 
 fn model(app: &App) -> Model {
-    let shows_manager = ShowsManager::from_json("shows/shows.json");
-    let rekordbox_access = RekordboxAccess::make();
     // let frame_provider = FrameProvider {
     //     shows_manager,
     //     rekordbox_access
@@ -63,27 +64,28 @@ fn model(app: &App) -> Model {
         light_from_pos_and_rot(pt3(-2.0, 10.0, 1.0)),
         light_from_pos_and_rot(pt3(-1.0, 10.0, 1.0)),
         light_from_pos_and_rot(pt3(0.0, 10.0, 1.0)),
-        light_from_pos_and_rot(pt3(1.0, 10.0, 1.0)),
-        light_from_pos_and_rot(pt3(2.0, 10.0, 1.0)),
-        light_from_pos_and_rot(pt3(3.0, 10.0, 1.0)),
     ];
+    let frame = Arc::new(Mutex::new(vec![0; 13]));
+    let frame_for_thread = Arc::clone(&frame);
+    thread::spawn(move || {
+        let shows_manager = ShowsManager::from_json("shows/shows.json");
+        let mut rekordbox_access = RekordboxAccess::make();
+        let rekordbox_update = rekordbox_access.get_update();
+        if let Some(update) = rekordbox_update {
+            let out_frame = shows_manager
+            .get_frame_from_rekordbox_update(update);
+            let mut mutex = frame_for_thread.lock().unwrap();
+            *mutex = out_frame.frame;
+        }
+    });
     return Model {
-        rekordbox_access,
-        shows_manager,
-        frame: vec![0; 16],
+        frame: Arc::clone(&frame),
         lights: lights,
     };
 }
 
 fn update(_app: &App, model: &mut Model, _update: Update) {
     // println!("updating");
-    let rekordbox_update = model.rekordbox_access.get_update();
-    if let Some(update) = rekordbox_update {
-        let out_frame = model
-        .shows_manager
-        .get_frame_from_rekordbox_update(update);
-        model.frame = out_frame;
-    }
 }
 
 fn view(app: &App, model: &Model, frame: Frame) {
@@ -92,13 +94,13 @@ fn view(app: &App, model: &Model, frame: Frame) {
     let win = app.window_rect();
     let w = win.w() / 16.0;
     // println!("{:?}", model.frame);
-    for i in 0..16 {
+    for i in 0..13 {
         let (a, b) = (point_to_screen(model.lights[i].0, win), point_to_screen(model.lights[i].1, win));
             // .wh(a);
         draw.line()
             .weight(10.0)
             .caps_round()
-            .color(nannou::color::gray(model.frame[i] as f32 / 255.0))
+            .color(nannou::color::gray((*model.frame.lock().unwrap())[i] as f32 / 255.0))
             .points(a, b);
             draw.text(i.to_string().as_str())
             .color(BLUE)

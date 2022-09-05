@@ -157,7 +157,11 @@ impl ShowsManager {
             .filter(|(_title, show)| show.is_some())
             .map(|(title, show)| (title, show.unwrap()))
             .collect();
-        println!("loaded {} shows, failed to load {}", shows.len(), shows_num - shows.len());
+        println!(
+            "loaded {} shows, failed to load {}",
+            shows.len(),
+            shows_num - shows.len()
+        );
         return ShowsManager { shows: shows };
     }
 
@@ -198,10 +202,13 @@ impl ShowsManager {
             &rekordbox_update.track_2_title,
             rekordbox_update.track_2_offset,
         );
-        if(track_1_frame.is_none() && track_2_frame.is_none()) {
-            track_1_frame = self.get_frame_for_title(&String::from("default_track_2"), rekordbox_update.track_1_offset);
+        if (track_1_frame.is_none() && track_2_frame.is_none()) {
+            track_1_frame = self.get_frame_for_title(
+                &String::from("default_track_2"),
+                rekordbox_update.track_1_offset,
+            );
         }
-        
+
         // println!("{}, {}", track_1_frame.is_some(), track_2_frame.is_some());
         let out_frame = ShowsManager::combine_frames(
             track_1_frame,

@@ -1,0 +1,839 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DJ_PLAYLISTS Version="1.0.0" xmlns="">
+  <PRODUCT Name="rekordbox" Version="6.6.3" Company="AlphaTheta"/>
+  <COLLECTION Entries="82">
+    <TRACK TrackID="140842864" Name="NOISE" Artist="" Composer="" Album=""
+           Grouping="" Genre="" Kind="WAV File" Size="1382226" TotalTime="5"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/OSC_SAMPLER/PRESET%20ONESHOT/NOISE.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="190485617" Name="SINEWAVE" Artist="" Composer="" Album=""
+           Grouping="" Genre="" Kind="WAV File" Size="1515258" TotalTime="5"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="51"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/OSC_SAMPLER/PRESET%20ONESHOT/SINEWAVE.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="129850842" Name="SIREN" Artist="" Composer="" Album=""
+           Grouping="" Genre="" Kind="WAV File" Size="1941204" TotalTime="7"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="102"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/OSC_SAMPLER/PRESET%20ONESHOT/SIREN.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="237991380" Name="HORN" Artist="" Composer="" Album=""
+           Grouping="" Genre="" Kind="WAV File" Size="2010816" TotalTime="7"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="153"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/OSC_SAMPLER/PRESET%20ONESHOT/HORN.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="100833417" Name="Demo Track 1" Artist="Loopmasters"
+           Composer="" Album="" Grouping="" Genre="" Kind="MP3 File" Size="6899624"
+           TotalTime="172" DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="123.00"
+           DateAdded="2022-06-18" BitRate="320" SampleRate="44100" Comments="Tracks by www.loopmasters.com"
+           PlayCount="0" Rating="204" Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Demo%20Tracks/Demo%20Track%201.mp3"
+           Remixer="" Tonality="" Label="Loopmasters" Mix="">
+      <TEMPO Inizio="0.025" Bpm="128.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="135797056" Name="Demo Track 2" Artist="Loopmasters"
+           Composer="composerr" Album="DT2 Album" Grouping="Aqua" Genre="genreee"
+           Kind="MP3 File" Size="5124342" TotalTime="128" DiscNumber="9"
+           TrackNumber="21" Year="11" AverageBpm="123.55" DateAdded="2022-06-18"
+           BitRate="320" SampleRate="44100" Comments="Tracks by www.loopmasters.com"
+           PlayCount="13" Rating="255" Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Demo%20Tracks/Demo%20Track%202.mp3"
+           Remixer="remixerr" Tonality="Db" Label="Loopmasters" Mix="mixnammee"
+           Colour="0x25FDE9">
+      <TEMPO Inizio="0.025" Bpm="120.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="48.026" Bpm="120.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="48.525" Bpm="120.00" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="49.026" Bpm="120.00" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="49.525" Bpm="120.00" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="50.026" Bpm="120.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="50.525" Bpm="120.00" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="51.026" Bpm="120.00" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="51.525" Bpm="120.00" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="52.026" Bpm="120.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="171042581" Name="SNARE9" Artist="" Composer="" Album=""
+           Grouping="" Genre="" Kind="WAV File" Size="186906" TotalTime="0"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20101.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="242999" Name="SNARE8" Artist="" Composer="" Album=""
+           Grouping="" Genre="" Kind="WAV File" Size="135948" TotalTime="0"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20102.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="231423416" Name="CLAP" Artist="" Composer="" Album=""
+           Grouping="" Genre="" Kind="WAV File" Size="203884" TotalTime="0"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20103.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="200645549" Name="CYMBAL" Artist="" Composer="" Album=""
+           Grouping="" Genre="" Kind="WAV File" Size="543576" TotalTime="2"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20104.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="121400024" Name="CLASH CYMBAL" Artist="" Composer=""
+           Album="" Grouping="" Genre="" Kind="WAV File" Size="1155024"
+           TotalTime="4" DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00"
+           DateAdded="2022-06-18" BitRate="2116" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20201.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="32902484" Name="SNARE" Artist="Loopmasters" Composer=""
+           Album="" Grouping="" Genre="" Kind="WAV File" Size="486444" TotalTime="1"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="255"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20202.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="118070647" Name="BOOM DOWN LIFTER1" Artist="Loopmasters"
+           Composer="" Album="" Grouping="" Genre="" Kind="WAV File" Size="1297038"
+           TotalTime="4" DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00"
+           DateAdded="2022-06-18" BitRate="2116" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20203.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="160804406" Name="BOOM DOWN LIFTER2" Artist="Loopmasters"
+           Composer="" Album="" Grouping="" Genre="" Kind="WAV File" Size="1639462"
+           TotalTime="9" DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00"
+           DateAdded="2022-06-18" BitRate="1411" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20204.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="75784640" Name="NOISE DOWN LIFTER1" Artist="Loopmasters"
+           Composer="" Album="" Grouping="" Genre="" Kind="WAV File" Size="1297040"
+           TotalTime="4" DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00"
+           DateAdded="2022-06-18" BitRate="2116" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20205.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="113675476" Name="NOISE DOWN LIFTER2" Artist="Loopmasters"
+           Composer="" Album="" Grouping="" Genre="" Kind="WAV File" Size="1378094"
+           TotalTime="5" DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00"
+           DateAdded="2022-06-18" BitRate="2116" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20206.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="49446954" Name="IMPACT KICK" Artist="Loopmasters" Composer=""
+           Album="" Grouping="" Genre="" Kind="WAV File" Size="1459146"
+           TotalTime="5" DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00"
+           DateAdded="2022-06-18" BitRate="2116" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20207.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="92372899" Name="IMPACT SNARE" Artist="Loopmasters" Composer=""
+           Album="" Grouping="" Genre="" Kind="WAV File" Size="1489766"
+           TotalTime="5" DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00"
+           DateAdded="2022-06-18" BitRate="2116" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20208.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="29932459" Name="SHORT BOOM" Artist="Loopmasters" Composer=""
+           Album="" Grouping="" Genre="" Kind="WAV File" Size="652554" TotalTime="2"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20209.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="22583130" Name="NEEDLE SCRATCH NOISE" Artist="" Composer=""
+           Album="" Grouping="" Genre="" Kind="WAV File" Size="543590" TotalTime="2"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20301.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="59229638" Name="HORN" Artist="" Composer="" Album=""
+           Grouping="" Genre="" Kind="WAV File" Size="1621228" TotalTime="6"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20302.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="221470616" Name="REWIND" Artist="" Composer="" Album=""
+           Grouping="" Genre="" Kind="WAV File" Size="1494288" TotalTime="5"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20303.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="216831064" Name="SHORT BOOM" Artist="Loopmasters" Composer=""
+           Album="" Grouping="" Genre="" Kind="WAV File" Size="727752" TotalTime="2"
+           DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00" DateAdded="2022-06-18"
+           BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20304.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="144376535" Name="LET&apos;S GO" Artist="Loopmasters"
+           Composer="" Album="" Grouping="" Genre="" Kind="WAV File" Size="1002802"
+           TotalTime="3" DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="0.00"
+           DateAdded="2022-06-18" BitRate="2116" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/C:/Users/win10base/Music/PioneerDJ/Sampler/MERGE%20FX/MergeFX%20Sample%20Sound%20305.wav"
+           Remixer="" Tonality="" Label="" Mix=""/>
+    <TRACK TrackID="76155751" Name="O.P.U.S." Artist="Subtronics" Composer=""
+           Album="FRACTALS" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="3472593" TotalTime="201" DiscNumber="1" TrackNumber="1"
+           Year="2022" AverageBpm="109.99" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Subtronics%20-%20O.P.U.S.mp3"
+           Remixer="" Tonality="" Label="Cyclops Recordings" Mix="">
+      <TEMPO Inizio="0.156" Bpm="109.99" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="93366202" Name="Atlas" Artist="Camo &amp; Krooked" Composer=""
+           Album="Drum&amp;BassArena 2019" Grouping="" Genre="Dance" Kind="MP3 File"
+           Size="5190094" TotalTime="317" DiscNumber="1" TrackNumber="19"
+           Year="2019" AverageBpm="175.00" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Camo%20%26%20Krooked%20-%20Atlas.mp3"
+           Remixer="" Tonality="" Label="Drum&amp;BassArena" Mix="">
+      <TEMPO Inizio="0.014" Bpm="175.00" Metro="4/4" Battito="1"/>
+      <POSITION_MARK Name="" Type="0" Start="0.014" Num="-1"/>
+      <POSITION_MARK Name="FIRSTLE" Type="0" Start="6.871" Num="0" Red="40" Green="226"
+                     Blue="20"/>
+      <POSITION_MARK Name="twoth" Type="0" Start="8.928" Num="1" Red="40" Green="226"
+                     Blue="20"/>
+    </TRACK>
+    <TRACK TrackID="92277727" Name="Lost My Mind" Artist="Dillon Francis "
+           Composer="" Album="Lost My Mind" Grouping="" Genre="Electro"
+           Kind="MP3 File" Size="4288826" TotalTime="261" DiscNumber="1"
+           TrackNumber="1" Year="2019" AverageBpm="80.00" DateAdded="2022-06-24"
+           BitRate="128" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/Z:/tube_imager/tracks/Dillon%20Francis%20-%20Lost%20My%20Mind.mp3"
+           Remixer="" Tonality="" Label="IDGAFOS" Mix="">
+      <TEMPO Inizio="0.186" Bpm="80.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="55114319" Name="Mandrill (Barker Remix)" Artist="Martin L. Gore"
+           Composer="" Album="The Third Chimpanzee Remixed" Grouping=""
+           Genre="Electro" Kind="MP3 File" Size="5663379" TotalTime="338"
+           DiscNumber="1" TrackNumber="2" Year="2021" AverageBpm="135.02"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Martin%20L.%20Gore%20-%20Mandrill%20(Barker%20Remix).mp3"
+           Remixer="" Tonality="" Label="Mute" Mix="">
+      <TEMPO Inizio="0.141" Bpm="135.02" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="40.580" Bpm="135.02" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="93.906" Bpm="135.02" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="147.232" Bpm="135.02" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="200.558" Bpm="135.02" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="257.439" Bpm="135.02" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="297.878" Bpm="135.02" Metro="4/4" Battito="3"/>
+    </TRACK>
+    <TRACK TrackID="240572572" Name="Raise Your Weapon" Artist="deadmau5"
+           Composer="" Album="4x4=12" Grouping="" Genre="Dance" Kind="MP3 File"
+           Size="8125417" TotalTime="502" DiscNumber="1" TrackNumber="10"
+           Year="2010" AverageBpm="128.41" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/deadmau5%20-%20Raise%20Your%20Weapon.mp3"
+           Remixer="" Tonality="" Label="Virgin Records" Mix="">
+      <TEMPO Inizio="0.287" Bpm="128.41" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="57.758" Bpm="128.41" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="107.753" Bpm="128.41" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="157.748" Bpm="128.41" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="207.743" Bpm="128.41" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="261.476" Bpm="128.41" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="311.471" Bpm="128.41" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="361.466" Bpm="128.41" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="411.461" Bpm="128.41" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="463.325" Bpm="128.41" Metro="4/4" Battito="3"/>
+    </TRACK>
+    <TRACK TrackID="226245053" Name="Worship" Artist="Golden Features" Composer=""
+           Album="SECT" Grouping="" Genre="Electro" Kind="MP3 File" Size="9810089"
+           TotalTime="244" DiscNumber="1" TrackNumber="8" Year="2018" AverageBpm="122.00"
+           DateAdded="2022-06-24" BitRate="320" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Golden%20Features%20-%20Worship.mp3"
+           Remixer="" Tonality="" Label="WM Australia" Mix="">
+      <TEMPO Inizio="0.072" Bpm="122.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="252029691" Name="Angie Got Stoned (My Nu Leng Remix)"
+           Artist="emalkay/My Nu Leng" Composer="" Album="Angie Got Stoned (My Nu Leng Remix)"
+           Grouping="" Genre="Dance/Rap/Hip Hop" Kind="MP3 File" Size="15972522"
+           TotalTime="397" DiscNumber="1" TrackNumber="1" Year="2019" AverageBpm="129.00"
+           DateAdded="2022-06-24" BitRate="320" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/emalkay%20-%20Angie%20Got%20Stoned%20(My%20Nu%20Leng%20Remix.mp3"
+           Remixer="" Tonality="" Label="Emalkay" Mix="">
+      <TEMPO Inizio="0.050" Bpm="129.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="141.911" Bpm="129.00" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="391.679" Bpm="129.00" Metro="4/4" Battito="3"/>
+    </TRACK>
+    <TRACK TrackID="177557353" Name="Former World" Artist="Batu" Composer=""
+           Album="Opal" Grouping="" Genre="Electro" Kind="MP3 File" Size="1102697"
+           TotalTime="58" DiscNumber="1" TrackNumber="1" Year="2022" AverageBpm="0.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Batu%20-%20Former%20World.mp3"
+           Remixer="" Tonality="" Label="Timedance" Mix=""/>
+    <TRACK TrackID="61135455" Name="Apoptose, Pt. 1" Artist="Floating Points"
+           Composer="" Album="Crush" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="2826614" TotalTime="155" DiscNumber="1" TrackNumber="11"
+           Year="2019" AverageBpm="80.83" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Floating%20Points%20-%20Apoptose,%20Pt.%201.mp3"
+           Remixer="" Tonality="" Label="Ninja Tune" Mix="">
+      <TEMPO Inizio="0.529" Bpm="80.83" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="1.272" Bpm="80.83" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="21.313" Bpm="80.83" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="46.550" Bpm="80.83" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="66.591" Bpm="80.83" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="91.828" Bpm="80.83" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="117.065" Bpm="80.83" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="142.302" Bpm="80.83" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="140691758" Name="Consumed" Artist="The Haxan Cloak"
+           Composer="" Album="Excavation" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="1660801" TotalTime="99" DiscNumber="1" TrackNumber="1"
+           Year="2018" AverageBpm="99.90" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/The%20Haxan%20Cloak%20-%20Consumed.mp3"
+           Remixer="" Tonality="" Label="Archaic Devices" Mix="">
+      <TEMPO Inizio="0.326" Bpm="99.90" Metro="4/4" Battito="2"/>
+    </TRACK>
+    <TRACK TrackID="18112084" Name="Stesm" Artist="circumference" Composer=""
+           Album="Zone 2" Grouping="" Genre="Electro" Kind="MP3 File" Size="3689272"
+           TotalTime="217" DiscNumber="1" TrackNumber="14" Year="2021" AverageBpm="172.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/circumference%20-%20Stesm.mp3"
+           Remixer="" Tonality="" Label="Overview Music" Mix="">
+      <TEMPO Inizio="0.050" Bpm="172.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="165324089" Name="Emulsion Of Light" Artist="Batu" Composer=""
+           Album="Opal" Grouping="" Genre="Electro" Kind="MP3 File" Size="2520844"
+           TotalTime="147" DiscNumber="1" TrackNumber="6" Year="2022" AverageBpm="136.50"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Batu%20-%20Emulsion%20Of%20Light.mp3"
+           Remixer="" Tonality="" Label="Timedance" Mix="">
+      <TEMPO Inizio="0.292" Bpm="136.50" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="252570754" Name="Vortex 150" Artist="Special Request"
+           Composer="" Album="VORTEX" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="4987179" TotalTime="307" DiscNumber="1" TrackNumber="6"
+           Year="2019" AverageBpm="150.00" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Special%20Request%20-%20Vortex%20150.mp3"
+           Remixer="" Tonality="" Label="Houndstooth" Mix="">
+      <TEMPO Inizio="0.070" Bpm="150.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="245932883" Name="Reactor" Artist="Woodkid" Composer=""
+           Album="S16" Grouping="" Genre="Alternative" Kind="MP3 File" Size="5521064"
+           TotalTime="339" DiscNumber="1" TrackNumber="6" Year="2020" AverageBpm="85.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Woodkid%20-%20Reactor.mp3"
+           Remixer="" Tonality="" Label="Island Records" Mix="">
+      <TEMPO Inizio="0.169" Bpm="85.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="105916357" Name="Hardrive - Deep Inside [Tuff Trax Speed Gara"
+           Artist="" Composer="" Album="" Grouping="" Genre="" Kind="MP3 File"
+           Size="4355969" TotalTime="272" DiscNumber="0" TrackNumber="0"
+           Year="0" AverageBpm="127.00" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Hardrive%20-%20Deep%20Inside%20%5bTuff%20Trax%20Speed%20Gara.mp3"
+           Remixer="" Tonality="" Label="" Mix="">
+      <TEMPO Inizio="0.108" Bpm="127.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="0.581" Bpm="127.00" Metro="4/4" Battito="2"/>
+    </TRACK>
+    <TRACK TrackID="57940866" Name="Emotion Sickness" Artist="Mat Zo" Composer=""
+           Album="Emotion Sickness" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="7210727" TotalTime="443" DiscNumber="1" TrackNumber="1"
+           Year="2019" AverageBpm="86.00" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Mat%20Zo%20-%20Emotion%20Sickness.mp3"
+           Remixer="" Tonality="" Label="Bassrush Records" Mix="">
+      <TEMPO Inizio="0.370" Bpm="86.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="21839952" Name="Overture" Artist="Camo &amp; Krooked "
+           Composer="" Album="Overture" Grouping="" Genre="Dance" Kind="MP3 File"
+           Size="5100416" TotalTime="312" DiscNumber="1" TrackNumber="1"
+           Year="2022" AverageBpm="175.00" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Camo%20%26%20Krooked%20-%20Overture.mp3"
+           Remixer="" Tonality="" Label="MODUS" Mix="">
+      <TEMPO Inizio="0.051" Bpm="175.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="86091294" Name="Change Your Mind feat. Dakota Sixx (Original Mix)"
+           Artist="Affiliate, Dakota Sixx  " Composer="" Album="Change Your Mind"
+           Grouping="" Genre="Electro" Kind="MP3 File" Size="4553363" TotalTime="277"
+           DiscNumber="1" TrackNumber="1" Year="2018" AverageBpm="128.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Affiliate,%20Dakota%20Sixx%20-%20Change%20Your%20Mind%20fe.mp3"
+           Remixer="" Tonality="" Label="Saucy Records" Mix="">
+      <TEMPO Inizio="0.052" Bpm="128.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="91896495" Name="51 Endless Pulses" Artist="Lapalux"
+           Composer="" Album="Esrevoinma" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="3347219" TotalTime="200" DiscNumber="1" TrackNumber="2"
+           Year="2020" AverageBpm="144.65" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Lapalux%20-%2051%20Endless%20Pulses.mp3"
+           Remixer="" Tonality="" Label="Brainfeeder" Mix="">
+      <TEMPO Inizio="0.240" Bpm="144.65" Metro="4/4" Battito="3"/>
+    </TRACK>
+    <TRACK TrackID="106444981" Name="Father Ocean (Ben Böhmer Remix Edit)"
+           Artist="Monolink" Composer="" Album="Father Ocean" Grouping=""
+           Genre="Electro" Kind="MP3 File" Size="5396960" TotalTime="318"
+           DiscNumber="1" TrackNumber="1" Year="2018" AverageBpm="122.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Monolink%20-%20Father%20Ocean%20(Ben%20B%c3%b6hmer%20Remix%20Ed.mp3"
+           Remixer="" Tonality="" Label="Embassy One" Mix="">
+      <TEMPO Inizio="0.055" Bpm="122.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="222958193" Name="Could This Be (Original)" Artist="Noisia"
+           Composer="" Album="Split the Atom (Special Edition)" Grouping=""
+           Genre="Electro" Kind="MP3 File" Size="4079209" TotalTime="245"
+           DiscNumber="1" TrackNumber="21" Year="2012" AverageBpm="172.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Noisia%20-%20Could%20This%20Be%20(Original).mp3"
+           Remixer="" Tonality="" Label="Vision Recordings" Mix="">
+      <TEMPO Inizio="0.026" Bpm="172.00" Metro="4/4" Battito="3"/>
+    </TRACK>
+    <TRACK TrackID="84016220" Name="Colorblind" Artist="Getter" Composer=""
+           Album="Colorblind" Grouping="" Genre="Electro/Rock" Kind="MP3 File"
+           Size="12145538" TotalTime="299" DiscNumber="1" TrackNumber="1"
+           Year="2018" AverageBpm="129.77" DateAdded="2022-06-24" BitRate="320"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Getter%20-%20Colorblind.mp3"
+           Remixer="" Tonality="" Label="Shred Collective" Mix="">
+      <TEMPO Inizio="0.030" Bpm="129.77" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="0.493" Bpm="129.77" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="61.523" Bpm="129.77" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="122.553" Bpm="129.77" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="190.056" Bpm="129.77" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="251.086" Bpm="129.77" Metro="4/4" Battito="4"/>
+      <POSITION_MARK Name="first" Type="0" Start="93.425" Num="0" Red="40" Green="226"
+                     Blue="20"/>
+      <POSITION_MARK Name="secondly" Type="0" Start="95.274" Num="1" Red="40" Green="226"
+                     Blue="20"/>
+      <POSITION_MARK Name="" Type="0" Start="4.654" Num="2" Red="40" Green="226" Blue="20"/>
+      <POSITION_MARK Name="" Type="0" Start="5.579" Num="6" Red="40" Green="226" Blue="20"/>
+    </TRACK>
+    <TRACK TrackID="184204835" Name="Chicken Soup" Artist="Skrillex/Habstrakt"
+           Composer="" Album="HOWSLA" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="5196175" TotalTime="207" DiscNumber="0" TrackNumber="3"
+           Year="2017" AverageBpm="126.00" DateAdded="2022-06-24" BitRate="0"
+           SampleRate="44100" Comments="" PlayCount="1" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Skrillex%20-%20Chicken%20Soup.mp3"
+           Remixer="" Tonality="" Label="" Mix="">
+      <TEMPO Inizio="0.050" Bpm="126.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="1.003" Bpm="126.00" Metro="4/4" Battito="3"/>
+      <POSITION_MARK Name="ewa_completed" Type="0" Start="47.669" Num="0" Red="40"
+                     Green="226" Blue="20"/>
+      <POSITION_MARK Name="EW_E" Type="0" Start="53.384" Num="4" Red="40" Green="226"
+                     Blue="20"/>
+    </TRACK>
+    <TRACK TrackID="139764903" Name="Scappa" Artist="Alessandro Cortini"
+           Composer="" Album="Forse 3" Grouping="" Genre="" Kind="MP3 File"
+           Size="9627369" TotalTime="597" DiscNumber="1" TrackNumber="3"
+           Year="2015" AverageBpm="152.62" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Alessandro%20Cortini%20-%20Scappa.mp3"
+           Remixer="" Tonality="" Label="modwheelmusic/important" Mix="">
+      <TEMPO Inizio="0.275" Bpm="152.62" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="28.188" Bpm="152.62" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="61.998" Bpm="152.62" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="95.808" Bpm="152.62" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="129.618" Bpm="152.62" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="163.428" Bpm="152.62" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="203.135" Bpm="152.62" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="236.945" Bpm="152.62" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="270.755" Bpm="152.62" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="310.462" Bpm="152.62" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="344.272" Bpm="152.62" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="378.082" Bpm="152.62" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="411.892" Bpm="152.62" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="445.702" Bpm="152.62" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="479.512" Bpm="152.62" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="519.219" Bpm="152.62" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="553.029" Bpm="152.62" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="589.591" Bpm="152.62" Metro="4/4" Battito="4"/>
+    </TRACK>
+    <TRACK TrackID="38848440" Name="Now the Branch Is Creaking" Artist="Tom VR"
+           Composer="" Album="Please Keep Shimmering" Grouping="" Genre="Electro"
+           Kind="MP3 File" Size="4648661" TotalTime="279" DiscNumber="1"
+           TrackNumber="6" Year="2021" AverageBpm="139.00" DateAdded="2022-06-24"
+           BitRate="128" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/Z:/tube_imager/tracks/Tom%20VR%20-%20Now%20the%20Branch%20Is%20Creaking.mp3"
+           Remixer="" Tonality="" Label="All My Thoughts" Mix="">
+      <TEMPO Inizio="0.052" Bpm="139.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="51082109" Name="WANT NEED LOVE" Artist="Prospa" Composer=""
+           Album="WANT NEED LOVE" Grouping="" Genre="Dance" Kind="MP3 File"
+           Size="4136129" TotalTime="241" DiscNumber="1" TrackNumber="1"
+           Year="2021" AverageBpm="127.00" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Prospa%20-%20WANT%20NEED%20LOVE.mp3"
+           Remixer="" Tonality="" Label="Polydor Records" Mix="">
+      <TEMPO Inizio="0.059" Bpm="127.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="174892643" Name="Death, Taxes &amp; Hanger" Artist="Aquarian"
+           Composer="" Album="Death, Taxes &amp; Hanger" Grouping="" Genre="Dance"
+           Kind="MP3 File" Size="7014003" TotalTime="426" DiscNumber="1"
+           TrackNumber="1" Year="2022" AverageBpm="167.00" DateAdded="2022-06-24"
+           BitRate="128" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/Z:/tube_imager/tracks/Aquarian%20-%20Death,%20Taxes%20%26%20Hanger.mp3"
+           Remixer="" Tonality="" Label="Dekmantel" Mix="">
+      <TEMPO Inizio="0.053" Bpm="167.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="0.413" Bpm="167.00" Metro="4/4" Battito="2"/>
+    </TRACK>
+    <TRACK TrackID="74770628" Name="Artificial Light" Artist="Underbelly"
+           Composer="" Album="Artificial Light" Grouping="" Genre="Electro"
+           Kind="MP3 File" Size="3351246" TotalTime="203" DiscNumber="1"
+           TrackNumber="1" Year="2020" AverageBpm="85.00" DateAdded="2022-06-24"
+           BitRate="128" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/Z:/tube_imager/tracks/Underbelly%20-%20Artificial%20Light.mp3"
+           Remixer="" Tonality="" Label="We Suck at Producing" Mix="">
+      <TEMPO Inizio="0.025" Bpm="85.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="155599422" Name="Kool FM" Artist="Four Tet" Composer=""
+           Album="Beautiful Rewind" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="5080402" TotalTime="309" DiscNumber="1" TrackNumber="5"
+           Year="2013" AverageBpm="131.00" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Four%20Tet%20-%20Kool%20FM.mp3"
+           Remixer="" Tonality="" Label="Text Records" Mix="">
+      <TEMPO Inizio="0.056" Bpm="131.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="13.797" Bpm="131.00" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="14.254" Bpm="131.00" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="14.713" Bpm="131.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="41215024" Name="Lil DB Tool" Artist="Skee Mask" Composer=""
+           Album="Modeselektion Vol. 04" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="5506976" TotalTime="341" DiscNumber="1" TrackNumber="15"
+           Year="2018" AverageBpm="154.00" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Skee%20Mask%20-%20Lil%20DB%20Tool.mp3"
+           Remixer="" Tonality="" Label="Monkeytown Records x Ninja Tune"
+           Mix="">
+      <TEMPO Inizio="0.241" Bpm="154.00" Metro="4/4" Battito="4"/>
+    </TRACK>
+    <TRACK TrackID="264197872" Name="Retrograde" Artist="James Blake" Composer=""
+           Album="Overgrown" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="3698562" TotalTime="223" DiscNumber="1" TrackNumber="5"
+           Year="2013" AverageBpm="77.50" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/James%20Blake%20-%20Retrograde.mp3"
+           Remixer="" Tonality="" Label="Polydor Records" Mix="">
+      <TEMPO Inizio="0.115" Bpm="77.50" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="164.243" Bpm="77.50" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="87002258" Name="Dusk (Original Mix)" Artist="Daze Prism"
+           Composer="" Album="Why EP" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="13405912" TotalTime="329" DiscNumber="1" TrackNumber="4"
+           Year="2019" AverageBpm="129.00" DateAdded="2022-06-24" BitRate="320"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Daze%20Prism%20-%20Dusk%20(Original%20Mix).mp3"
+           Remixer="" Tonality="" Label="Broken Music Syndicate" Mix="">
+      <TEMPO Inizio="0.058" Bpm="129.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="228.429" Bpm="129.00" Metro="4/4" Battito="4"/>
+    </TRACK>
+    <TRACK TrackID="203236890" Name="Long Road Home" Artist="Caroline Polachek "
+           Composer="" Album="Billions" Grouping="" Genre="Alternative"
+           Kind="MP3 File" Size="3686318" TotalTime="224" DiscNumber="1"
+           TrackNumber="2" Year="2022" AverageBpm="77.00" DateAdded="2022-06-24"
+           BitRate="128" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/Z:/tube_imager/tracks/Caroline%20Polachek%20-%20Long%20Road%20Home.mp3"
+           Remixer="" Tonality="" Label="Perpetual Novice" Mix="">
+      <TEMPO Inizio="0.056" Bpm="77.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="0.836" Bpm="77.00" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="214.343" Bpm="77.00" Metro="4/4" Battito="4"/>
+    </TRACK>
+    <TRACK TrackID="13214519" Name="Sculpture" Artist="Skalpel" Composer=""
+           Album="Sculpture" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="4689738" TotalTime="290" DiscNumber="1" TrackNumber="3"
+           Year="2003" AverageBpm="82.26" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Skalpel%20-%20Sculpture.mp3"
+           Remixer="" Tonality="" Label="Ninja Tune" Mix="">
+      <TEMPO Inizio="0.646" Bpm="82.26" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="8.670" Bpm="82.26" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="22.529" Bpm="82.26" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="36.388" Bpm="82.26" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="48.059" Bpm="82.26" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="61.918" Bpm="82.26" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="75.777" Bpm="82.26" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="87.448" Bpm="82.26" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="101.307" Bpm="82.26" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="115.166" Bpm="82.26" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="126.837" Bpm="82.26" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="140.696" Bpm="82.26" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="154.555" Bpm="82.26" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="166.226" Bpm="82.26" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="180.085" Bpm="82.26" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="193.944" Bpm="82.26" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="205.615" Bpm="82.26" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="219.474" Bpm="82.26" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="233.333" Bpm="82.26" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="245.004" Bpm="82.26" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="258.863" Bpm="82.26" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="272.722" Bpm="82.26" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="284.393" Bpm="82.26" Metro="4/4" Battito="2"/>
+    </TRACK>
+    <TRACK TrackID="152740231" Name="michael has been fired from his job, michael has been burnt to death"
+           Artist="No Love In The House Of Gold" Composer="" Album="atlantis part 2"
+           Grouping="" Genre="Alternative" Kind="MP3 File" Size="4767877"
+           TotalTime="294" DiscNumber="1" TrackNumber="4" Year="2021" AverageBpm="159.57"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/No%20Love%20In%20The%20House%20Of%20Gold%20-%20michael%20has%20b.mp3"
+           Remixer="" Tonality="" Label="Microwave" Mix="">
+      <TEMPO Inizio="0.053" Bpm="159.57" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="4.566" Bpm="159.57" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="4.941" Bpm="159.57" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="5.318" Bpm="159.57" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="5.693" Bpm="159.57" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="6.070" Bpm="159.57" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="89.169" Bpm="159.57" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="89.544" Bpm="159.57" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="89.921" Bpm="159.57" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="172.644" Bpm="159.57" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="173.019" Bpm="159.57" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="173.396" Bpm="159.57" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="257.247" Bpm="159.57" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="257.622" Bpm="159.57" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="257.999" Bpm="159.57" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="258.374" Bpm="159.57" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="258.751" Bpm="159.57" Metro="4/4" Battito="3"/>
+    </TRACK>
+    <TRACK TrackID="35750241" Name="Lifeline (Ö Remix)" Artist="A. G. Cook "
+           Composer="" Album="Apple vs. 7G" Grouping="" Genre="" Kind="MP3 File"
+           Size="5549150" TotalTime="342" DiscNumber="1" TrackNumber="10"
+           Year="2021" AverageBpm="130.45" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/A.%20G.%20Cook%20-%20Lifeline%20(%c3%96%20Remix).mp3"
+           Remixer="" Tonality="" Label="PC Music" Mix="">
+      <TEMPO Inizio="0.035" Bpm="130.45" Metro="4/4" Battito="3"/>
+    </TRACK>
+    <TRACK TrackID="168581506" Name="Plans We Made" Artist="Son Lux" Composer=""
+           Album="Tomorrows I" Grouping="" Genre="Alternative" Kind="MP3 File"
+           Size="3633715" TotalTime="220" DiscNumber="1" TrackNumber="2"
+           Year="2020" AverageBpm="101.93" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Son%20Lux%20-%20Plans%20We%20Made.mp3"
+           Remixer="" Tonality="" Label="City Slang" Mix="">
+      <TEMPO Inizio="0.007" Bpm="101.93" Metro="4/4" Battito="4"/>
+    </TRACK>
+    <TRACK TrackID="90460299" Name="Longshot" Artist="Bruce" Composer=""
+           Album="Sharpen, Moving" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="5281216" TotalTime="319" DiscNumber="1" TrackNumber="6"
+           Year="2020" AverageBpm="135.00" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Bruce%20-%20Longshot.mp3"
+           Remixer="" Tonality="" Label="Timedance" Mix="">
+      <TEMPO Inizio="0.051" Bpm="135.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="0.496" Bpm="135.00" Metro="4/4" Battito="2"/>
+    </TRACK>
+    <TRACK TrackID="121701410" Name="Power" Artist="Netsky " Composer=""
+           Album="Second Nature" Grouping="" Genre="Dance" Kind="MP3 File"
+           Size="3781970" TotalTime="226" DiscNumber="1" TrackNumber="14"
+           Year="2020" AverageBpm="174.00" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Netsky%20-%20Power.mp3"
+           Remixer="" Tonality="" Label="Hospital Records" Mix="">
+      <TEMPO Inizio="0.051" Bpm="174.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="26554885" Name="S Y N T H E T I K" Artist="1788-L "
+           Composer="" Album="S Y N T H E T I K" Grouping="" Genre="Electro"
+           Kind="MP3 File" Size="3765026" TotalTime="231" DiscNumber="1"
+           TrackNumber="1" Year="2019" AverageBpm="109.93" DateAdded="2022-06-24"
+           BitRate="128" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/Z:/tube_imager/tracks/1788-L%20-%20S%20Y%20N%20T%20H%20E%20T%20I%20K.mp3"
+           Remixer="" Tonality="" Label="Deadbeats" Mix="">
+      <TEMPO Inizio="0.439" Bpm="109.93" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="204977604" Name="Obscure Sorrows" Artist="EASTGHOST"
+           Composer="" Album="Misery &amp; Wonder" Grouping="" Genre="Electro"
+           Kind="MP3 File" Size="11523865" TotalTime="284" DiscNumber="1"
+           TrackNumber="7" Year="2019" AverageBpm="127.50" DateAdded="2022-06-24"
+           BitRate="320" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/Z:/tube_imager/tracks/EASTGHOST%20-%20Obscure%20Sorrows.mp3"
+           Remixer="" Tonality="" Label="bitbird" Mix="">
+      <TEMPO Inizio="0.066" Bpm="127.50" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="138366283" Name="Future Fold" Artist="Mind Vortex" Composer=""
+           Album="RAMM200" Grouping="" Genre="Dance" Kind="MP3 File" Size="4768950"
+           TotalTime="297" DiscNumber="1" TrackNumber="2" Year="2016" AverageBpm="174.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Mind%20Vortex%20-%20Future%20Fold.mp3"
+           Remixer="" Tonality="" Label="RAM Records" Mix="">
+      <TEMPO Inizio="0.031" Bpm="174.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="135216950" Name="Vite" Artist="BAUMA" Composer="" Album="Gentil Records Compilation, Vol. 3: Toy Instruments"
+           Grouping="" Genre="Alternative" Kind="MP3 File" Size="3649606"
+           TotalTime="216" DiscNumber="1" TrackNumber="3" Year="2019" AverageBpm="124.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/BAUMA%20-%20Vite.mp3"
+           Remixer="" Tonality="" Label="Gentil Records" Mix="">
+      <TEMPO Inizio="0.040" Bpm="124.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="59199904" Name="Brilliant Yes That Would Be" Artist="Underworld"
+           Composer="" Album="DRIFT Series 1" Grouping="" Genre="Electro"
+           Kind="MP3 File" Size="10093646" TotalTime="619" DiscNumber="1"
+           TrackNumber="5" Year="2019" AverageBpm="127.64" DateAdded="2022-06-24"
+           BitRate="128" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/Z:/tube_imager/tracks/Underworld%20-%20Brilliant%20Yes%20That%20Would%20Be.mp3"
+           Remixer="" Tonality="" Label="Virgin Music UK LAS (P&amp;D)"
+           Mix="">
+      <TEMPO Inizio="0.347" Bpm="127.64" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="9.749" Bpm="127.64" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="38.894" Bpm="127.64" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="68.039" Bpm="127.64" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="96.714" Bpm="127.64" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="125.859" Bpm="127.64" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="155.004" Bpm="127.64" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="183.679" Bpm="127.64" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="212.824" Bpm="127.64" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="241.969" Bpm="127.64" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="271.114" Bpm="127.64" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="293.678" Bpm="127.64" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="328.934" Bpm="127.64" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="358.079" Bpm="127.64" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="386.754" Bpm="127.64" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="415.899" Bpm="127.64" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="445.044" Bpm="127.64" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="473.719" Bpm="127.64" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="502.864" Bpm="127.64" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="532.009" Bpm="127.64" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="561.154" Bpm="127.64" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="583.718" Bpm="127.64" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="618.974" Bpm="127.64" Metro="4/4" Battito="2"/>
+    </TRACK>
+    <TRACK TrackID="123731400" Name="Pets" Artist="deadmau5" Composer=""
+           Album="while(1&lt;2)" Grouping="" Genre="Dance" Kind="MP3 File"
+           Size="7300034" TotalTime="451" DiscNumber="2" TrackNumber="13"
+           Year="2014" AverageBpm="128.00" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/deadmau5%20-%20Pets.mp3"
+           Remixer="" Tonality="" Label="Virgin Records Ltd" Mix="">
+      <TEMPO Inizio="0.025" Bpm="128.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="154174300" Name="Deep Inside" Artist="Mat Zo" Composer=""
+           Album="Deep Inside" Grouping="" Genre="" Kind="MP3 File" Size="5449254"
+           TotalTime="332" DiscNumber="1" TrackNumber="1" Year="2019" AverageBpm="124.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Mat%20Zo%20-%20Deep%20Inside.mp3"
+           Remixer="" Tonality="" Label="Mad Zoo" Mix="">
+      <TEMPO Inizio="0.283" Bpm="124.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="28830276" Name="Solitude (Felsmann + Tiley Reinterpretation)"
+           Artist="M83 " Composer="" Album="Solitude (Felsmann + Tiley Reinterpretation)"
+           Grouping="" Genre="Alternative" Kind="MP3 File" Size="4022751"
+           TotalTime="222" DiscNumber="1" TrackNumber="1" Year="2020" AverageBpm="123.11"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/M83%20-%20Solitude%20(Felsmann%20+%20Tiley%20Reinterpret.mp3"
+           Remixer="" Tonality="" Label="Naive" Mix="">
+      <TEMPO Inizio="0.249" Bpm="123.11" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="19.257" Bpm="123.11" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="39.727" Bpm="123.11" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="54.836" Bpm="123.11" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="75.306" Bpm="123.11" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="94.314" Bpm="123.11" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="114.784" Bpm="123.11" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="125.994" Bpm="123.11" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="146.464" Bpm="123.11" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="165.472" Bpm="123.11" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="184.480" Bpm="123.11" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="204.950" Bpm="123.11" Metro="4/4" Battito="3"/>
+    </TRACK>
+    <TRACK TrackID="130787809" Name="Epiphany" Artist="Trent Reznor and Atticus Ross"
+           Composer="" Album="Soul (Original Motion Picture Soundtrack)"
+           Grouping="" Genre="Films/Games" Kind="MP3 File" Size="3775089"
+           TotalTime="228" DiscNumber="1" TrackNumber="34" Year="2020" AverageBpm="137.57"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Trent%20Reznor%20and%20Atticus%20Ross%20-%20Epiphany.mp3"
+           Remixer="" Tonality="" Label="Walt Disney Records" Mix="">
+      <TEMPO Inizio="0.406" Bpm="137.57" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="1.279" Bpm="137.57" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="32.244" Bpm="137.57" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="63.209" Bpm="137.57" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="97.227" Bpm="137.57" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="131.681" Bpm="137.57" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="165.699" Bpm="137.57" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="199.717" Bpm="137.57" Metro="4/4" Battito="4"/>
+    </TRACK>
+    <TRACK TrackID="110302024" Name="Bluster (Djrum Remix)" Artist="Wordcolour "
+           Composer="" Album="Bluster" Grouping="" Genre="Electro" Kind="MP3 File"
+           Size="8310430" TotalTime="511" DiscNumber="1" TrackNumber="3"
+           Year="2022" AverageBpm="162.00" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Wordcolour%20-%20Bluster%20(Djrum%20Remix).mp3"
+           Remixer="" Tonality="" Label="Houndstooth" Mix="">
+      <TEMPO Inizio="0.072" Bpm="162.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="0.443" Bpm="162.00" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="440.442" Bpm="162.00" Metro="4/4" Battito="2"/>
+    </TRACK>
+    <TRACK TrackID="46950082" Name="Waters of Nazareth (Erol Alkan Remix)"
+           Artist="Justice" Composer="" Album="Waters of Nazareth (The Remixes)"
+           Grouping="" Genre="Electro" Kind="MP3 File" Size="6351387" TotalTime="372"
+           DiscNumber="1" TrackNumber="3" Year="2006" AverageBpm="124.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Justice%20-%20Waters%20of%20Nazareth%20(Erol%20Alkan%20Rem.mp3"
+           Remixer="" Tonality="" Label="Ed Banger Records" Mix="">
+      <TEMPO Inizio="0.462" Bpm="124.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="258905627" Name="H E X" Artist="Rezz " Composer="" Album="H E X"
+           Grouping="" Genre="Electro" Kind="MP3 File" Size="3714922" TotalTime="207"
+           DiscNumber="1" TrackNumber="1" Year="2018" AverageBpm="90.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Rezz%20-%20H%20E%20X.mp3"
+           Remixer="" Tonality="" Label="mau5trap Venture Limited" Mix="">
+      <TEMPO Inizio="0.460" Bpm="90.00" Metro="4/4" Battito="2"/>
+    </TRACK>
+    <TRACK TrackID="221161992" Name="Final View From The Rooftops (Justin Hawkes Remix)"
+           Artist="London Elektricity " Composer="" Album="Rebuilding Better Worlds"
+           Grouping="" Genre="Dance" Kind="MP3 File" Size="6250197" TotalTime="377"
+           DiscNumber="1" TrackNumber="4" Year="2021" AverageBpm="173.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/London%20Elektricity%20-%20Final%20View%20From%20The%20Roo.mp3"
+           Remixer="" Tonality="" Label="Hospital Records" Mix="">
+      <TEMPO Inizio="0.217" Bpm="173.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="139032214" Name="Breathe (feat. Jem Cooke)" Artist="CamelPhat  "
+           Composer="" Album="Breathe (feat. Jem Cooke)" Grouping="" Genre="Dance"
+           Kind="MP3 File" Size="3230825" TotalTime="194" DiscNumber="1"
+           TrackNumber="1" Year="2018" AverageBpm="125.00" DateAdded="2022-06-24"
+           BitRate="128" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
+           Location="file://localhost/Z:/tube_imager/tracks/CamelPhat%20-%20Breathe%20(feat.%20Jem%20Cooke).mp3"
+           Remixer="" Tonality="" Label="Ministry of Sound Recordings" Mix="">
+      <TEMPO Inizio="0.217" Bpm="125.00" Metro="4/4" Battito="1"/>
+    </TRACK>
+    <TRACK TrackID="150670141" Name="baxter climb" Artist="tstewart " Composer=""
+           Album="elysian" Grouping="" Genre="Classical" Kind="MP3 File"
+           Size="4515995" TotalTime="274" DiscNumber="1" TrackNumber="6"
+           Year="2022" AverageBpm="124.15" DateAdded="2022-06-24" BitRate="128"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/tstewart%20-%20baxter%20climb.mp3"
+           Remixer="" Tonality="" Label="Mercury Classics" Mix="">
+      <TEMPO Inizio="0.278" Bpm="124.15" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="2.695" Bpm="124.15" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="15.261" Bpm="124.15" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="34.593" Bpm="124.15" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="47.159" Bpm="124.15" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="66.491" Bpm="124.15" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="82.440" Bpm="124.15" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="98.389" Bpm="124.15" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="117.721" Bpm="124.15" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="133.670" Bpm="124.15" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="149.619" Bpm="124.15" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="165.568" Bpm="124.15" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="181.517" Bpm="124.15" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="197.466" Bpm="124.15" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="216.798" Bpm="124.15" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="232.747" Bpm="124.15" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="248.696" Bpm="124.15" Metro="4/4" Battito="3"/>
+      <TEMPO Inizio="268.028" Bpm="124.15" Metro="4/4" Battito="3"/>
+    </TRACK>
+    <TRACK TrackID="209896316" Name="Woodkid - Goliath" Artist="Woodkid"
+           Composer="" Album="Goliath" Grouping="" Genre="Alternative" Kind="MP3 File"
+           Size="5085650" TotalTime="228" DiscNumber="0" TrackNumber="1"
+           Year="2020" AverageBpm="118.00" DateAdded="2022-06-24" BitRate="0"
+           SampleRate="44100" Comments="" PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Woodkid%20-%20Goliath.mp3"
+           Remixer="" Tonality="" Label="" Mix="">
+      <TEMPO Inizio="0.079" Bpm="118.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="0.588" Bpm="118.00" Metro="4/4" Battito="2"/>
+    </TRACK>
+    <TRACK TrackID="113435334" Name="The Top (Rival Consoles Remix)" Artist="Sarah Neufeld"
+           Composer="" Album="The Top (Rival Consoles Remix)" Grouping=""
+           Genre="Classical" Kind="MP3 File" Size="4327810" TotalTime="267"
+           DiscNumber="1" TrackNumber="1" Year="2022" AverageBpm="101.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Sarah%20Neufeld%20-%20The%20Top%20(Rival%20Consoles%20Remi.mp3"
+           Remixer="" Tonality="" Label="Paper Bag Records" Mix="">
+      <TEMPO Inizio="0.363" Bpm="101.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="0.958" Bpm="101.00" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="205.909" Bpm="101.00" Metro="4/4" Battito="3"/>
+    </TRACK>
+    <TRACK TrackID="149796469" Name="Breather" Artist="Underbelly" Composer=""
+           Album="Ripple" Grouping="" Genre="Electro" Kind="MP3 File" Size="4019256"
+           TotalTime="233" DiscNumber="1" TrackNumber="1" Year="2017" AverageBpm="72.00"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Underbelly%20-%20Breather.mp3"
+           Remixer="" Tonality="" Label="741716 Records DK" Mix="">
+      <TEMPO Inizio="0.446" Bpm="72.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="43.780" Bpm="72.00" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="214.614" Bpm="72.00" Metro="4/4" Battito="2"/>
+    </TRACK>
+    <TRACK TrackID="158340158" Name="Rhymes" Artist="Hannah Wants " Composer=""
+           Album="Rhymes" Grouping="" Genre="Dance" Kind="MP3 File" Size="3245310"
+           TotalTime="200" DiscNumber="1" TrackNumber="1" Year="2014" AverageBpm="125.95"
+           DateAdded="2022-06-24" BitRate="128" SampleRate="44100" Comments=""
+           PlayCount="0" Rating="0" Location="file://localhost/Z:/tube_imager/tracks/Hannah%20Wants%20-%20Rhymes.mp3"
+           Remixer="" Tonality="" Label="EMI" Mix="">
+      <TEMPO Inizio="0.022" Bpm="125.95" Metro="4/4" Battito="1"/>
+      <TEMPO Inizio="0.499" Bpm="125.95" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="26.224" Bpm="125.95" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="48.138" Bpm="125.95" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="70.052" Bpm="125.95" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="95.777" Bpm="125.95" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="113.880" Bpm="125.95" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="139.605" Bpm="125.95" Metro="4/4" Battito="2"/>
+      <TEMPO Inizio="161.519" Bpm="125.95" Metro="4/4" Battito="4"/>
+      <TEMPO Inizio="187.244" Bpm="125.95" Metro="4/4" Battito="2"/>
+    </TRACK>
+  </COLLECTION>
+  <PLAYLISTS>
+    <NODE Type="0" Name="ROOT" Count="1">
+      <NODE Name="Trial playlist - Cloud Library Sync" Type="1" KeyType="0"
+            Entries="0"/>
+    </NODE>
+  </PLAYLISTS>
+</DJ_PLAYLISTS>
