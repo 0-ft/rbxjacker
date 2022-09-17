@@ -11,6 +11,9 @@ const TRACK_2_OFFSET: [u32; 4] = [0x03FB2B08, 0x8, 0x230, 0x148];
 const TRACK_1_TITLE: [u32; 5] = [0x03FA6B10, 0x780, 0x170, 0x0, 0x0];
 const TRACK_2_TITLE: [u32; 3] = [0x03F4D188, 0x318, 0x0];
 
+const TRACK_1_ARTIST: [u32; 5] = [0x03FA6B10, 0x780, 0x170, 0x0, 0x0]; //TODO: FIND
+const TRACK_2_ARTIST: [u32; 3] = [0x03F4D188, 0x318, 0x0]; //TODO: FIND
+
 const CROSSFADER: [u32; 6] = [0x03FA6B10, 0x200, 0x40, 0x30, 0xE0, 0xB4];
 
 // // #[inline]
@@ -77,19 +80,26 @@ struct ModuleHandle {
 
 impl ModuleHandle {}
 
+pub struct TrackState {
+    pub title: String,
+    pub artist: String,
+    pub beat_offset: f64,
+    pub last_cue: Option<XmlCueInfo>,
+}
+
 pub struct RekordboxUpdate {
-    pub track_1_title: String,
-    pub track_2_title: String,
-    pub track_1_offset: f64,
-    pub track_2_offset: f64,
+    pub track_1: TrackState,
+    pub track_2: TrackState,
     pub crossfader: f32,
 }
 
 pub struct RekordboxAccess {
     handle: Option<ModuleHandle>,
     track_1_title_address: CachedPointerChain,
-    track_2_title_address: CachedPointerChain,
+    track_1_artist_address: CachedPointerChain,
     track_1_offset_address: CachedPointerChain,
+    track_2_title_address: CachedPointerChain,
+    track_2_artist_address: CachedPointerChain,
     track_2_offset_address: CachedPointerChain,
     crossfader_address: CachedPointerChain,
     xml_tracks: Vec<XmlTrackInfo>,
@@ -100,8 +110,10 @@ impl RekordboxAccess {
         let rekordbox_access = RekordboxAccess {
             handle: None,
             track_1_title_address: CachedPointerChain::make(TRACK_1_TITLE.to_vec()),
-            track_2_title_address: CachedPointerChain::make(TRACK_2_TITLE.to_vec()),
+            track_1_artist_address: CachedPointerChain::make(TRACK_1_ARTIST.to_vec()),
             track_1_offset_address: CachedPointerChain::make(TRACK_1_OFFSET.to_vec()),
+            track_2_title_address: CachedPointerChain::make(TRACK_2_TITLE.to_vec()),
+            track_2_artist_address: CachedPointerChain::make(TRACK_2_ARTIST.to_vec()),
             track_2_offset_address: CachedPointerChain::make(TRACK_2_OFFSET.to_vec()),
             crossfader_address: CachedPointerChain::make(CROSSFADER.to_vec()),
             xml_tracks: parse_rekordbox_xml(collection_xml_path).unwrap_or(Vec::new()),
@@ -123,13 +135,38 @@ impl RekordboxAccess {
         return self.handle.is_some();
     }
 
+    fn get_cue_state(&self, track: TrackState) -> Option<XmlCueInfo> {
+        return self.xml_tracks
+            .iter()
+            .find(|track_info| {
+                track_info.title == track.title && track_info.artist == track.artist
+            })?
+            .cues
+            .iter()
+            .filter(|cue| cue.beat_offset < track.beat_offset)
+            .last().map(std::clone::Clone::clone);
+    }
+
     fn read_values(&mut self) -> Option<RekordboxUpdate> {
         let ref mut handle = self.handle.as_ref()?;
-        let track_1_offset = self.track_1_offset_address.get_double(&handle, true)?;
-        let track_2_offset = self.track_2_offset_address.get_double(&handle, true)?;
 
-        let track_1_title = self.track_1_title_address.get_string(&handle, false)?;
-        let track_2_title = self.track_2_title_address.get_string(&handle, false)?;
+        let mut track_1 = &TrackState {
+            title: self.track_1_title_address.get_string(&handle, false)?,
+            artist: self.track_1_artist_address.get_string(&handle, false)?,
+            beat_offset: self.track_1_offset_address.get_double(&handle, true)?,
+            last_cue: None,
+        };
+
+        track_1.last_cue = self.get_cue_state(*track_1);
+
+        let mut track_2 = TrackState {
+            title: self.track_2_title_address.get_string(&handle, false)?,
+            artist: self.track_2_artist_address.get_string(&handle, false)?,
+            beat_offset: self.track_2_offset_address.get_double(&handle, true)?,
+            last_cue: None,
+        };
+
+        track_2.last_cue = self.get_cue_state(track_2);
 
         // let crossfader = self
         //     .crossfader_address
@@ -138,10 +175,8 @@ impl RekordboxAccess {
         let crossfader = 0.5;
         // println!("read values");
         return Some(RekordboxUpdate {
-            track_1_title,
-            track_2_title,
-            track_1_offset,
-            track_2_offset,
+            track_1: *track_1,
+            track_2,
             crossfader,
         });
     }
@@ -213,7 +248,7 @@ impl CachedPointerChain {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct XmlCueInfo {
     pub beat_offset: f64,
     pub comment: Option<String>,

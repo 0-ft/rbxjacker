@@ -1,82 +1,82 @@
 {
     "shows": [
         {
-            "showName": "Atlas",
+            "title": "Atlas",
             "path": "shows/atlas.png",
             "frameRate": 32
         },
         {
-            "showName": "Demo Track 1",
+            "title": "Demo Track 1",
             "path": "shows/test_al.png",
             "frameRate": 64
         },
         {
-            "showName": "Demo Track 2",
+            "title": "Demo Track 2",
             "path": "shows/dt2.png",
             "frameRate": 64
         },
         {
-            "showName": "Chicken Soup",
+            "title": "Chicken Soup",
             "path": "shows/chickensoup.png",
             "frameRate": 64
         },
         {
-            "showName": "Overture",
+            "title": "Overture",
             "path": "shows/overture.png",
             "frameRate": 32
         },
         {
-            "showName": "WANT NEED LOVE",
+            "title": "WANT NEED LOVE",
             "path": "shows/wantneedlove.png",
             "frameRate": 64
         },
         {
-            "showName": "Goliath",
+            "title": "Goliath",
             "path": "shows/goliath.png",
             "frameRate": 64
         },
         {
-            "showName": "The Top (Rival Consoles Remix)",
+            "title": "The Top (Rival Consoles Remix)",
             "path": "shows/thetop.png",
             "frameRate": 64
         },
         {
-            "showName": "Colorblind",
+            "title": "Colorblind",
             "path": "shows/colorblind.png",
             "frameRate": 64
         },
         {
-            "showName": "Long Road Home",
+            "title": "Long Road Home",
             "path": "shows/longroadhome.png",
             "frameRate": 64
         },
         {
-            "showName": "Breathe (feat. Jem Cooke)",
+            "title": "Breathe (feat. Jem Cooke)",
             "path": "shows/house_1.png",
             "frameRate": 64
         },
         {
-            "showName": "Rhymes",
+            "title": "Rhymes",
             "path": "shows/dnb_1.png",
             "frameRate": 32
         },
         {
-            "showName": "Vortex 150",
+            "title": "Vortex 150",
             "path": "shows/v150 test.png",
             "frameRate": 32
         },
         {
-            "showName": "Solitude (Felsmann + Tiley Reinterpretation)",
+            "title": "Solitude (Felsmann + Tiley Reinterpretation)",
             "path": "shows/solitude.png",
             "frameRate": 64
         },
         {
-            "showName": "default_track_1",
+            "title": "default_track_1",
             "path": "shows/house_1.png",
             "frameRate": 64
         },
         {
-            "showName": "default_track_2",
+            "title": "default_track_2",
             "path": "shows/dnb_1.png",
             "frameRate": 32
         }

@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::fs::read_to_string;
 // mod rekordbox;
 // use image::GenericImageView;
-use crate::rekordbox::{self, RekordboxUpdate};
+use crate::rekordbox::{self, RekordboxUpdate, TrackState};
 use image::{GenericImageView, Pixel};
 // use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -66,8 +66,8 @@ where
 }
 
 pub struct FrameInfo {
-    pub track_1_title: String,
-    pub track_2_title: String,
+    // pub track_1_title: String,
+    // pub track_2_title: String,
     pub frame: Vec<u8>,
     // pub track_1_index: usize,
     // pub track_2_index: usize,
@@ -165,10 +165,10 @@ impl ShowsManager {
         return ShowsManager { shows: shows };
     }
 
-    pub fn get_frame_for_title(&self, title: &String, offset: f64) -> Option<Vec<u8>> {
+    pub fn get_frame_for_state(&self, track: TrackState) -> Option<Vec<u8>> {
         // println!("'{}'", title);
-        let show = self.shows.get(title)?;
-        let frame_index = (offset * show.frame_rate as f64).floor() as i32 % show.length;
+        let show = self.shows.get(&track.title)?;
+        let frame_index = (track.beat_offset * show.frame_rate as f64).floor() as i32 % show.length;
         let frame = ShowsManager::get_show_frame_no_strobe(show, frame_index);
         return Some(frame);
     }
@@ -194,20 +194,14 @@ impl ShowsManager {
 
     pub fn get_frame_from_rekordbox_update(&self, rekordbox_update: RekordboxUpdate) -> FrameInfo {
         // println!("{}, {}", rekordbox_update.track_1_title, rekordbox_update.track_2_title);
-        let mut track_1_frame = self.get_frame_for_title(
-            &rekordbox_update.track_1_title,
-            rekordbox_update.track_1_offset,
-        );
-        let track_2_frame = self.get_frame_for_title(
-            &rekordbox_update.track_2_title,
-            rekordbox_update.track_2_offset,
-        );
-        if (track_1_frame.is_none() && track_2_frame.is_none()) {
-            track_1_frame = self.get_frame_for_title(
-                &String::from("default_track_2"),
-                rekordbox_update.track_1_offset,
-            );
-        }
+        let mut track_1_frame = self.get_frame_for_state(rekordbox_update.track_1);
+        let track_2_frame = self.get_frame_for_state(rekordbox_update.track_2);
+        // if (track_1_frame.is_none() && track_2_frame.is_none()) {
+        //     track_1_frame = self.get_frame_for_title(
+        //         &String::from("default_track_2"),
+        //         rekordbox_update.track_1_offset,
+        //     );
+        // }
 
         // println!("{}, {}", track_1_frame.is_some(), track_2_frame.is_some());
         let out_frame = ShowsManager::combine_frames(
@@ -219,8 +213,8 @@ impl ShowsManager {
         // let out_frame = self.get_frame_for_title(&String::from("default_track_2"), rekordbox_update.track_1_offset).unwrap();
         // println!("made_frame");
         return FrameInfo {
-            track_1_title: String::from(rekordbox_update.track_1_title),
-            track_2_title: String::from(rekordbox_update.track_2_title),
+            // track_1_title: String::from(rekordbox_update.track_1_title),
+            // track_2_title: String::from(rekordbox_update.track_2_title),
             frame: out_frame,
         };
     }
