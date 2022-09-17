@@ -13,7 +13,7 @@ const GRAPH_CHARS: [char; 9] = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '
 
 #[derive(Serialize, Deserialize)]
 struct ShowJson {
-    title: String,
+    showName: String,
     path: String,
     frameRate: usize,
 }
@@ -150,7 +150,7 @@ impl ShowsManager {
             .into_iter()
             .map(|s| {
                 (
-                    s.title,
+                    s.showName,
                     ShowsManager::load_show_file(s.path.as_str(), s.frameRate, 13),
                 )
             })

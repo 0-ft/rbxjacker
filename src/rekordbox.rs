@@ -5,13 +5,14 @@ use read_process_memory::*;
 use std::convert::TryInto;
 use sysinfo::{PidExt, ProcessExt, SystemExt};
 
-const TRACK_1_OFFSET: [u32; 6] = [0x03FB2B08, 0x0, 0x240, 0x78, 0x108, 0x148];
+// const TRACK_1_OFFSET: [u32; 6] = [0x03FB2B08, 0x0, 0x240, 0x78, 0x108, 0x148];
+const TRACK_1_OFFSET: [u32; 4] = [0x03FB2B08, 0x0, 0x230, 0x148];
 const TRACK_2_OFFSET: [u32; 4] = [0x03FB2B08, 0x8, 0x230, 0x148];
 
 const TRACK_1_TITLE: [u32; 5] = [0x03FA6B10, 0x780, 0x170, 0x0, 0x0];
 const TRACK_2_TITLE: [u32; 3] = [0x03F4D188, 0x318, 0x0];
 
-const TRACK_1_ARTIST: [u32; 5] = [0x03FA6B10, 0x780, 0x170, 0x0, 0x0]; //TODO: FIND
+const TRACK_1_ARTIST: [u32; 4] = [0x03FB1A50, 0xB0, 0x140, 0x0];
 const TRACK_2_ARTIST: [u32; 3] = [0x03F4D188, 0x318, 0x0]; //TODO: FIND
 
 const CROSSFADER: [u32; 6] = [0x03FA6B10, 0x200, 0x40, 0x30, 0xE0, 0xB4];
@@ -80,6 +81,7 @@ struct ModuleHandle {
 
 impl ModuleHandle {}
 
+#[derive(Debug, Clone)]
 pub struct TrackState {
     pub title: String,
     pub artist: String,
@@ -135,11 +137,14 @@ impl RekordboxAccess {
         return self.handle.is_some();
     }
 
-    fn get_cue_state(&self, track: TrackState) -> Option<XmlCueInfo> {
+    fn get_last_cue(&self, track: &TrackState) -> Option<XmlCueInfo> {
         return self.xml_tracks
             .iter()
             .find(|track_info| {
-                track_info.title == track.title && track_info.artist == track.artist
+                // let foundtrack = track_info.title == track.title && track_info.artist == track.artist;
+                let foundtrack = track_info.title == track.title;
+                // println!("have track for {}, {}: {}", track.title, track.artist, foundtrack);
+                return foundtrack;
             })?
             .cues
             .iter()
@@ -150,14 +155,16 @@ impl RekordboxAccess {
     fn read_values(&mut self) -> Option<RekordboxUpdate> {
         let ref mut handle = self.handle.as_ref()?;
 
-        let mut track_1 = &TrackState {
+        let mut track_1 = TrackState {
             title: self.track_1_title_address.get_string(&handle, false)?,
             artist: self.track_1_artist_address.get_string(&handle, false)?,
             beat_offset: self.track_1_offset_address.get_double(&handle, true)?,
             last_cue: None,
         };
 
-        track_1.last_cue = self.get_cue_state(*track_1);
+        track_1.last_cue = self.get_last_cue(&track_1);
+        let t1cuestring = track_1.last_cue.as_ref().map_or("no cue".to_string(), |cue| cue.comment.as_ref().unwrap_or(&"no comment".to_string()).to_string());
+        // println!("track1cue: {}, {:?}", t1cuestring, track_1.last_cue);
 
         let mut track_2 = TrackState {
             title: self.track_2_title_address.get_string(&handle, false)?,
@@ -166,7 +173,7 @@ impl RekordboxAccess {
             last_cue: None,
         };
 
-        track_2.last_cue = self.get_cue_state(track_2);
+        track_2.last_cue = self.get_last_cue(&track_2);
 
         // let crossfader = self
         //     .crossfader_address
@@ -175,8 +182,8 @@ impl RekordboxAccess {
         let crossfader = 0.5;
         // println!("read values");
         return Some(RekordboxUpdate {
-            track_1: *track_1,
-            track_2,
+            track_1: track_1,
+            track_2: track_2,
             crossfader,
         });
     }
@@ -297,7 +304,7 @@ fn parse_rekordbox_xml(path: &String) -> Option<Vec<XmlTrackInfo>> {
         .expect("failed to load xml")
         .parse::<Element>()
         .expect("failed to parse xml");
-    println!("rekordbox root: {:?}", root);
+    // println!("rekordbox root: {:?}", root);
     let xml_tracks: Vec<XmlTrackInfo> = root
         .children()
         .find(|child| child.name() == "COLLECTION")?
@@ -316,6 +323,6 @@ fn parse_rekordbox_xml(path: &String) -> Option<Vec<XmlTrackInfo>> {
             };
         })
         .collect();
-    println!("xml tracks: {:?}", xml_tracks);
+    // println!("xml tracks: {:?}", xml_tracks);
     return Some(xml_tracks);
 }
