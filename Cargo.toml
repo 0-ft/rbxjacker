@@ -1,6 +1,6 @@
 [package]
 name = "rust_tuber"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -19,7 +19,8 @@ rustc-hash = "1.1.0"
 # nannou = "0.17"
 serialport = "4.2.0"
 # sdl2 = "0.35.2"
-ggez = "0.7.0"
+# ggez = "0.7.0"
+itertools = "0.10.4"
 
 [profile.release]
 # lto = true

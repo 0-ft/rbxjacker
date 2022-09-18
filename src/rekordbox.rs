@@ -2,7 +2,7 @@ use byteorder::*;
 use minidom::Element;
 use process_list::for_each_module;
 use read_process_memory::*;
-use std::convert::TryInto;
+use std::{convert::TryInto, fmt};
 use sysinfo::{PidExt, ProcessExt, SystemExt};
 
 // const TRACK_1_OFFSET: [u32; 6] = [0x03FB2B08, 0x0, 0x240, 0x78, 0x108, 0x148];
@@ -13,7 +13,10 @@ const TRACK_1_TITLE: [u32; 5] = [0x03FA6B10, 0x780, 0x170, 0x0, 0x0];
 const TRACK_2_TITLE: [u32; 3] = [0x03F4D188, 0x318, 0x0];
 
 const TRACK_1_ARTIST: [u32; 4] = [0x03FB1A50, 0xB0, 0x140, 0x0];
-const TRACK_2_ARTIST: [u32; 3] = [0x03F4D188, 0x318, 0x0]; //TODO: FIND
+const TRACK_2_ARTIST: [u32; 5] = [0x03FA6B10, 0x788, 0xF8, 0x118, 0x0];
+
+const TRACK_1_ID: [u32; 4] = [0x03F71650, 0x158, 0x0, 0x34];
+const TRACK_2_ID: [u32; 2] = [0x03F93898, 0x200];
 
 const CROSSFADER: [u32; 6] = [0x03FA6B10, 0x200, 0x40, 0x30, 0xE0, 0xB4];
 
@@ -24,12 +27,20 @@ const CROSSFADER: [u32; 6] = [0x03FA6B10, 0x200, 0x40, 0x30, 0xE0, 0xB4];
 // }
 
 #[inline]
-fn le_double(bytes: Vec<u8>) -> f64 {
+fn le_f64(bytes: Vec<u8>) -> f64 {
     return byteorder::LittleEndian::read_f64(bytes.as_slice());
 }
 
+fn le_u64(bytes: Vec<u8>) -> u64 {
+    return byteorder::LittleEndian::read_u64(bytes.as_slice());
+}
+
+fn le_u32(bytes: Vec<u8>) -> u32 {
+    return byteorder::LittleEndian::read_u32(bytes.as_slice());
+}
+
 #[inline]
-fn le_float(bytes: Vec<u8>) -> f32 {
+fn le_f32(bytes: Vec<u8>) -> f32 {
     return byteorder::LittleEndian::read_f32(bytes.as_slice());
 }
 
@@ -85,8 +96,29 @@ impl ModuleHandle {}
 pub struct TrackState {
     pub title: String,
     pub artist: String,
+    pub id: u32,
     pub beat_offset: f64,
     pub last_cue: Option<XmlCueInfo>,
+}
+
+impl fmt::Display for TrackState {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let cue_info = self.last_cue.as_ref().map_or("❌".to_string(), |cue| {
+            cue.comment.as_ref().unwrap_or(&"no comment".to_string()).to_string()
+        });
+        write!(
+            f,
+            "({} / {} {})",
+            self.id,
+            // rekordbox_update.track_1.artist,
+            self.title,
+            if self.last_cue.is_some() {
+                "✔️"
+            } else {
+                "❌"
+            },
+        )
+    }
 }
 
 pub struct RekordboxUpdate {
@@ -99,9 +131,11 @@ pub struct RekordboxAccess {
     handle: Option<ModuleHandle>,
     track_1_title_address: CachedPointerChain,
     track_1_artist_address: CachedPointerChain,
+    track_1_id_address: CachedPointerChain,
     track_1_offset_address: CachedPointerChain,
     track_2_title_address: CachedPointerChain,
     track_2_artist_address: CachedPointerChain,
+    track_2_id_address: CachedPointerChain,
     track_2_offset_address: CachedPointerChain,
     crossfader_address: CachedPointerChain,
     xml_tracks: Vec<XmlTrackInfo>,
@@ -113,9 +147,11 @@ impl RekordboxAccess {
             handle: None,
             track_1_title_address: CachedPointerChain::make(TRACK_1_TITLE.to_vec()),
             track_1_artist_address: CachedPointerChain::make(TRACK_1_ARTIST.to_vec()),
+            track_1_id_address: CachedPointerChain::make(TRACK_1_ID.to_vec()),
             track_1_offset_address: CachedPointerChain::make(TRACK_1_OFFSET.to_vec()),
             track_2_title_address: CachedPointerChain::make(TRACK_2_TITLE.to_vec()),
             track_2_artist_address: CachedPointerChain::make(TRACK_2_ARTIST.to_vec()),
+            track_2_id_address: CachedPointerChain::make(TRACK_2_ID.to_vec()),
             track_2_offset_address: CachedPointerChain::make(TRACK_2_OFFSET.to_vec()),
             crossfader_address: CachedPointerChain::make(CROSSFADER.to_vec()),
             xml_tracks: parse_rekordbox_xml(collection_xml_path).unwrap_or(Vec::new()),
@@ -138,38 +174,44 @@ impl RekordboxAccess {
     }
 
     fn get_last_cue(&self, track: &TrackState) -> Option<XmlCueInfo> {
-        return self.xml_tracks
+        return self
+            .xml_tracks
             .iter()
             .find(|track_info| {
                 // let foundtrack = track_info.title == track.title && track_info.artist == track.artist;
-                let foundtrack = track_info.title == track.title;
+                // let foundtrack = track_info.title == track.title;
                 // println!("have track for {}, {}: {}", track.title, track.artist, foundtrack);
+                let foundtrack = track_info.id == track.id;
                 return foundtrack;
             })?
             .cues
             .iter()
             .filter(|cue| cue.beat_offset < track.beat_offset)
-            .last().map(std::clone::Clone::clone);
+            .last()
+            .map(std::clone::Clone::clone);
     }
 
+    //TODO: make each track optional
     fn read_values(&mut self) -> Option<RekordboxUpdate> {
         let ref mut handle = self.handle.as_ref()?;
 
         let mut track_1 = TrackState {
             title: self.track_1_title_address.get_string(&handle, false)?,
             artist: self.track_1_artist_address.get_string(&handle, false)?,
-            beat_offset: self.track_1_offset_address.get_double(&handle, true)?,
+            id: self.track_1_id_address.get_u32(&handle, false)?,
+            beat_offset: self.track_1_offset_address.get_f64(&handle, true)?,
             last_cue: None,
         };
 
         track_1.last_cue = self.get_last_cue(&track_1);
-        let t1cuestring = track_1.last_cue.as_ref().map_or("no cue".to_string(), |cue| cue.comment.as_ref().unwrap_or(&"no comment".to_string()).to_string());
+        // let t1cuestring = track_1.last_cue.as_ref().map_or("no cue".to_string(), |cue| cue.comment.as_ref().unwrap_or(&"no comment".to_string()).to_string());
         // println!("track1cue: {}, {:?}", t1cuestring, track_1.last_cue);
 
         let mut track_2 = TrackState {
             title: self.track_2_title_address.get_string(&handle, false)?,
             artist: self.track_2_artist_address.get_string(&handle, false)?,
-            beat_offset: self.track_2_offset_address.get_double(&handle, true)?,
+            id: self.track_2_id_address.get_u32(&handle, false)?,
+            beat_offset: self.track_2_offset_address.get_f64(&handle, true)?,
             last_cue: None,
         };
 
@@ -248,10 +290,23 @@ impl CachedPointerChain {
         return String::from_utf8(bytes[..zero_index].to_vec()).ok();
     }
 
-    fn get_double(&mut self, handle: &ModuleHandle, try_without_cache: bool) -> Option<f64> {
+    fn get_f64(&mut self, handle: &ModuleHandle, try_without_cache: bool) -> Option<f64> {
         return self
             .get_bytes(handle, 8, try_without_cache)
-            .and_then(|bytes| Some(le_double(bytes)));
+            .map(|bytes| le_f64(bytes));
+    }
+
+    fn get_u64(&mut self, handle: &ModuleHandle, try_without_cache: bool) -> Option<u64> {
+        return self.get_bytes(handle, 8, try_without_cache).map(|bytes| {
+            println!("leb: {:?}", bytes);
+            return le_u64(bytes);
+        });
+    }
+
+    fn get_u32(&mut self, handle: &ModuleHandle, try_without_cache: bool) -> Option<u32> {
+        return self
+            .get_bytes(handle, 8, try_without_cache)
+            .map(|bytes| le_u32(bytes));
     }
 }
 
@@ -265,6 +320,7 @@ pub struct XmlCueInfo {
 pub struct XmlTrackInfo {
     pub title: String,
     pub artist: String,
+    pub id: u32,
     pub cues: Vec<XmlCueInfo>,
 }
 
@@ -319,6 +375,11 @@ fn parse_rekordbox_xml(path: &String) -> Option<Vec<XmlTrackInfo>> {
                     .attr("Artist")
                     .expect("could not parse track artist")
                     .to_string(),
+                id: track_elem
+                    .attr("TrackID")
+                    .expect("could not read track ID")
+                    .parse::<u32>()
+                    .expect("could not parse track ID"),
                 cues: parse_xml_cues(track_elem),
             };
         })

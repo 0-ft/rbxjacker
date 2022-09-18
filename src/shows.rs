@@ -6,7 +6,7 @@ use std::fs::read_to_string;
 use crate::rekordbox::{self, RekordboxUpdate, TrackState};
 use image::{GenericImageView, Pixel};
 // use std::time::{SystemTime, UNIX_EPOCH};
-
+use itertools::{EitherOrBoth::*, Itertools};
 use std::fmt;
 
 const GRAPH_CHARS: [char; 9] = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
@@ -16,6 +16,7 @@ struct ShowJson {
     showName: String,
     path: String,
     frameRate: usize,
+    numLights: usize,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -47,7 +48,7 @@ struct Show {
     // data: Vec<Vec<u8>>,
     frames: Vec<Vec<LightState>>,
     length: i32,
-    lights: usize,
+    num_lights: usize,
     frame_rate: usize,
 }
 
@@ -100,10 +101,10 @@ impl ShowsManager {
         let length = frames.len() as i32;
         return Some(Show {
             // data: rows,
-            frames: frames,
-            length: length,
-            lights: num_lights,
-            frame_rate: frame_rate,
+            frames,
+            length,
+            num_lights,
+            frame_rate,
         });
     }
 
@@ -136,7 +137,7 @@ impl ShowsManager {
                 .map(|v| v.brightness)
                 .collect();
         }
-        return vec![0; show.lights];
+        return vec![0; show.num_lights];
     }
 
     pub fn from_json(shows_json_path: &str) -> ShowsManager {
@@ -151,7 +152,7 @@ impl ShowsManager {
             .map(|s| {
                 (
                     s.showName,
-                    ShowsManager::load_show_file(s.path.as_str(), s.frameRate, 13),
+                    ShowsManager::load_show_file(s.path.as_str(), s.frameRate, s.numLights),
                 )
             })
             .filter(|(_title, show)| show.is_some())
@@ -165,37 +166,68 @@ impl ShowsManager {
         return ShowsManager { shows: shows };
     }
 
-    pub fn get_frame_for_state(&self, track: TrackState) -> Option<Vec<u8>> {
+    pub fn get_frame_for_state(&self, track: &TrackState) -> Option<Vec<u8>> {
         // println!("'{}'", title);
-        let show = self.shows.get(&track.title)?;
-        let frame_index = (track.beat_offset * show.frame_rate as f64).floor() as i32 % show.length;
-        let frame = ShowsManager::get_show_frame_no_strobe(show, frame_index);
-        return Some(frame);
+
+        // let track_slug = format!("{} - {}", &track.artist, &track.title);
+        if let Some(track_show) = self.shows.get(&format!("{} - {}", &track.artist, &track.title)) {
+            let frame_index = (track.beat_offset * track_show.frame_rate as f64).floor() as i32 % track_show.length;
+            return Some(ShowsManager::get_show_frame_no_strobe(track_show, frame_index));
+        } else if let Some(last_cue) = &track.last_cue {
+            if let Some(last_cue_comment) = &last_cue.comment {
+                if let Some(cue_show) = self.shows.get(last_cue_comment) {
+                    let frame_index = ((track.beat_offset - last_cue.beat_offset) * cue_show.frame_rate as f64).floor() as i32 % cue_show.length;
+                    return Some(ShowsManager::get_show_frame_no_strobe(cue_show, frame_index));
+                }
+            }
+        }
+        return None;
+        // return Some(frame);
     }
 
     pub fn combine_frames(
         track_1_frame: Option<Vec<u8>>,
         track_2_frame: Option<Vec<u8>>,
         crossfader: f32,
-        lights: usize,
+        // lights: usize,
     ) -> Vec<u8> {
-        let left_frame = track_1_frame.unwrap_or(vec![0; lights]);
-        let right_frame = track_2_frame.unwrap_or(vec![0; lights]);
-        let out_frame = left_frame
-            .iter()
-            .zip(right_frame)
-            .map(|(a, b)| *a as u16 + b as u16)
-            .map(|sum| if sum > 255 { 255 } else { sum as u8 })
-            // .map(|(a, b)| *a as f32 * crossfader + b as f32 * (1.0 - crossfader))
-            // .map(|sum| if sum > 255.0 { 255 } else { sum as u8 })
-            .collect();
-        return out_frame;
+        if track_1_frame.is_some() && track_2_frame.is_some() {
+            let left_frame = track_1_frame.unwrap();
+            let right_frame = track_2_frame.unwrap();
+            return left_frame
+                .iter()
+                .zip_longest(right_frame.iter())
+                .map(|pair| match pair {
+                    Both(l, r) => std::cmp::min(255, *l as u16 + *r as u16) as u8,
+                    Left(l) => *l,
+                    Right(r) => *r,
+                })
+                .collect();
+
+            // if left_frame.len() < right_frame.len() {
+            //     left_frame.resize(right_frame.len(), 0);
+            // }
+            // return left_frame
+            //     .iter()
+            //     .zip(right_frame)
+            //     .map(|(a, b)| *a as u16 + b as u16)
+            //     .map(|sum| if sum > 255 { 255 } else { sum as u8 })
+            //     // .map(|(a, b)| *a as f32 * crossfader + b as f32 * (1.0 - crossfader))
+            //     // .map(|sum| if sum > 255.0 { 255 } else { sum as u8 })
+            //     .collect();
+        } else if track_1_frame.is_some() {
+            return track_1_frame.unwrap();
+        } else if track_2_frame.is_some() {
+            return track_2_frame.unwrap();
+        }
+        return vec![0; 0];
+        // let out_frame = vec!([0; std::cmp::max(track_1_frame.e)])
     }
 
-    pub fn get_frame_from_rekordbox_update(&self, rekordbox_update: RekordboxUpdate) -> FrameInfo {
+    pub fn get_frame_from_rekordbox_update(&self, rekordbox_update: &RekordboxUpdate) -> FrameInfo {
         // println!("{}, {}", rekordbox_update.track_1_title, rekordbox_update.track_2_title);
-        let mut track_1_frame = self.get_frame_for_state(rekordbox_update.track_1);
-        let track_2_frame = self.get_frame_for_state(rekordbox_update.track_2);
+        let mut track_1_frame = self.get_frame_for_state(&rekordbox_update.track_1);
+        let track_2_frame = self.get_frame_for_state(&rekordbox_update.track_2);
         // if (track_1_frame.is_none() && track_2_frame.is_none()) {
         //     track_1_frame = self.get_frame_for_title(
         //         &String::from("default_track_2"),
@@ -204,12 +236,8 @@ impl ShowsManager {
         // }
 
         // println!("{}, {}", track_1_frame.is_some(), track_2_frame.is_some());
-        let out_frame = ShowsManager::combine_frames(
-            track_1_frame,
-            track_2_frame,
-            rekordbox_update.crossfader,
-            16,
-        );
+        let out_frame =
+            ShowsManager::combine_frames(track_1_frame, track_2_frame, rekordbox_update.crossfader);
         // let out_frame = self.get_frame_for_title(&String::from("default_track_2"), rekordbox_update.track_1_offset).unwrap();
         // println!("made_frame");
         return FrameInfo {

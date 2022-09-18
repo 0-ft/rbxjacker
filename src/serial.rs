@@ -56,7 +56,11 @@ impl SerialLightOutput {
 
     pub fn write_frame(&mut self, frame: &Vec<u8>) -> bool {
         // if *frame == self.last_frame {
-        //     return true;
+        //     // println!("skipping frame");
+        //     return false;
+        // } else {
+        //     // println!("{:?} | {:?}", *frame, self.last_frame);
+        //     self.last_frame = frame.clone();
         // }
         if let Some(ref mut port) = self.port {
             let checksum: u8 = frame.iter().sum();
@@ -67,7 +71,6 @@ impl SerialLightOutput {
                 self.port = None;
             }
             self.frames_written += success as u64;
-            // self.last_frame = frame.clone();
             return success;
         } else {
             self.connect();

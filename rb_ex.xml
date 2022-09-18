@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<DJ_PLAYLISTS Version="1.0.0" xmlns="http://www.w3.org/1999/xhtml">
+<DJ_PLAYLISTS Version="1.0.0" xmlns="">
   <PRODUCT Name="rekordbox" Version="6.6.3" Company="AlphaTheta"/>
   <COLLECTION Entries="855">
     <TRACK TrackID="242610528" Name="NOISE" Artist="" Composer="" Album=""
@@ -27,15 +27,15 @@
            BitRate="2116" SampleRate="44100" Comments="" PlayCount="0" Rating="0"
            Location="file://localhost/C:/Users/atlas/Music/PioneerDJ/Sampler/OSC_SAMPLER/PRESET%20ONESHOT/HORN.wav"
            Remixer="" Tonality="" Label="" Mix=""/>
-    <TRACK TrackID="134763560" Name="Demo Track 1" Artist="Loopmasters"
-           Composer="" Album="" Grouping="" Genre="" Kind="MP3 File" Size="6899624"
+    <TRACK TrackID="134763560" Name="Demo Track 1" Artist="Salubri" Composer=""
+           Album="" Grouping="" Genre="" Kind="MP3 File" Size="6899624"
            TotalTime="172" DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="128.00"
            DateAdded="2022-05-31" BitRate="320" SampleRate="44100" Comments="Tracks by www.loopmasters.com"
            PlayCount="6" Rating="0" Location="file://localhost/C:/Users/atlas/Music/PioneerDJ/Demo%20Tracks/Demo%20Track%201.mp3"
            Remixer="" Tonality="" Label="Loopmasters" Mix="">
       <TEMPO Inizio="0.025" Bpm="128.00" Metro="4/4" Battito="1"/>
     </TRACK>
-    <TRACK TrackID="93948690" Name="Demo Track 2" Artist="Loopmasters" Composer=""
+    <TRACK TrackID="93948690" Name="Demo Track 2" Artist="Kendomi" Composer=""
            Album="" Grouping="" Genre="" Kind="MP3 File" Size="5124342"
            TotalTime="128" DiscNumber="0" TrackNumber="0" Year="0" AverageBpm="120.00"
            DateAdded="2022-05-31" BitRate="320" SampleRate="44100" Comments="Tracks by www.loopmasters.com"
@@ -706,7 +706,7 @@
            Composer="" Album="HOWSLA" Grouping="" Genre="Electro" Kind="MP3 File"
            Size="8382124" TotalTime="207" DiscNumber="1" TrackNumber="3"
            Year="2017" AverageBpm="126.00" DateAdded="2020-12-21" BitRate="320"
-           SampleRate="44100" Comments="" PlayCount="27" Rating="0" Location="file://localhost/C:/Users/atlas/Music/PioneerDJ/Imported%20from%20Device/Contents/Skrillex_Habstrakt/HOWSLA/Skrillex%20-%20Chicken%20Soup.mp3"
+           SampleRate="44100" Comments="" PlayCount="28" Rating="0" Location="file://localhost/C:/Users/atlas/Music/PioneerDJ/Imported%20from%20Device/Contents/Skrillex_Habstrakt/HOWSLA/Skrillex%20-%20Chicken%20Soup.mp3"
            Remixer="" Tonality="9A" Label="OWSLA" Mix="">
       <TEMPO Inizio="0.212" Bpm="126.00" Metro="4/4" Battito="1"/>
       <POSITION_MARK Name="cssecond" Type="0" Start="106.878" Num="2" Red="40" Green="226"
@@ -1521,7 +1521,7 @@
            Composer="" Album="HOWSLA" Grouping="" Genre="Electro" Kind="MP3 File"
            Size="8382124" TotalTime="207" DiscNumber="1" TrackNumber="3"
            Year="2017" AverageBpm="126.00" DateAdded="2020-12-21" BitRate="320"
-           SampleRate="44100" Comments="" PlayCount="32" Rating="0" Location="file://localhost/C:/Users/atlas/Music/PioneerDJ/Imported%20from%20Device/Contents/Skrillex_Habstrakt/HOWSLA/Skrillex%20-%20Chicken%20Soup-1.mp3"
+           SampleRate="44100" Comments="" PlayCount="33" Rating="0" Location="file://localhost/C:/Users/atlas/Music/PioneerDJ/Imported%20from%20Device/Contents/Skrillex_Habstrakt/HOWSLA/Skrillex%20-%20Chicken%20Soup-1.mp3"
            Remixer="" Tonality="9A" Label="OWSLA" Mix="">
       <TEMPO Inizio="0.212" Bpm="126.00" Metro="4/4" Battito="1"/>
       <POSITION_MARK Name="" Type="0" Start="106.878" Num="2" Red="40" Green="226"
@@ -1592,6 +1592,8 @@
                      Blue="20"/>
       <POSITION_MARK Name="PLAY ON" Type="0" Start="140.356" Num="3" Red="80" Green="180"
                      Blue="255"/>
+      <POSITION_MARK Name="Rhymes" Type="0" Start="199.433" Num="5" Red="40" Green="226"
+                     Blue="20"/>
     </TRACK>
     <TRACK TrackID="3815739" Name="Long Road Home" Artist="Caroline Polachek "
            Composer="" Album="Billions" Grouping="" Genre="Alternative"
@@ -1723,6 +1725,8 @@
       <POSITION_MARK Name="Drop 2 Energetic" Type="0" Start="236.120" Num="4" Red="255"
                      Green="18" Blue="123"/>
       <POSITION_MARK Name="Outro" Type="0" Start="299.071" Num="5" Red="40" Green="226"
+                     Blue="20"/>
+      <POSITION_MARK Name="Rhymes" Type="0" Start="43.333" Num="0" Red="40" Green="226"
                      Blue="20"/>
     </TRACK>
     <TRACK TrackID="70667805" Name="Brilliant Yes That Would Be" Artist="Underworld"
@@ -2099,6 +2103,10 @@
            Location="file://localhost/C:/Users/atlas/Music/PioneerDJ/Imported%20from%20Device/Contents/Dillon%20Francis/Lost%20My%20Mind/Dillon%20Francis%20-%20Lost%20My%20Mind-1.mp3"
            Remixer="" Tonality="4A" Label="IDGAFOS" Mix="">
       <TEMPO Inizio="0.187" Bpm="160.00" Metro="4/4" Battito="1"/>
+      <POSITION_MARK Name="ew_test_2" Type="0" Start="22.687" Num="0" Red="40" Green="226"
+                     Blue="20"/>
+      <POSITION_MARK Name="ew_sample_1" Type="0" Start="48.187" Num="1" Red="40" Green="226"
+                     Blue="20"/>
     </TRACK>
     <TRACK TrackID="715908" Name="Stesm" Artist="circumference" Composer=""
            Album="Zone 2" Grouping="" Genre="Electro" Kind="MP3 File" Size="3689272"
