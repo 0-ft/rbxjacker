@@ -15,25 +15,25 @@ use rekordbox::RekordboxAccess;
 mod serial;
 use serial::SerialLightOutput;
 
-fn display_loop(mut rekordbox_access: RekordboxAccess, shows_manager: ShowsManager) {
-    // let delay = time::Duration::from_micros(2);
-    let mut i: i64 = 0;
-    let mut start = time::Instant::now();
-    loop {
-        let maybe_frame = rekordbox_access.get_update().and_then(|rekordbox_update| {
-            // println!("got update");
-            Some(shows_manager.get_frame_from_rekordbox_update(&rekordbox_update))
-        });
+// fn display_loop(mut rekordbox_access: RekordboxAccess, shows_manager: ShowsManager) {
+//     // let delay = time::Duration::from_micros(2);
+//     let mut i: i64 = 0;
+//     let mut start = time::Instant::now();
+//     loop {
+//         let maybe_frame = rekordbox_access.get_update().and_then(|rekordbox_update| {
+//             // println!("got update");
+//             Some(shows_manager.get_frame_from_rekordbox_update(&rekordbox_update))
+//         });
 
-        let frame_chars =
-            maybe_frame.map_or(String::from("none"), |frame| levels_to_graph(&frame.frame));
-        i += 1;
-        if (i % 10 == 0) {
-            println!("{}, {:?}", frame_chars, start.elapsed());
-            start = time::Instant::now()
-        }
-    }
-}
+//         let frame_chars =
+//             maybe_frame.map_or(String::from("none"), |frame| levels_to_graph(&frame.frame));
+//         i += 1;
+//         if (i % 10 == 0) {
+//             println!("{}, {:?}", frame_chars, start.elapsed());
+//             start = time::Instant::now()
+//         }
+//     }
+// }
 
 fn adjust_levels(frame: &Vec<u8>) -> Vec<u8> {
     return frame.iter().map(|l| *l).collect();
@@ -52,28 +52,25 @@ fn output_loop(
             let frame = shows_manager.get_frame_from_rekordbox_update(&rekordbox_update);
             serial_output.write_frame(&adjust_levels(&frame.frame));
             let frame_chars = levels_to_graph(&frame.frame);
-            let tracks_display = format!(
-                "({} / {} {}) ({} / {} {})",
-                rekordbox_update.track_1.id,
-                // rekordbox_update.track_1.artist,
-                rekordbox_update.track_1.title,
-                if rekordbox_update.track_1.last_cue.is_some() { "✔️" } else { "❌" },
-                rekordbox_update.track_2.id,
-                // rekordbox_update.track_2.artist,
-                rekordbox_update.track_2.title,
-                if rekordbox_update.track_2.last_cue.is_some() { "✔️" } else { "❌" }
-            );
+            // let tracks_display = format!(
+            //     "{} {}",
+            //     rekordbox_update.track_1,
+            //     rekordbox_update.track_2,
+            // );
             i += 1;
             if i % 100 == 0 {
                 // let frame_chars: String = out_frame.map_or(String::from("none"), |frame| levels_to_graph(&frame));
                 println!(
-                    "{} || serial: {} ({} frames written) || {}",
-                    tracks_display,
+                    "{}\t{} {} || {} {} || serial: {} ({} frames written)",
+                    frame_chars,
+                    rekordbox_update.track_1,
+                    if frame.has_track_1_show { "✔️" } else { "❌" },
+                    rekordbox_update.track_2,
+                    if frame.has_track_2_show { "✔️" } else { "❌" },
                     serial_output.is_connected(),
                     serial_output.frames_written,
                     // rekordbox_access.is_attached(),
                     // 1000_000_000 / start.elapsed().as_micros(),
-                    frame_chars
                 );
                 start = time::Instant::now()
             }

@@ -101,22 +101,38 @@ pub struct TrackState {
     pub last_cue: Option<XmlCueInfo>,
 }
 
+fn truncate(s: &str, max_chars: usize) -> String {
+    match s.char_indices().nth(max_chars) {
+        None => s.to_string(),
+        Some((idx, _)) => format!("{}...", &s[..idx-3]),
+    }
+}
+
 impl fmt::Display for TrackState {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let cue_info = self.last_cue.as_ref().map_or("❌".to_string(), |cue| {
-            cue.comment.as_ref().unwrap_or(&"no comment".to_string()).to_string()
-        });
+        let time_info = match &self.last_cue {
+            Some(cue) =>  format!(
+                " @ {}+{:.1}",
+                cue.comment.as_ref().unwrap_or(&"no comment".to_string()),
+                self.beat_offset - cue.beat_offset
+            ),
+            None => format!(" @ {:.1}", self.beat_offset)
+        };
+        // self.last_cue.as_ref().map_or("❌".to_string(), |cue| {
+        //     format!(
+        //         "✔️ {}+{:.1}",
+        //         cue.comment.as_ref().unwrap_or(&"no comment".to_string()),
+        //         self.beat_offset - cue.beat_offset
+        //     )
+        //     .to_string()
+        // });
         write!(
             f,
-            "({} / {} {})",
+            "{} '{}'{}",
             self.id,
             // rekordbox_update.track_1.artist,
-            self.title,
-            if self.last_cue.is_some() {
-                "✔️"
-            } else {
-                "❌"
-            },
+            truncate(self.title.as_str(), 16),
+            time_info
         )
     }
 }
@@ -174,16 +190,15 @@ impl RekordboxAccess {
     }
 
     fn get_last_cue(&self, track: &TrackState) -> Option<XmlCueInfo> {
-        return self
-            .xml_tracks
-            .iter()
-            .find(|track_info| {
-                // let foundtrack = track_info.title == track.title && track_info.artist == track.artist;
-                // let foundtrack = track_info.title == track.title;
-                // println!("have track for {}, {}: {}", track.title, track.artist, foundtrack);
-                let foundtrack = track_info.id == track.id;
-                return foundtrack;
-            })?
+        let xml_track = self.xml_tracks.iter().find(|track_info| {
+            // let foundtrack = track_info.title == track.title && track_info.artist == track.artist;
+            // let foundtrack = track_info.title == track.title;
+            // println!("have track for {}, {}: {}", track.title, track.artist, foundtrack);
+            let foundtrack = track_info.id == track.id;
+            return foundtrack;
+        })?;
+        // println!("trackinfo {:?}", xml_track);
+        return xml_track
             .cues
             .iter()
             .filter(|cue| cue.beat_offset < track.beat_offset)
@@ -205,7 +220,7 @@ impl RekordboxAccess {
 
         track_1.last_cue = self.get_last_cue(&track_1);
         // let t1cuestring = track_1.last_cue.as_ref().map_or("no cue".to_string(), |cue| cue.comment.as_ref().unwrap_or(&"no comment".to_string()).to_string());
-        // println!("track1cue: {}, {:?}", t1cuestring, track_1.last_cue);
+        // println!("track1cue: {:?}", track_1.last_cue);
 
         let mut track_2 = TrackState {
             title: self.track_2_title_address.get_string(&handle, false)?,
@@ -298,7 +313,6 @@ impl CachedPointerChain {
 
     fn get_u64(&mut self, handle: &ModuleHandle, try_without_cache: bool) -> Option<u64> {
         return self.get_bytes(handle, 8, try_without_cache).map(|bytes| {
-            println!("leb: {:?}", bytes);
             return le_u64(bytes);
         });
     }
@@ -337,17 +351,26 @@ fn parse_xml_cues(track_elem: &Element) -> Vec<XmlCueInfo> {
         .collect();
     if let Some((start_seconds, tempo)) = tempo_points.get(0) {
         let beats_per_second = tempo / 60.0;
-        let cues: Vec<XmlCueInfo> = track_elem
+        let mut cues: Vec<XmlCueInfo> = track_elem
             .children()
             .filter(|child| child.name() == "POSITION_MARK")
             .filter_map(|child| {
                 return Some(XmlCueInfo {
-                    comment: child.attr("Name").map(str::to_string),
-                    beat_offset: (child.attr("Start")?.parse::<f64>().ok()? - start_seconds)
+                    comment: child
+                        .attr("Name")
+                        .filter(|name| !name.is_empty())
+                        .map(str::to_string),
+                    beat_offset: (child
+                        .attr("Start")?
+                        .parse::<f64>()
+                        .ok()
+                        .expect("could not parse cue beat offset")
+                        - start_seconds)
                         * beats_per_second,
                 });
             })
             .collect();
+        cues.sort_by(|a, b| a.beat_offset.partial_cmp(&b.beat_offset).unwrap());
         return cues;
     }
     return Vec::new();

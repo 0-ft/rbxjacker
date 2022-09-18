@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::fs::read_to_string;
 // mod rekordbox;
 // use image::GenericImageView;
-use crate::rekordbox::{self, RekordboxUpdate, TrackState};
+use crate::rekordbox::{RekordboxUpdate, TrackState};
 use image::{GenericImageView, Pixel};
 // use std::time::{SystemTime, UNIX_EPOCH};
 use itertools::{EitherOrBoth::*, Itertools};
@@ -12,6 +12,7 @@ use std::fmt;
 const GRAPH_CHARS: [char; 9] = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
 
 #[derive(Serialize, Deserialize)]
+#[allow(non_snake_case)]
 struct ShowJson {
     showName: String,
     path: String,
@@ -27,8 +28,8 @@ struct ShowsJson {
 #[derive(Clone, Debug)]
 struct LightState {
     brightness: u8,
-    strobe_rate: u8,
-    strobe_fraction: u8,
+    // strobe_rate: u8,
+    // strobe_fraction: u8,
 }
 
 impl fmt::Display for LightState {
@@ -37,15 +38,7 @@ impl fmt::Display for LightState {
     }
 }
 
-impl LightState {
-    pub fn to_string(&self) -> String {
-        // We don't want to disclose the secret
-        format!("(b: {})", &self.brightness)
-    }
-}
-
 struct Show {
-    // data: Vec<Vec<u8>>,
     frames: Vec<Vec<LightState>>,
     length: i32,
     num_lights: usize,
@@ -70,6 +63,8 @@ pub struct FrameInfo {
     // pub track_1_title: String,
     // pub track_2_title: String,
     pub frame: Vec<u8>,
+    pub has_track_1_show: bool,
+    pub has_track_2_show: bool,
     // pub track_1_index: usize,
     // pub track_2_index: usize,
 }
@@ -82,8 +77,8 @@ impl ShowsManager {
             .map(|p| (p.2.to_rgb().0))
             .map(|rgb| LightState {
                 brightness: rgb[0],
-                strobe_rate: rgb[1],
-                strobe_fraction: rgb[2],
+                // strobe_rate: rgb[1],
+                // strobe_fraction: rgb[2],
             })
             .collect();
         let pixel_rows: Vec<Vec<LightState>> = pixels
@@ -170,14 +165,27 @@ impl ShowsManager {
         // println!("'{}'", title);
 
         // let track_slug = format!("{} - {}", &track.artist, &track.title);
-        if let Some(track_show) = self.shows.get(&format!("{} - {}", &track.artist, &track.title)) {
-            let frame_index = (track.beat_offset * track_show.frame_rate as f64).floor() as i32 % track_show.length;
-            return Some(ShowsManager::get_show_frame_no_strobe(track_show, frame_index));
+        if let Some(track_show) = self
+            .shows
+            .get(&format!("{} - {}", &track.artist, &track.title))
+        {
+            let frame_index = (track.beat_offset * track_show.frame_rate as f64).floor() as i32
+                % track_show.length;
+            return Some(ShowsManager::get_show_frame_no_strobe(
+                track_show,
+                frame_index,
+            ));
         } else if let Some(last_cue) = &track.last_cue {
             if let Some(last_cue_comment) = &last_cue.comment {
                 if let Some(cue_show) = self.shows.get(last_cue_comment) {
-                    let frame_index = ((track.beat_offset - last_cue.beat_offset) * cue_show.frame_rate as f64).floor() as i32 % cue_show.length;
-                    return Some(ShowsManager::get_show_frame_no_strobe(cue_show, frame_index));
+                    let frame_index = ((track.beat_offset - last_cue.beat_offset)
+                        * cue_show.frame_rate as f64)
+                        .floor() as i32
+                        % cue_show.length;
+                    return Some(ShowsManager::get_show_frame_no_strobe(
+                        cue_show,
+                        frame_index,
+                    ));
                 }
             }
         }
@@ -225,25 +233,17 @@ impl ShowsManager {
     }
 
     pub fn get_frame_from_rekordbox_update(&self, rekordbox_update: &RekordboxUpdate) -> FrameInfo {
-        // println!("{}, {}", rekordbox_update.track_1_title, rekordbox_update.track_2_title);
-        let mut track_1_frame = self.get_frame_for_state(&rekordbox_update.track_1);
+        let track_1_frame = self.get_frame_for_state(&rekordbox_update.track_1);
         let track_2_frame = self.get_frame_for_state(&rekordbox_update.track_2);
-        // if (track_1_frame.is_none() && track_2_frame.is_none()) {
-        //     track_1_frame = self.get_frame_for_title(
-        //         &String::from("default_track_2"),
-        //         rekordbox_update.track_1_offset,
-        //     );
-        // }
-
-        // println!("{}, {}", track_1_frame.is_some(), track_2_frame.is_some());
+        let has_track_1_show = track_1_frame.is_some();
+        let has_track_2_show = track_2_frame.is_some();
         let out_frame =
             ShowsManager::combine_frames(track_1_frame, track_2_frame, rekordbox_update.crossfader);
-        // let out_frame = self.get_frame_for_title(&String::from("default_track_2"), rekordbox_update.track_1_offset).unwrap();
-        // println!("made_frame");
+
         return FrameInfo {
-            // track_1_title: String::from(rekordbox_update.track_1_title),
-            // track_2_title: String::from(rekordbox_update.track_2_title),
             frame: out_frame,
+            has_track_1_show,
+            has_track_2_show,
         };
     }
 }
