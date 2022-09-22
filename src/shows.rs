@@ -1,9 +1,11 @@
+use colored::Colorize;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 use std::fs::read_to_string;
+use std::time::UNIX_EPOCH;
+use std::{collections::HashMap, time::SystemTime};
 // mod rekordbox;
 // use image::GenericImageView;
-use crate::rekordbox::{RekordboxUpdate, TrackState};
+use crate::rekordbox::{FadersState, RekordboxUpdate, TrackState};
 use image::{GenericImageView, Pixel};
 // use std::time::{SystemTime, UNIX_EPOCH};
 use itertools::{EitherOrBoth::*, Itertools};
@@ -71,7 +73,6 @@ pub struct FrameInfo {
 }
 
 impl ShowsManager {
-
     fn load_show_file(path: &str, frame_rate: usize, num_lights: usize) -> Option<Show> {
         let img = image::open(path).ok()?;
         let pixels: Vec<LightState> = img
@@ -208,37 +209,40 @@ impl ShowsManager {
     pub fn combine_frames(
         track_1_frame: Option<Vec<u8>>,
         track_2_frame: Option<Vec<u8>>,
-        crossfader: f32,
+        faders: &FadersState,
         // lights: usize,
     ) -> Vec<u8> {
+        let track_1_multiplier = 1_f32.min(2. - 2. * faders.crossfader) * faders.track_1_fader;
+        let track_2_multiplier = 1_f32.min(2. * faders.crossfader) * faders.track_2_fader;
         if track_1_frame.is_some() && track_2_frame.is_some() {
-            let left_frame = track_1_frame.unwrap();
-            let right_frame = track_2_frame.unwrap();
-            return left_frame
+            let track_1_frame = track_1_frame.unwrap();
+            let track_2_frame = track_2_frame.unwrap();
+            return track_1_frame
                 .iter()
-                .zip_longest(right_frame.iter())
+                .map(|x| ((*x as f32) * track_1_multiplier) as u8)
+                .zip_longest(
+                    track_2_frame
+                        .iter()
+                        .map(|x| ((*x as f32) * track_2_multiplier) as u8),
+                )
                 .map(|pair| match pair {
-                    Both(l, r) => std::cmp::min(255, *l as u16 + *r as u16) as u8,
-                    Left(l) => *l,
-                    Right(r) => *r,
+                    Both(l, r) => std::cmp::min(255, l as u16 + r as u16) as u8,
+                    Left(l) => l,
+                    Right(r) => r,
                 })
                 .collect();
-
-            // if left_frame.len() < right_frame.len() {
-            //     left_frame.resize(right_frame.len(), 0);
-            // }
-            // return left_frame
-            //     .iter()
-            //     .zip(right_frame)
-            //     .map(|(a, b)| *a as u16 + b as u16)
-            //     .map(|sum| if sum > 255 { 255 } else { sum as u8 })
-            //     // .map(|(a, b)| *a as f32 * crossfader + b as f32 * (1.0 - crossfader))
-            //     // .map(|sum| if sum > 255.0 { 255 } else { sum as u8 })
-            //     .collect();
         } else if track_1_frame.is_some() {
-            return track_1_frame.unwrap();
+            return track_1_frame
+                .unwrap()
+                .iter()
+                .map(|x| ((*x as f32) * track_1_multiplier) as u8)
+                .collect();
         } else if track_2_frame.is_some() {
-            return track_2_frame.unwrap();
+            return track_2_frame
+                .unwrap()
+                .iter()
+                .map(|x| ((*x as f32) * track_2_multiplier) as u8)
+                .collect();
         }
         return vec![0; 0];
         // let out_frame = vec!([0; std::cmp::max(track_1_frame.e)])
@@ -250,7 +254,7 @@ impl ShowsManager {
         let has_track_1_show = track_1_frame.is_some();
         let has_track_2_show = track_2_frame.is_some();
         let out_frame =
-            ShowsManager::combine_frames(track_1_frame, track_2_frame, rekordbox_update.crossfader);
+            ShowsManager::combine_frames(track_1_frame, track_2_frame, &rekordbox_update.faders);
 
         return FrameInfo {
             frame: out_frame,
@@ -261,8 +265,14 @@ impl ShowsManager {
 }
 
 pub fn levels_to_graph(levels: &Vec<u8>) -> String {
+    // let d = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs_f32();
     return levels
         .iter()
-        .map(|l| GRAPH_CHARS[(*l / 32) as usize] as char)
-        .collect();
+        .map(|l| "█".truecolor((*l / 16) * (*l / 16), *l / 3, *l))
+        .join("");
+
+    // return levels
+    //     .iter()
+    //     .map(|l| GRAPH_CHARS[(*l / 32) as usize] as char)
+    //     .collect();
 }

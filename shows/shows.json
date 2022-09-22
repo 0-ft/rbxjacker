@@ -20,9 +20,9 @@
         },
         {
             "showName": "Affiliate, Dakota Sixx - Change Your Mind feat. Dakota Sixx (Das Kapital Remix)",
-            "path": "shows/Ambient_5.png",
+            "path": "shows/objects_3.png",
             "numLights": 16,
-            "frameRate": 32
+            "frameRate": 64
         },
         {
             "showName": "Aquarian - Death, Taxes & Hanger",

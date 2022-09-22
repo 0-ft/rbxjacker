@@ -18,7 +18,12 @@ const TRACK_2_ARTIST: [u32; 5] = [0x03FA6B10, 0x788, 0xF8, 0x118, 0x0];
 const TRACK_1_ID: [u32; 4] = [0x03F71650, 0x158, 0x0, 0x34];
 const TRACK_2_ID: [u32; 2] = [0x03F93898, 0x200];
 
-const CROSSFADER: [u32; 6] = [0x03FA6B10, 0x200, 0x40, 0x30, 0xE0, 0xB4];
+// const CROSSFADER: [u32; 7] = [0x03F4C1A0, 0x208, 0x20, 0x150, 0x0, 0x468, 0x28];
+const CROSSFADER: [u32; 8] = [0x03FA7740, 0x8, 0x180, 0x28, 0x150, 0x0, 0x468, 0x28];
+
+// const TRACK_1_FADER: [u32; 7] = [0x03FA7740, 0x8, 0x180, 0xA8, 0x150, 0x0, 0x4F8, 0x3CC];
+const TRACK_1_FADER: [u32; 1] = [0x03F7E3CC];
+const TRACK_2_FADER: [u32; 1] = [0x03F7E3D4];
 
 // // #[inline]
 // fn vec_to_arr<T, const N: usize>(v: Vec<T>) -> [T; N] {
@@ -104,19 +109,19 @@ pub struct TrackState {
 fn truncate(s: &str, max_chars: usize) -> String {
     match s.char_indices().nth(max_chars) {
         None => s.to_string(),
-        Some((idx, _)) => format!("{}...", &s[..idx-3]),
+        Some((idx, _)) => format!("{}...", &s[..idx - 3]),
     }
 }
 
 impl fmt::Display for TrackState {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let time_info = match &self.last_cue {
-            Some(cue) =>  format!(
+            Some(cue) => format!(
                 " @ {}+{:.1}",
                 cue.comment.as_ref().unwrap_or(&"no comment".to_string()),
                 self.beat_offset - cue.beat_offset
             ),
-            None => format!(" @ {:.1}", self.beat_offset)
+            None => format!(" @ {:.1}", self.beat_offset),
         };
         // self.last_cue.as_ref().map_or("❌".to_string(), |cue| {
         //     format!(
@@ -137,10 +142,16 @@ impl fmt::Display for TrackState {
     }
 }
 
+pub struct FadersState {
+    pub track_1_fader: f32,
+    pub track_2_fader: f32,
+    pub crossfader: f32,
+}
+
 pub struct RekordboxUpdate {
     pub track_1: TrackState,
     pub track_2: TrackState,
-    pub crossfader: f32,
+    pub faders: FadersState,
 }
 
 pub struct RekordboxAccess {
@@ -153,6 +164,8 @@ pub struct RekordboxAccess {
     track_2_artist_address: CachedPointerChain,
     track_2_id_address: CachedPointerChain,
     track_2_offset_address: CachedPointerChain,
+    track_1_fader_address: CachedPointerChain,
+    track_2_fader_address: CachedPointerChain,
     crossfader_address: CachedPointerChain,
     xml_tracks: Vec<XmlTrackInfo>,
 }
@@ -169,6 +182,8 @@ impl RekordboxAccess {
             track_2_artist_address: CachedPointerChain::make(TRACK_2_ARTIST.to_vec()),
             track_2_id_address: CachedPointerChain::make(TRACK_2_ID.to_vec()),
             track_2_offset_address: CachedPointerChain::make(TRACK_2_OFFSET.to_vec()),
+            track_1_fader_address: CachedPointerChain::make(TRACK_1_FADER.to_vec()),
+            track_2_fader_address: CachedPointerChain::make(TRACK_2_FADER.to_vec()),
             crossfader_address: CachedPointerChain::make(CROSSFADER.to_vec()),
             xml_tracks: parse_rekordbox_xml(collection_xml_path).unwrap_or(Vec::new()),
         };
@@ -236,12 +251,18 @@ impl RekordboxAccess {
         //     .crossfader_address
         //     .get_bytes(&handle, 4, true)
         //     .and_then(|bytes| Some((le_float(bytes) + 2.5625) / 5.125))?;
-        let crossfader = 0.5;
+        let track_1_fader = self.track_1_fader_address.get_f32(handle, false)? / 1.875;
+        let track_2_fader = self.track_2_fader_address.get_f32(handle, false)? / 1.875;
+        let crossfader = self.crossfader_address.get_f32(handle, false)? / 1023.0;
         // println!("read values");
         return Some(RekordboxUpdate {
             track_1: track_1,
             track_2: track_2,
-            crossfader,
+            faders: FadersState {
+                track_1_fader,
+                track_2_fader,
+                crossfader,
+            },
         });
     }
 
@@ -309,6 +330,12 @@ impl CachedPointerChain {
         return self
             .get_bytes(handle, 8, try_without_cache)
             .map(|bytes| le_f64(bytes));
+    }
+
+    fn get_f32(&mut self, handle: &ModuleHandle, try_without_cache: bool) -> Option<f32> {
+        return self
+            .get_bytes(handle, 8, try_without_cache)
+            .map(|bytes| le_f32(bytes));
     }
 
     fn get_u64(&mut self, handle: &ModuleHandle, try_without_cache: bool) -> Option<u64> {
