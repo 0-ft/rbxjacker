@@ -41,27 +41,28 @@ fn adjust_levels(frame: &Vec<u8>) -> Vec<u8> {
 
 fn output_loop(
     mut rekordbox_access: RekordboxAccess,
-    shows_manager: ShowsManager,
+    mut shows_manager: ShowsManager,
     mut serial_output: SerialLightOutput,
 ) {
     // let delay = time::Duration::from_micros(2);
     let mut i: i64 = 0;
+    let mut last_fw = 0;
     let mut start = time::Instant::now();
     loop {
         if let Some(rekordbox_update) = rekordbox_access.get_update() {
             let frame = shows_manager.get_frame_from_rekordbox_update(&rekordbox_update);
-            serial_output.write_frame(&adjust_levels(&frame.frame));
-            let frame_chars = levels_to_graph(&frame.frame);
+            let frame_written = serial_output.write_frame(&adjust_levels(&frame.frame));
             // let tracks_display = format!(
             //     "{} {}",
             //     rekordbox_update.track_1,
             //     rekordbox_update.track_2,
             // );
             i += 1;
-            if i % 100 == 0 {
+            if i % 1000 == 0 {
                 // let frame_chars: String = out_frame.map_or(String::from("none"), |frame| levels_to_graph(&frame));
+                let frame_chars = levels_to_graph(&frame.frame);
                 println!(
-                    "{}\t{} {} || {} {} || serial: {} ({} frames written)",
+                    "{} {} {} || {} {} || serial: {} ({} frames written)",
                     frame_chars,
                     rekordbox_update.track_1,
                     if frame.has_track_1_show { "✔️" } else { "❌" },
@@ -70,9 +71,14 @@ fn output_loop(
                     serial_output.is_connected(),
                     serial_output.frames_written,
                     // rekordbox_access.is_attached(),
-                    // 1000_000_000 / start.elapsed().as_micros(),
+                    // (serial_output.frames_written - last_fw) as f64 / (start.elapsed().as_micros() / 1000_000) as f64,
                 );
-                start = time::Instant::now()
+                start = time::Instant::now();
+                last_fw = serial_output.frames_written;
+                if i % 500000 == 0 {
+                    println!("reloading shows");
+                    shows_manager.load_shows();
+                }
             }
         }
         // let maybe_frame = maybe_rekordbox_update.map(|rekordbox_update| {
@@ -103,7 +109,7 @@ fn main() {
         .get(2)
         .and_then(|a| Some(String::from(a)))
         .or_else(|| SerialLightOutput::prompt_port());
-    let mut serial_output = SerialLightOutput::make(&port.unwrap());
+    let mut serial_output = SerialLightOutput::make(&port.expect("no serial port found"));
     serial_output.connect();
 
     println!("finished setup");

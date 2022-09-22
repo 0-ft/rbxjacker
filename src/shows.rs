@@ -46,6 +46,7 @@ struct Show {
 }
 
 pub struct ShowsManager {
+    json_path: String,
     shows: HashMap<String, Show>,
 }
 
@@ -70,6 +71,7 @@ pub struct FrameInfo {
 }
 
 impl ShowsManager {
+
     fn load_show_file(path: &str, frame_rate: usize, num_lights: usize) -> Option<Show> {
         let img = image::open(path).ok()?;
         let pixels: Vec<LightState> = img
@@ -135,9 +137,9 @@ impl ShowsManager {
         return vec![0; show.num_lights];
     }
 
-    pub fn from_json(shows_json_path: &str) -> ShowsManager {
+    pub fn load_shows(&mut self) {
         let json_content: String =
-            read_to_string(shows_json_path).expect("Could not read shows JSON");
+            read_to_string(self.json_path.as_str()).expect("Could not read shows JSON");
         let json: ShowsJson =
             serde_json::from_str(json_content.as_str()).expect("JSON was not well-formatted");
         let shows_num = json.shows.len();
@@ -158,7 +160,16 @@ impl ShowsManager {
             shows.len(),
             shows_num - shows.len()
         );
-        return ShowsManager { shows: shows };
+        self.shows = shows;
+    }
+
+    pub fn from_json(shows_json_path: &str) -> ShowsManager {
+        let mut result = ShowsManager {
+            shows: HashMap::new(),
+            json_path: shows_json_path.to_string(),
+        };
+        result.load_shows();
+        return result;
     }
 
     pub fn get_frame_for_state(&self, track: &TrackState) -> Option<Vec<u8>> {
@@ -171,6 +182,7 @@ impl ShowsManager {
         {
             let frame_index = (track.beat_offset * track_show.frame_rate as f64).floor() as i32
                 % track_show.length;
+            // println!("tt {} {}", track.title, frame_index);
             return Some(ShowsManager::get_show_frame_no_strobe(
                 track_show,
                 frame_index,
