@@ -11,7 +11,9 @@ use image::{GenericImageView, Pixel};
 use itertools::{EitherOrBoth::*, Itertools};
 use std::fmt;
 
-const GRAPH_CHARS: [char; 9] = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
+const USE_FADERS: bool = true;
+
+pub const GRAPH_CHARS: [char; 9] = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
 
 #[derive(Serialize, Deserialize)]
 #[allow(non_snake_case)]
@@ -207,43 +209,64 @@ impl ShowsManager {
     }
 
     pub fn combine_frames(
-        track_1_frame: Option<Vec<u8>>,
-        track_2_frame: Option<Vec<u8>>,
+        maybe_track_1_frame: Option<Vec<u8>>,
+        maybe_track_2_frame: Option<Vec<u8>>,
         faders: &FadersState,
-        // lights: usize,
     ) -> Vec<u8> {
-        let track_1_multiplier = 1_f32.min(2. - 2. * faders.crossfader) * faders.track_1_fader;
-        let track_2_multiplier = 1_f32.min(2. * faders.crossfader) * faders.track_2_fader;
-        if track_1_frame.is_some() && track_2_frame.is_some() {
-            let track_1_frame = track_1_frame.unwrap();
-            let track_2_frame = track_2_frame.unwrap();
-            return track_1_frame
-                .iter()
+        let track_1_multiplier = if USE_FADERS { 1_f32.min(2. - 2. * faders.crossfader) * faders.track_1_fader * faders.track_1_fader } else { 1. };
+        let track_2_multiplier = if USE_FADERS { 1_f32.min(2. * faders.crossfader) * faders.track_2_fader * faders.track_2_fader } else { 1. };
+        // println!("mults: {} {}", track_1_multiplier, track_2_multiplier);
+        let track_1_frame = maybe_track_1_frame.map_or(vec![0; 0], |f| {
+            f.iter()
                 .map(|x| ((*x as f32) * track_1_multiplier) as u8)
-                .zip_longest(
-                    track_2_frame
-                        .iter()
-                        .map(|x| ((*x as f32) * track_2_multiplier) as u8),
-                )
-                .map(|pair| match pair {
-                    Both(l, r) => std::cmp::min(255, l as u16 + r as u16) as u8,
-                    Left(l) => l,
-                    Right(r) => r,
-                })
-                .collect();
-        } else if track_1_frame.is_some() {
-            return track_1_frame
-                .unwrap()
-                .iter()
-                .map(|x| ((*x as f32) * track_1_multiplier) as u8)
-                .collect();
-        } else if track_2_frame.is_some() {
-            return track_2_frame
-                .unwrap()
-                .iter()
+                .collect()
+        });
+        let track_2_frame = maybe_track_2_frame.map_or(vec![0; 0], |f| {
+            f.iter()
                 .map(|x| ((*x as f32) * track_2_multiplier) as u8)
-                .collect();
-        }
+                .collect()
+        });
+        let result = track_1_frame
+            .iter()
+            .zip_longest(track_2_frame.iter())
+            .map(|pair| match pair {
+                Both(l, r) => std::cmp::min(255, *l as u16 + *r as u16) as u8,
+                Left(l) => *l,
+                Right(r) => *r,
+            })
+            .collect();
+        // println!("{:?}", result);
+        return result;
+        // if track_1_frame.is_some() && track_2_frame.is_some() {
+        //     let track_1_frame = track_1_frame.unwrap();
+        //     let track_2_frame = track_2_frame.unwrap();
+        //     return track_1_frame
+        //         .iter()
+        //         .map(|x| ((*x as f32) * track_1_multiplier) as u8)
+        //         .zip_longest(
+        //             track_2_frame
+        //                 .iter()
+        //                 .map(|x| ((*x as f32) * track_2_multiplier) as u8),
+        //         )
+        //         .map(|pair| match pair {
+        //             Both(l, r) => std::cmp::min(255, l as u16 + r as u16) as u8,
+        //             Left(l) => l,
+        //             Right(r) => r,
+        //         })
+        //         .collect();
+        // } else if track_1_frame.is_some() {
+        //     return track_1_frame
+        //         .unwrap()
+        //         .iter()
+        //         .map(|x| ((*x as f32) * track_1_multiplier) as u8)
+        //         .collect();
+        // } else if track_2_frame.is_some() {
+        //     return track_2_frame
+        //         .unwrap()
+        //         .iter()
+        //         .map(|x| ((*x as f32) * track_2_multiplier) as u8)
+        //         .collect();
+        // }
         return vec![0; 0];
         // let out_frame = vec!([0; std::cmp::max(track_1_frame.e)])
     }
@@ -262,6 +285,10 @@ impl ShowsManager {
             has_track_2_show,
         };
     }
+}
+
+pub fn fader_to_char(fader: f32) -> char {
+    return GRAPH_CHARS[(fader * 8.) as usize] as char;
 }
 
 pub fn levels_to_graph(levels: &Vec<u8>) -> String {

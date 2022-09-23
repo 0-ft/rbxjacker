@@ -1,3 +1,4 @@
+use ratelimit::Limiter;
 use serialport;
 use std::time::Duration;
 
@@ -8,6 +9,7 @@ pub struct SerialLightOutput {
     port: Option<Box<dyn serialport::SerialPort>>,
     last_frame: Vec<u8>,
     pub frames_written: u64,
+    rate_limit: Limiter,
 }
 
 impl SerialLightOutput {
@@ -44,11 +46,18 @@ impl SerialLightOutput {
     }
 
     pub fn make(serial_port: &String) -> SerialLightOutput {
+        let rate_limit = ratelimit::Builder::new()
+            .capacity(1) //number of tokens the bucket will hold
+            .quantum(1) //add one token per interval
+            .interval(Duration::new(0, 2000000)) //add quantum tokens every 1 second
+            .build();
+
         return SerialLightOutput {
             port: None,
             port_name: serial_port.clone(),
             frames_written: 0,
             last_frame: vec![0, 0],
+            rate_limit
         };
     }
 
@@ -114,6 +123,7 @@ impl SerialLightOutput {
         } else {
             self.connect();
         }
+        self.rate_limit.wait();
         return true;
     }
 }

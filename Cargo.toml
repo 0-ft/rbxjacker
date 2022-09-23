@@ -30,4 +30,5 @@ debug = false
 [dependencies]
 minidom = "0.15.0"
 colored = "2"
+ratelimit = "0.4.4"
 # serde-xml-rs = "0.6.0"

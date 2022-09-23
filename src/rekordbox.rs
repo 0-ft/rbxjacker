@@ -5,6 +5,8 @@ use read_process_memory::*;
 use std::{convert::TryInto, fmt};
 use sysinfo::{PidExt, ProcessExt, SystemExt};
 
+use crate::shows::GRAPH_CHARS;
+
 // const TRACK_1_OFFSET: [u32; 6] = [0x03FB2B08, 0x0, 0x240, 0x78, 0x108, 0x148];
 const TRACK_1_OFFSET: [u32; 4] = [0x03FB2B08, 0x0, 0x230, 0x148];
 const TRACK_2_OFFSET: [u32; 4] = [0x03FB2B08, 0x8, 0x230, 0x148];
@@ -21,9 +23,10 @@ const TRACK_2_ID: [u32; 2] = [0x03F93898, 0x200];
 // const CROSSFADER: [u32; 7] = [0x03F4C1A0, 0x208, 0x20, 0x150, 0x0, 0x468, 0x28];
 const CROSSFADER: [u32; 8] = [0x03FA7740, 0x8, 0x180, 0x28, 0x150, 0x0, 0x468, 0x28];
 
-// const TRACK_1_FADER: [u32; 7] = [0x03FA7740, 0x8, 0x180, 0xA8, 0x150, 0x0, 0x4F8, 0x3CC];
-const TRACK_1_FADER: [u32; 1] = [0x03F7E3CC];
-const TRACK_2_FADER: [u32; 1] = [0x03F7E3D4];
+const TRACK_1_FADER: [u32; 8] = [0x03FA7740, 0x8, 0x180, 0x28, 0x150, 0x0, 0x410, 0x28];
+// const TRACK_1_FADER: [u32; 1] = [0x03F7E3CC];
+// const TRACK_2_FADER: [u32; 1] = [0x03F7E3D4];
+const TRACK_2_FADER: [u32; 8] = [0x03FA7740, 0x8, 0x180, 0x28, 0x150, 0x8, 0x410, 0x28];
 
 // // #[inline]
 // fn vec_to_arr<T, const N: usize>(v: Vec<T>) -> [T; N] {
@@ -142,12 +145,27 @@ impl fmt::Display for TrackState {
     }
 }
 
+#[derive(Debug, Clone)]
 pub struct FadersState {
     pub track_1_fader: f32,
     pub track_2_fader: f32,
     pub crossfader: f32,
 }
 
+impl ToString for FadersState {
+    fn to_string(&self) -> String {
+        return format!(
+            "{} {}{}{} {}",
+            GRAPH_CHARS[(self.track_1_fader * 8.) as usize],
+            "─".repeat((self.crossfader * 8.).round() as usize),
+            "■",
+            "─".repeat(8 - (self.crossfader * 8.).round() as usize),
+            GRAPH_CHARS[(self.track_2_fader * 8.) as usize]
+        );
+    }
+}
+
+#[derive(Debug, Clone)]
 pub struct RekordboxUpdate {
     pub track_1: TrackState,
     pub track_2: TrackState,
@@ -216,10 +234,24 @@ impl RekordboxAccess {
         return xml_track
             .cues
             .iter()
+            .filter(|cue| {
+                cue.comment
+                    .as_ref()
+                    .map_or(false, |comment| comment.starts_with("EW"))
+            })
             .filter(|cue| cue.beat_offset < track.beat_offset)
             .last()
             .map(std::clone::Clone::clone);
     }
+
+    // fn map_raw_fader(raw_fader: f32) -> f32 {
+    //     return raw_fader / 1023.;
+    //     // println!("{:#}", f32::from_bits(raw_fader.to_bits() & 0xFFFFFF));
+    //     // return f32::from_bits(raw_fader.to_bits() & 0xFFFFFF);
+    //     let ranged = if raw_fader > 0.0 { (raw_fader - 0.875) } else { 0.0 };
+
+    //     return 1. - (1. - ranged).powf(0.3);
+    // }
 
     //TODO: make each track optional
     fn read_values(&mut self) -> Option<RekordboxUpdate> {
@@ -247,14 +279,9 @@ impl RekordboxAccess {
 
         track_2.last_cue = self.get_last_cue(&track_2);
 
-        // let crossfader = self
-        //     .crossfader_address
-        //     .get_bytes(&handle, 4, true)
-        //     .and_then(|bytes| Some((le_float(bytes) + 2.5625) / 5.125))?;
-        let track_1_fader = self.track_1_fader_address.get_f32(handle, false)? / 1.875;
-        let track_2_fader = self.track_2_fader_address.get_f32(handle, false)? / 1.875;
-        let crossfader = self.crossfader_address.get_f32(handle, false)? / 1023.0;
-        // println!("read values");
+        let track_1_fader = self.track_1_fader_address.get_f32(handle, false)? / 1023.;
+        let track_2_fader = self.track_2_fader_address.get_f32(handle, false)? / 1023.;
+        let crossfader = self.crossfader_address.get_f32(handle, false)? / 1023.;
         return Some(RekordboxUpdate {
             track_1: track_1,
             track_2: track_2,
@@ -269,6 +296,7 @@ impl RekordboxAccess {
     pub fn get_update(&mut self) -> Option<RekordboxUpdate> {
         return self.read_values().or_else(|| {
             self.handle = None;
+            println!("failed to read values from rekordbox, reattaching");
             self.attach();
             return None;
         });
@@ -334,7 +362,7 @@ impl CachedPointerChain {
 
     fn get_f32(&mut self, handle: &ModuleHandle, try_without_cache: bool) -> Option<f32> {
         return self
-            .get_bytes(handle, 8, try_without_cache)
+            .get_bytes(handle, 4, try_without_cache)
             .map(|bytes| le_f32(bytes));
     }
 
@@ -346,7 +374,7 @@ impl CachedPointerChain {
 
     fn get_u32(&mut self, handle: &ModuleHandle, try_without_cache: bool) -> Option<u32> {
         return self
-            .get_bytes(handle, 8, try_without_cache)
+            .get_bytes(handle, 4, try_without_cache)
             .map(|bytes| le_u32(bytes));
     }
 }

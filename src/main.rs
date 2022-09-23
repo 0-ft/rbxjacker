@@ -15,6 +15,8 @@ use rekordbox::RekordboxAccess;
 mod serial;
 use serial::SerialLightOutput;
 
+use crate::shows::fader_to_char;
+
 // fn display_loop(mut rekordbox_access: RekordboxAccess, shows_manager: ShowsManager) {
 //     // let delay = time::Duration::from_micros(2);
 //     let mut i: i64 = 0;
@@ -62,23 +64,23 @@ fn output_loop(
                 // let frame_chars: String = out_frame.map_or(String::from("none"), |frame| levels_to_graph(&frame));
                 let frame_chars = levels_to_graph(&frame.frame);
                 println!(
-                    "{} {} {} || {} {} || serial: {} ({} frames written)",
+                    "{} {} {} ┃ {} {} ┃ {} ({} frames written) ┃ {}",
                     frame_chars,
                     rekordbox_update.track_1,
-                    if frame.has_track_1_show { "✔️" } else { "❌" },
+                    ["❌", "✔️"][frame.has_track_2_show as usize],
                     rekordbox_update.track_2,
-                    if frame.has_track_2_show { "✔️" } else { "❌" },
-                    serial_output.is_connected(),
+                    ["❌", "✔️"][frame.has_track_2_show as usize],
+                    ["connected", "not connected"][serial_output.is_connected() as usize],
                     serial_output.frames_written,
-                    // rekordbox_access.is_attached(),
-                    // (serial_output.frames_written - last_fw) as f64 / (start.elapsed().as_micros() / 1000_000) as f64,
+                    rekordbox_update.faders.to_string() // rekordbox_access.is_attached(),
+                                                        // (serial_output.frames_written - last_fw) as f64 / (start.elapsed().as_micros() / 1000_000) as f64,
                 );
                 start = time::Instant::now();
                 last_fw = serial_output.frames_written;
-                if i % 500000 == 0 {
-                    println!("reloading shows");
-                    shows_manager.load_shows();
-                }
+                // if i % 500000 == 0 {
+                //     println!("reloading shows");
+                //     shows_manager.load_shows();
+                // }
             }
         }
         // let maybe_frame = maybe_rekordbox_update.map(|rekordbox_update| {
