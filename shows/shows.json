@@ -1,64 +1,646 @@
 {
-    "shows": [
-        {
-            "showName": "random",
-            "path": "shows/random.png",
-            "numLights": 13,
-            "frameRate": 32
-        },
-        {
-            "showName": "EWTR",
-            "path": "shows/sample.png",
-            "numLights": 13,
-            "frameRate": 32
-        },
-        {
-            "showName": "Skrillex/Habstrakt - Chicken Soup",
-            "path": "shows/chickensoup.png",
-            "numLights": 13,
-            "frameRate": 64
-        },
-        {
-            "showName": "Affiliate, Dakota Sixx - Change Your Mind feat. Dakota Sixx (Das Kapital Remix)",
-            "path": "shows/objects_3.png",
-            "numLights": 16,
-            "frameRate": 64
-        },
-        {
-            "showName": "Aquarian - Death, Taxes & Hanger",
-            "path": "shows/objects_3.png",
-            "numLights": 16,
-            "frameRate": 64
-        },
-        {
-            "showName": "Getter - Colorblind",
-            "path": "shows/colorblind.png",
-            "numLights": 13,
-            "frameRate": 64
-        },
-        {
-            "showName": "Sarah Neufeld - The Top (Rival Consoles Remix)",
-            "path": "shows/thetop.png",
-            "numLights": 13,
-            "frameRate": 64
-        },
-        {
-            "showName": "Woodkid - Goliath",
-            "path": "shows/goliath.png",
-            "numLights": 13,
-            "frameRate": 64
-        },
-        {
-            "showName": "Special Request - Vortex 150",
-            "path": "shows/v150 test.png",
-            "numLights": 13,
-            "frameRate": 64
-        },
-        {
-            "showName": "Overture",
-            "path": "shows/overture.png",
-            "numLights": 13,
-            "frameRate": 32
-        }
-    ]
+  "shows": [
+    {
+      "showName": "EWA1",
+      "path": "shows/A1.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWA2",
+      "path": "shows/A2.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWA3",
+      "path": "shows/A3.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWA4",
+      "path": "shows/O1.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWA5",
+      "path": "shows/A5.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWB1",
+      "path": "shows/B1.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWB10",
+      "path": "shows/B10.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWB11",
+      "path": "shows/B11.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWB12",
+      "path": "shows/B12.png",
+      "numLights": 16,
+      "frameRate": 16
+    },
+    {
+      "showName": "EWB13",
+      "path": "shows/B13.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWB14",
+      "path": "shows/B14.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWB15",
+      "path": "shows/B15.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWB2",
+      "path": "shows/B2.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWB3",
+      "path": "shows/B3.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWB4",
+      "path": "shows/B4.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWB5",
+      "path": "shows/B5.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWB6",
+      "path": "shows/B6.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWB7",
+      "path": "shows/B7.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWB8",
+      "path": "shows/B8.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWB9",
+      "path": "shows/B9.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWD1",
+      "path": "shows/D1.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWD2",
+      "path": "shows/D2.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWD3",
+      "path": "shows/D3.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWD4",
+      "path": "shows/D4.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWD5",
+      "path": "shows/D5.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWE1",
+      "path": "shows/E1.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWE10",
+      "path": "shows/E10.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWE2",
+      "path": "shows/E2.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWE3",
+      "path": "shows/E3.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWE4",
+      "path": "shows/E4.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWE5",
+      "path": "shows/E5.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWE6",
+      "path": "shows/E6.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWE7",
+      "path": "shows/E7.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWE8",
+      "path": "shows/E8.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWE9",
+      "path": "shows/E9.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWG1",
+      "path": "shows/G1.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWG10",
+      "path": "shows/G10.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWG11",
+      "path": "shows/G11.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWG12",
+      "path": "shows/G12.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWG13",
+      "path": "shows/G13.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWG14",
+      "path": "shows/G14.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWG15",
+      "path": "shows/G15.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWG2",
+      "path": "shows/G2.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWG3",
+      "path": "shows/G3.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWG4",
+      "path": "shows/G4.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWG5",
+      "path": "shows/G5.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWG6",
+      "path": "shows/G6.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWG7",
+      "path": "shows/O1.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWG8",
+      "path": "shows/G8.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWG9",
+      "path": "shows/G9.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWH1",
+      "path": "shows/H1.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWH10",
+      "path": "shows/H10.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWH11",
+      "path": "shows/H11.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWH12",
+      "path": "shows/H12.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWH13",
+      "path": "shows/H13.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWH14",
+      "path": "shows/H14.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWH15",
+      "path": "shows/H15.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWH2",
+      "path": "shows/H2.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWH3",
+      "path": "shows/H3.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWH4",
+      "path": "shows/H4.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWH5",
+      "path": "shows/H5.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWH6",
+      "path": "shows/H6.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWH7",
+      "path": "shows/H7.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWH8",
+      "path": "shows/H8.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWH9",
+      "path": "shows/H9.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWM1",
+      "path": "shows/M1.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWM10",
+      "path": "shows/M10.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWM11",
+      "path": "shows/M11.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWM12",
+      "path": "shows/M12.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWM13",
+      "path": "shows/O2.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWM14",
+      "path": "shows/M14.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWM15",
+      "path": "shows/M15.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWM2",
+      "path": "shows/M2.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWM3",
+      "path": "shows/M3.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWM4",
+      "path": "shows/M4.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWM5",
+      "path": "shows/M5.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWM6",
+      "path": "shows/M6.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWM7",
+      "path": "shows/M7.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWM8",
+      "path": "shows/M8.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWM9",
+      "path": "shows/M9.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWO1",
+      "path": "shows/O1.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWO10",
+      "path": "shows/O10.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWO2",
+      "path": "shows/O2.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWO3",
+      "path": "shows/O3.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWO4",
+      "path": "shows/O4.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWO5",
+      "path": "shows/O5.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWO6",
+      "path": "shows/O6.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWO7",
+      "path": "shows/O7.png",
+      "numLights": 16,
+      "frameRate": 64
+    },
+    {
+      "showName": "EWO8",
+      "path": "shows/O8.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWO9",
+      "path": "shows/O9.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWP1",
+      "path": "shows/P1.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWP2",
+      "path": "shows/P2.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWP3",
+      "path": "shows/P3.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWP4",
+      "path": "shows/P4.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWP5",
+      "path": "shows/P5.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWS1",
+      "path": "shows/S1.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWS2",
+      "path": "shows/S2.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWS3",
+      "path": "shows/S3.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWS4",
+      "path": "shows/S4.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWS5",
+      "path": "shows/S5.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWF1",
+      "path": "shows/F1.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWF2",
+      "path": "shows/F2.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWF3",
+      "path": "shows/F3.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWF4",
+      "path": "shows/F4.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWF5",
+      "path": "shows/F5.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWTS",
+      "path": "shows/16_testing.png",
+      "numLights": 16,
+      "frameRate": 32
+    },
+    {
+      "showName": "EWshows.",
+      "path": "shows/shows.json",
+      "numLights": 16,
+      "frameRate": 32
+    }
+  ]
 }

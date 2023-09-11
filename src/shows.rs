@@ -204,6 +204,13 @@ impl ShowsManager {
                 }
             }
         }
+        let DEFAULT_SHOW = self.shows.get("EWO1").unwrap();
+        let frame_index = (track.beat_offset * DEFAULT_SHOW.frame_rate as f64).floor() as i32
+            % DEFAULT_SHOW.length;
+        return Some(ShowsManager::get_show_frame_no_strobe(
+            DEFAULT_SHOW,
+            frame_index,
+        ));
         return None;
         // return Some(frame);
     }
@@ -213,8 +220,16 @@ impl ShowsManager {
         maybe_track_2_frame: Option<Vec<u8>>,
         faders: &FadersState,
     ) -> Vec<u8> {
-        let track_1_multiplier = if USE_FADERS { 1_f32.min(2. - 2. * faders.crossfader) * faders.track_1_fader * faders.track_1_fader } else { 1. };
-        let track_2_multiplier = if USE_FADERS { 1_f32.min(2. * faders.crossfader) * faders.track_2_fader * faders.track_2_fader } else { 1. };
+        let track_1_multiplier = if USE_FADERS {
+            1_f32.min(2. - 2. * faders.crossfader) * faders.track_1_fader * faders.track_1_fader
+        } else {
+            1.
+        };
+        let track_2_multiplier = if USE_FADERS {
+            1_f32.min(2. * faders.crossfader) * faders.track_2_fader * faders.track_2_fader
+        } else {
+            1.
+        };
         // println!("mults: {} {}", track_1_multiplier, track_2_multiplier);
         let track_1_frame = maybe_track_1_frame.map_or(vec![0; 0], |f| {
             f.iter()

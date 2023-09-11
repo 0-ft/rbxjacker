@@ -192,7 +192,7 @@ impl RekordboxAccess {
     pub fn make(collection_xml_path: &String) -> RekordboxAccess {
         let rekordbox_access = RekordboxAccess {
             handle: None,
-            track_1_title_address: CachedPointerChain::make(TRACK_1_TITLE.to_vec()),
+            track_1_title_address: CachedPointerChain::make(TRACK_2_TITLE.to_vec()),
             track_1_artist_address: CachedPointerChain::make(TRACK_1_ARTIST.to_vec()),
             track_1_id_address: CachedPointerChain::make(TRACK_1_ID.to_vec()),
             track_1_offset_address: CachedPointerChain::make(TRACK_1_OFFSET.to_vec()),
@@ -257,25 +257,32 @@ impl RekordboxAccess {
     fn read_values(&mut self) -> Option<RekordboxUpdate> {
         let ref mut handle = self.handle.as_ref()?;
 
+        // println!("gtrack33");
         let mut track_1 = TrackState {
-            title: self.track_1_title_address.get_string(&handle, false)?,
-            artist: self.track_1_artist_address.get_string(&handle, false)?,
+            // title: self.track_1_title_address.get_string(&handle, false)?,
+            // artist: self.track_1_artist_address.get_string(&handle, false)?,
+            title: "unknown".to_string(),
+            artist: "ua".to_string(),
             id: self.track_1_id_address.get_u32(&handle, false)?,
             beat_offset: self.track_1_offset_address.get_f64(&handle, true)?,
             last_cue: None,
         };
 
+        // println!("gtrack1");
         track_1.last_cue = self.get_last_cue(&track_1);
         // let t1cuestring = track_1.last_cue.as_ref().map_or("no cue".to_string(), |cue| cue.comment.as_ref().unwrap_or(&"no comment".to_string()).to_string());
         // println!("track1cue: {:?}", track_1.last_cue);
 
         let mut track_2 = TrackState {
-            title: self.track_2_title_address.get_string(&handle, false)?,
-            artist: self.track_2_artist_address.get_string(&handle, false)?,
+            // title: self.track_2_title_address.get_string(&handle, false)?,
+            // artist: self.track_2_artist_address.get_string(&handle, false)?,
+            title: "unknown".to_string(),
+            artist: "ua".to_string(),
             id: self.track_2_id_address.get_u32(&handle, false)?,
             beat_offset: self.track_2_offset_address.get_f64(&handle, true)?,
             last_cue: None,
         };
+        // println!("gtrack2");
 
         track_2.last_cue = self.get_last_cue(&track_2);
 
