@@ -1,0 +1,64 @@
+{
+    "shows": [
+        {
+            "showName": "random",
+            "path": "shows/random.png",
+            "numLights": 13,
+            "frameRate": 32
+        },
+        {
+            "showName": "EWTR",
+            "path": "shows/sample.png",
+            "numLights": 13,
+            "frameRate": 32
+        },
+        {
+            "showName": "Skrillex/Habstrakt - Chicken Soup",
+            "path": "shows/chickensoup.png",
+            "numLights": 13,
+            "frameRate": 64
+        },
+        {
+            "showName": "Affiliate, Dakota Sixx - Change Your Mind feat. Dakota Sixx (Das Kapital Remix)",
+            "path": "shows/16_testing.png",
+            "numLights": 16,
+            "frameRate": 64
+        },
+        {
+            "showName": "Aquarian - Death, Taxes & Hanger",
+            "path": "shows/objects_3.png",
+            "numLights": 16,
+            "frameRate": 64
+        },
+        {
+            "showName": "Getter - Colorblind",
+            "path": "shows/colorblind.png",
+            "numLights": 13,
+            "frameRate": 64
+        },
+        {
+            "showName": "Sarah Neufeld - The Top (Rival Consoles Remix)",
+            "path": "shows/thetop.png",
+            "numLights": 13,
+            "frameRate": 64
+        },
+        {
+            "showName": "Woodkid - Goliath",
+            "path": "shows/goliath.png",
+            "numLights": 13,
+            "frameRate": 64
+        },
+        {
+            "showName": "Special Request - Vortex 150",
+            "path": "shows/v150 test.png",
+            "numLights": 13,
+            "frameRate": 64
+        },
+        {
+            "showName": "Overture",
+            "path": "shows/overture.png",
+            "numLights": 13,
+            "frameRate": 32
+        }
+    ]
+}

@@ -6,9 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [target.'cfg(windows)'.dependencies]
-read-process-memory = "0.1.4"
+read-process-memory = "0.1.6"
 process_list = "0.2.1"
-winapi = { version = "0.3", features = ["errhandlingapi","wincontypes"] }
+# winapi = { version = "0.3", features = ["errhandlingapi","wincontypes"] }
 sysinfo = "0.24.0"
 byteorder = "1.2.2"
 image = "0.24.2"
