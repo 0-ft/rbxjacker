@@ -21,24 +21,21 @@ struct AutomationPoint {
 
 #[derive(Debug, Clone)]
 pub struct LightingPattern {
-    publength: f64,
+    length: f64,
     envelopes: HashMap<String, Vec<bezier::Curve<Coord2>>>,
 }
 
-fn find_segment_index(
-    time: f64,
-    segments: &Vec<bezier::Curve<Coord2>>,
-) -> Option<bezier::Curve<Coord2>> {
-    // find the latest curve that starts at or before time
-    let mut latest_curve: Option<bezier::Curve<Coord2>> = None;
-    for curve in segments {
-        if curve.start_point().0 <= time {
-            latest_curve = Some(*curve);
-        } else {
-            break;
-        }
+impl LightingPattern {
+    pub fn at_time(&self, time: f64) -> HashMap<String, f64> {
+        return self.envelopes.iter().map(
+            |(name, envelope)| {
+                (
+                    name.to_string(),
+                    sample_segments(time, envelope),
+                )
+            },
+        ).collect();
     }
-    return latest_curve;
 }
 
 fn find_segment(time: f64, segments: &Vec<bezier::Curve<Coord2>>) -> Option<bezier::Curve<Coord2>> {
@@ -218,7 +215,7 @@ fn construct_segments(points: &Vec<AutomationPoint>) -> Vec<bezier::Curve<Coord2
 // path_to_curves(builder.build()).collect()
 // builder.build().to_curves()
 
-fn read_gzip(filepath: String) -> String {
+fn read_gzip(filepath: &String) -> String {
     println!("Reading file: {}", filepath);
     let file = File::open(filepath).unwrap();
     let mut decoder = GzDecoder::new(file);
@@ -269,7 +266,6 @@ fn find_locators(root: roxmltree::Node) -> Vec<(f64, String)> {
 
     locators.sort_by(|a, b| a.0.partial_cmp(&b.0).unwrap());
 
-
     locators
 }
 
@@ -319,21 +315,21 @@ fn split_envelopes_by_locators(
 }
 
 fn merge_maps<T: Clone>(
-    id_to_events: HashMap<String, Vec<T>>,
-    id_to_name: HashMap<String, String>,
+    id_to_events: &HashMap<String, Vec<T>>,
+    id_to_name: &HashMap<String, String>,
 ) -> HashMap<String, Vec<T>> {
     let mut name_to_events: HashMap<String, Vec<T>> = HashMap::new();
 
     for (id, name) in id_to_name {
-        if let Some(events) = id_to_events.get(&id) {
-            name_to_events.insert(name, events.clone());
+        if let Some(events) = id_to_events.get(id) {
+            name_to_events.insert(name.clone(), events.clone());
         }
     }
 
     name_to_events
 }
 
-pub fn load_patterns_from_als(filepath: String) -> HashMap<String, LightingPattern> {
+pub fn load_patterns_from_als(filepath: &String) -> HashMap<String, LightingPattern> {
     let xml_str = read_gzip(filepath);
 
     let doc = Document::parse(&xml_str).unwrap();
@@ -342,7 +338,7 @@ pub fn load_patterns_from_als(filepath: String) -> HashMap<String, LightingPatte
 
     let parameters = find_parameters(doc.root_element());
 
-    let envelope_map = merge_maps(envelopes, parameters);
+    let envelope_map = merge_maps(&envelopes, &parameters);
 
     let curves_map = envelope_map.iter().map(|(name, points)| {
         (
@@ -355,38 +351,39 @@ pub fn load_patterns_from_als(filepath: String) -> HashMap<String, LightingPatte
 
     let patterns = split_envelopes_by_locators(&curves_map, &locators);
 
+    println!("{}: Found {} parameters, {} envelopes, {} locators. Loaded {} patterns.", filepath, parameters.len(), envelopes.len(), locators.len(), patterns.len());
     patterns
 }
 
-fn main() {
-    let patterns = load_patterns_from_als(env::args().nth(1).unwrap());
-    let t1 = patterns.get("TEST1").unwrap();
-    let t1c1l0 = t1.envelopes.get("C1L0").unwrap();
-    plot_segments(linspace(0.0, t1.length, 400).as_slice(), t1c1l0);
-    println!("{:#?}", t1c1l0);
-    // let xml_str = read_gzip(env::args().nth(1).unwrap());
+// fn main() {
+//     let patterns = load_patterns_from_als(env::args().nth(1).unwrap());
+//     let t1 = patterns.get("TEST1").unwrap();
+//     let t1c1l0 = t1.envelopes.get("C1L0").unwrap();
+//     plot_segments(linspace(0.0, t1.length, 400).as_slice(), t1c1l0);
+//     println!("{:#?}", t1c1l0);
+//     // let xml_str = read_gzip(env::args().nth(1).unwrap());
 
-    // let doc = Document::parse(&xml_str).unwrap();
+//     // let doc = Document::parse(&xml_str).unwrap();
 
-    // let envelopes = find_envelopes(doc.root_element());
+//     // let envelopes = find_envelopes(doc.root_element());
 
-    // // println!("{:#?}", envelopes);
+//     // // println!("{:#?}", envelopes);
 
-    // let parameters = find_parameters(doc.root_element());
-    // // println!("{:#?}", parameters);
+//     // let parameters = find_parameters(doc.root_element());
+//     // // println!("{:#?}", parameters);
 
-    // let merged = merge_maps(envelopes, parameters);
-    // // println!("{:#?}", merged);
+//     // let merged = merge_maps(envelopes, parameters);
+//     // // println!("{:#?}", merged);
 
-    // let a = merged.get("C1L0").expect("Auto not found");
-    // // let seg = find_segment(61.0, a);
-    // // println!("{:#?}", seg);
-    // // println!("{:#?}", a);
-    // let segments: Vec<bezier::Curve<Coord2>> = construct_segments(a);
-    // // println!("{:#?}", segments);
-    // // println!("{:#?}", sample_segments(61.0, &segments));
-    // plot_segments(linspace(60.0, 62.0, 1000).as_slice(), &segments);
+//     // let a = merged.get("C1L0").expect("Auto not found");
+//     // // let seg = find_segment(61.0, a);
+//     // // println!("{:#?}", seg);
+//     // // println!("{:#?}", a);
+//     // let segments: Vec<bezier::Curve<Coord2>> = construct_segments(a);
+//     // // println!("{:#?}", segments);
+//     // // println!("{:#?}", sample_segments(61.0, &segments));
+//     // plot_segments(linspace(60.0, 62.0, 1000).as_slice(), &segments);
 
-    // let locators = find_locators(doc.root_element());
-    // println!("{:#?}", locators);
-}
+//     // let locators = find_locators(doc.root_element());
+//     // println!("{:#?}", locators);
+// }

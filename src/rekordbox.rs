@@ -4,6 +4,7 @@ use process_list::for_each_module;
 use read_process_memory::*;
 use std::{convert::TryInto, fmt};
 use sysinfo::{PidExt, ProcessExt, SystemExt};
+use roxmltree::Document;
 
 use crate::shows::GRAPH_CHARS;
 
@@ -400,14 +401,14 @@ pub struct XmlTrackInfo {
     pub cues: Vec<XmlCueInfo>,
 }
 
-fn parse_xml_cues(track_elem: &Element) -> Vec<XmlCueInfo> {
+fn parse_xml_cues(track_elem: roxmltree::Node) -> Vec<XmlCueInfo> {
     let tempo_points: Vec<(f64, f64)> = track_elem
         .children()
-        .filter(|child| child.name() == "TEMPO")
+        .filter(|child| child.has_tag_name("TEMPO"))
         .filter_map(|child| {
             Some((
-                child.attr("Inizio")?.parse::<f64>().ok()?,
-                child.attr("Bpm")?.parse::<f64>().ok()?,
+                child.attribute("Inizio")?.parse::<f64>().ok()?,
+                child.attribute("Bpm")?.parse::<f64>().ok()?,
             ))
         })
         .collect();
@@ -415,15 +416,15 @@ fn parse_xml_cues(track_elem: &Element) -> Vec<XmlCueInfo> {
         let beats_per_second = tempo / 60.0;
         let mut cues: Vec<XmlCueInfo> = track_elem
             .children()
-            .filter(|child| child.name() == "POSITION_MARK")
+            .filter(|child| child.has_tag_name("POSITION_MARK"))
             .filter_map(|child| {
                 return Some(XmlCueInfo {
                     comment: child
-                        .attr("Name")
+                        .attribute("Name")
                         .filter(|name| !name.is_empty())
                         .map(str::to_string),
                     beat_offset: (child
-                        .attr("Start")?
+                        .attribute("Start")?
                         .parse::<f64>()
                         .ok()
                         .expect("could not parse cue beat offset")
@@ -441,27 +442,32 @@ fn parse_xml_cues(track_elem: &Element) -> Vec<XmlCueInfo> {
 fn parse_rekordbox_xml(path: &String) -> Option<Vec<XmlTrackInfo>> {
     // let file_contents: String = ;
     println!("loading rekordbox xml");
-    let root: Element = std::fs::read_to_string(path)
-        .expect("failed to load xml")
-        .parse::<Element>()
+    let raw_xml = std::fs::read_to_string(path)
+        .expect("failed to read xml");
+    let doc = Document::parse(&raw_xml)
         .expect("failed to parse xml");
     // println!("rekordbox root: {:?}", root);
-    let xml_tracks: Vec<XmlTrackInfo> = root
+    let root = doc.root();
+    let collection = root
+        .descendants()
+        .find(|n| n.has_tag_name("COLLECTION"))
+        .expect("could not find collection tag");
+    let xml_tracks: Vec<XmlTrackInfo> = collection
         .children()
-        .find(|child| child.name() == "COLLECTION")?
-        .children()
+        .filter(|n| n.has_tag_name("TRACK"))
         .map(|track_elem| {
+            // println!("track elem: {:?}", track_elem);
             return XmlTrackInfo {
                 title: track_elem
-                    .attr("Name")
+                    .attribute("Name")
                     .expect("could not parse track title")
                     .to_string(),
                 artist: track_elem
-                    .attr("Artist")
+                    .attribute("Artist")
                     .expect("could not parse track artist")
                     .to_string(),
                 id: track_elem
-                    .attr("TrackID")
+                    .attribute("TrackID")
                     .expect("could not read track ID")
                     .parse::<u32>()
                     .expect("could not parse track ID"),
@@ -469,6 +475,6 @@ fn parse_rekordbox_xml(path: &String) -> Option<Vec<XmlTrackInfo>> {
             };
         })
         .collect();
-    // println!("xml tracks: {:?}", xml_tracks);
+    println!("Finished loading XML {}, found {} tracks with {} cue points", path, xml_tracks.len(), xml_tracks.iter().map(|track| track.cues.len()).sum::<usize>());
     return Some(xml_tracks);
 }
