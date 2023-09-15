@@ -8,6 +8,7 @@ use std::io::prelude::*;
 
 use flo_curves::*;
 use plotters::prelude::*;
+use regex::Regex;
 
 #[derive(Debug, Clone, Copy)]
 struct AutomationPoint {
@@ -27,14 +28,16 @@ pub struct LightingPattern {
 
 impl LightingPattern {
     pub fn at_time(&self, time: f64) -> HashMap<String, f64> {
-        return self.envelopes.iter().map(
-            |(name, envelope)| {
+        return self
+            .envelopes
+            .iter()
+            .map(|(name, envelope)| {
                 (
                     name.to_string(),
-                    sample_segments(time, envelope),
+                    sample_segments(time % self.length, envelope) / 127.0,
                 )
-            },
-        ).collect();
+            })
+            .collect();
     }
 }
 
@@ -52,10 +55,14 @@ fn find_segment(time: f64, segments: &Vec<bezier::Curve<Coord2>>) -> Option<bezi
 }
 
 fn sample_segments(time: f64, segments: &Vec<bezier::Curve<Coord2>>) -> f64 {
-    let curve = find_segment(time, segments).unwrap();
-    let t = (time - curve.start_point().0) / (curve.end_point().0 - curve.start_point().0);
-    let point = curve.point_at_pos(t);
-    return point.1;
+    if let Some(curve) = find_segment(time, segments) {
+        let t = (time - curve.start_point().0) / (curve.end_point().0 - curve.start_point().0);
+        // println!("t: {}", t);
+        let point = curve.point_at_pos(t);
+        // println!("t: {} point: {:?}", t, point);
+        return point.1;    
+    }
+    return 0.0;
 }
 
 fn multisample_segments(times: &[f64], segments: &Vec<bezier::Curve<Coord2>>) -> Vec<Coord2> {
@@ -269,6 +276,42 @@ fn find_locators(root: roxmltree::Node) -> Vec<(f64, String)> {
     locators
 }
 
+fn find_macros(root: roxmltree::Node) -> HashMap<String, String> {
+    let mut map: HashMap<String, String> = HashMap::new();
+    let macro_controls_regex = Regex::new(r"MacroControls.([0-9]+)$").unwrap();
+
+    for macro_node in root
+        .descendants()
+        .filter(|n| n.tag_name().name().starts_with("MacroControls."))
+    {
+        let macro_number = macro_controls_regex
+            .captures(macro_node.tag_name().name())
+            .unwrap()
+            .get(1)
+            .unwrap()
+            .as_str();
+        let automation_target = macro_node
+            .descendants()
+            .find(|n| n.has_tag_name("AutomationTarget"))
+            .unwrap().attribute("Id").unwrap().to_string();
+        // let display_name = macro_node.parent().unwrap().children()
+        //     .find(|n| n.has_tag_name(format!("MacroDisplayName.{}", macro_number).as_str()));
+        if let Some(display_name) = macro_node
+            .parent()
+            .unwrap()
+            .children()
+            .find(|n| n.has_tag_name(format!("MacroDisplayNames.{}", macro_number).as_str()))
+        {
+            map.insert(
+                automation_target,
+                display_name.attribute("Value").unwrap().to_string(),
+            );
+        }
+    }
+
+    map
+}
+
 fn envelope_between_times(
     start: f64,
     end: f64,
@@ -300,16 +343,24 @@ fn split_envelopes_by_locators(
     let mut map: HashMap<String, LightingPattern> = HashMap::new();
 
     for (start, end) in locators.iter().tuple_windows() {
-        let envelope_cut: HashMap<String, Vec<bezier::Curve<Coord2>>> = envelopes.iter().map(|(name, envelope)| {
-            (
-                name.to_string(),
-                envelope_between_times(start.0, end.0, envelope),
-            )
-        }).collect();
-        map.insert(start.1.to_string(), LightingPattern {
-            length: end.0 - start.0,
-            envelopes: envelope_cut,
-        });
+        let envelope_cut: HashMap<String, Vec<bezier::Curve<Coord2>>> = envelopes
+            .iter()
+            .map(|(name, envelope)| {
+                (
+                    name.to_string(),
+                    envelope_between_times(start.0, end.0, envelope),
+                )
+            })
+            .collect();
+        if(envelope_cut.values().any(|v| v.len() > 0)) {
+            map.insert(
+                start.1.to_string(),
+                LightingPattern {
+                    length: end.0 - start.0,
+                    envelopes: envelope_cut,
+                },
+            );    
+        }
     }
     map
 }
@@ -338,20 +389,29 @@ pub fn load_patterns_from_als(filepath: &String) -> HashMap<String, LightingPatt
 
     let parameters = find_parameters(doc.root_element());
 
-    let envelope_map = merge_maps(&envelopes, &parameters);
+    let macros = find_macros(doc.root_element());
 
-    let curves_map = envelope_map.iter().map(|(name, points)| {
-        (
-            name.to_string(),
-            construct_segments(points),
-        )
-    }).collect();
+    let envelope_map = merge_maps(&envelopes, &macros);
+
+    let curves_map = envelope_map
+        .iter()
+        .map(|(name, points)| (name.to_string(), construct_segments(points)))
+        .collect();
 
     let locators = find_locators(doc.root_element());
 
     let patterns = split_envelopes_by_locators(&curves_map, &locators);
 
-    println!("{}: Found {} parameters, {} envelopes, {} locators. Loaded {} patterns.", filepath, parameters.len(), envelopes.len(), locators.len(), patterns.len());
+
+    println!(
+        "{}: Found {} parameters, {} envelopes, {} locators. Loaded {} patterns.",
+        filepath,
+        parameters.len(),
+        envelopes.len(),
+        locators.len(),
+        patterns.len()
+    );
+    // println!("Patterns: {:#?}", patterns);
     patterns
 }
 

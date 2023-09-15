@@ -1298,6 +1298,7 @@ dependencies = [
  "ratatui",
  "ratelimit",
  "read-process-memory",
+ "regex",
  "roxmltree",
  "rustc-hash",
  "serde",

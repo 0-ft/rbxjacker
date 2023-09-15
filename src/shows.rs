@@ -1,7 +1,7 @@
 use crate::ableton::{load_patterns_from_als, LightingPattern};
 use crate::rekordbox::RekordboxUpdate;
 use colored::Colorize;
-use itertools::Itertools;
+use itertools::{Itertools, izip};
 use std::collections::HashMap;
 use walkdir::WalkDir;
 
@@ -59,6 +59,19 @@ impl ShowsManager {
             return HashMap::new();
         }
     }
+
+    pub fn get_combined_frame(&self, states: Vec<(String, f64, f64)>) -> HashMap<String, f64> {
+        let mut combined_frame = HashMap::new();
+        for (show_name, time, weight) in states {
+            let show_frame = self.get_frame(show_name.clone(), time);
+            for (name, value) in show_frame {
+                let combined_value = combined_frame.entry(name).or_insert(0.);
+                *combined_value += value * weight;
+            }
+        }
+        return combined_frame;
+    }
+
 }
 
 pub const GRAPH_CHARS: [char; 9] = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
@@ -69,13 +82,39 @@ pub fn fader_to_char(fader: f32) -> char {
 
 pub fn levels_to_graph(levels: &Vec<u8>) -> String {
     // let d = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs_f32();
-    return levels
-        .iter()
-        .map(|l| "█".truecolor((*l / 16) * (*l / 16), *l / 3, *l))
-        .join("");
-
     // return levels
     //     .iter()
-    //     .map(|l| GRAPH_CHARS[(*l / 32) as usize] as char)
-    //     .collect();
+    //     .map(|l| "█".truecolor((*l / 16) * (*l / 16), *l / 3, *l))
+    //     .join("");
+
+    return levels
+        .iter()
+        .map(|l| GRAPH_CHARS[(*l / 32) as usize] as char)
+        .collect();
+}
+
+pub trait LightingOutput {
+    fn output_map(&self) -> &HashMap<String, u32>;
+    fn write_frame(&mut self, frame: &Vec<f64>);
+    fn write_frame_mapped(&mut self, frame: &HashMap<String, f64>) {
+        if frame.len() == 0 {
+            return;
+        }
+        let frame_map = frame
+            .iter()
+            .filter(|(name, _)| self.output_map().contains_key(name.clone()))
+            .map(|(name, value)| (*self.output_map().get(name).unwrap(), *value))
+            .collect::<HashMap<u32, f64>>();
+        let mut frame_vec = vec![0.; (frame_map.keys().max().unwrap() + 1).try_into().unwrap()];
+        for (index, value) in frame_map.iter() {
+            frame_vec[*index as usize] = *value;
+        }
+        self.write_frame(&frame_vec);
+        // let mut frame_vec = vec![0.; 64];
+        // for (name, value) in frame.iter() {
+        //     let index = name_to_index(name);
+        //     frame_vec[index] = *value;
+        // }
+        // self.write_frame(&frame_vec);
+    }
 }

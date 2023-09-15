@@ -1,14 +1,17 @@
 use std::{
+    collections::HashMap,
     error::Error,
     io::{self, Stdout},
     time::{self, Duration},
 };
 
+use colored::Colorize;
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode},
     execute,
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
+use itertools::Itertools;
 use ratatui::{
     prelude::*,
     widgets::{block::title, *},
@@ -17,7 +20,7 @@ use ratatui::{
 use crate::{
     rekordbox::{RekordboxAccess, RekordboxUpdate, TrackState},
     serial::SerialLightOutput,
-    shows::ShowsManager,
+    shows::{levels_to_graph, LightingOutput, ShowsManager},
 };
 type Frame<'a> = ratatui::Frame<'a, CrosstermBackend<Stdout>>;
 
@@ -25,7 +28,7 @@ pub struct Tuber {
     // ...
     rekordbox_access: RekordboxAccess,
     shows_manager: ShowsManager,
-    serial_output: SerialLightOutput,
+    output: Box<dyn LightingOutput>,
     terminal: Terminal<CrosstermBackend<Stdout>>,
 }
 
@@ -33,13 +36,13 @@ impl Tuber {
     pub fn create(
         shows_manager: ShowsManager,
         rekordbox_access: RekordboxAccess,
-        serial_output: SerialLightOutput,
+        output: Box<dyn LightingOutput>,
     ) -> Result<Tuber, Box<dyn Error>> {
         let mut terminal = Tuber::setup_terminal()?;
         Ok(Tuber {
             shows_manager,
             rekordbox_access,
-            serial_output,
+            output,
             terminal,
         })
     }
@@ -51,15 +54,43 @@ impl Tuber {
             .padding(Padding::uniform(1));
         // f.render_widget(block, area);
         f.render_widget(
-            Paragraph::new(
-                format!(
-                    "Track {} @ {:.3}
-Current Cue: {:?}", track.id, track.beat_offset, track.last_cue)).block(block),
+            Paragraph::new(format!(
+                "Track {} @ {:.3}
+Current Cue: {:?}",
+                track.id, track.beat_offset, track.last_cue
+            ))
+            .block(block),
             area,
         );
     }
 
-    fn ui(&mut self, rekordbox_update: RekordboxUpdate) -> Result<(), Box<dyn Error>> {
+    fn draw_frame(f: &mut Frame, area: Rect, frame: &HashMap<String, f64>) {
+        let block = Block::default()
+            .title("Frame")
+            .borders(Borders::ALL)
+            .padding(Padding::uniform(1));
+        // f.render_widget(block, area);
+        // let mut text = String::new();
+        let text = frame
+            .iter()
+            .map(|(name, val)| format!("{}: {:.3}", name, val))
+            .sorted()
+            .chunks(8)
+            .into_iter()
+            .map(|row| {
+                // let vals = row.map(|(name, val)| (val * 255.) as u8).collect();
+                // levels_to_graph(&vals)
+                row.into_iter().join(" | ")
+            })
+            .join("\n");
+        f.render_widget(Paragraph::new(text).block(block), area);
+    }
+
+    fn ui(
+        &mut self,
+        rekordbox_update: RekordboxUpdate,
+        frame: &HashMap<String, f64>,
+    ) -> Result<(), Box<dyn Error>> {
         self.terminal.draw(|f| {
             let rows = Layout::default()
                 .direction(Direction::Vertical)
@@ -77,14 +108,38 @@ Current Cue: {:?}", track.id, track.beat_offset, track.last_cue)).block(block),
             let right_track = cols[1];
             let both = rows[1];
 
-            Tuber::ui_track(f, left_track, rekordbox_update.track_1, "LEFT TRACK");
-            Tuber::ui_track(f, right_track, rekordbox_update.track_2, "RIGHT TRACK");
+            Self::ui_track(f, left_track, rekordbox_update.track_1, "LEFT TRACK");
+            Self::ui_track(f, right_track, rekordbox_update.track_2, "RIGHT TRACK");
+            Self::draw_frame(f, both, frame);
         })?;
         Ok(())
     }
 
+    fn get_frame(&mut self, rekordbox_update: &RekordboxUpdate) -> HashMap<String, f64> {
+        let mut states: Vec<(String, f64, f64)> = Vec::new();
+        for track in vec![&rekordbox_update.track_1, &rekordbox_update.track_2] {
+            if let Some(last_cue) = &track.last_cue {
+                states.push((
+                    last_cue.comment.clone().unwrap()[2..].to_string(),
+                    track.beat_offset - last_cue.beat_offset,
+                    1.,
+                ));
+            }
+        }
+        let frame = self.shows_manager.get_combined_frame(states);
+        frame
+    }
+
+    // fn output(&mut self, frame: HashMap<String, f64>) -> Result<(), Box<dyn Error>> {
+
+    //     // println!("{:?}", frame.get("C1L0").unwrap());
+    //     self.output.write_frame_mapped(&frame);
+    //     Ok(())
+    // }
+
     pub fn tick(
         &mut self, // terminal: &mut Terminal<CrosstermBackend<Stdout>>,
+        refresh_ui: bool,
     ) -> Result<(), Box<dyn Error>> {
         // let delay = time::Duration::from_micros(2);
         if let Some(rekordbox_update) = self.rekordbox_access.get_update() {
@@ -93,7 +148,13 @@ Current Cue: {:?}", track.id, track.beat_offset, track.last_cue)).block(block),
             //     trackLeft.last_cue, trackLeft.id, trackLeft.beat_offset
             // );
             // thread::sleep(time::Duration::from_millis(20));
-            self.ui(rekordbox_update)?;
+            // println!("{:?} {:?}", rekordbox_update.track_1, rekordbox_update.track_2);
+            let frame = self.get_frame(&rekordbox_update);
+            self.output.write_frame_mapped(&frame);
+            if (refresh_ui) {
+                self.ui(rekordbox_update, &frame)?;
+            }
+
             //     let frame = shows_manager.get_frame_from_rekordbox_update(&rekordbox_update);
             //     let frame_written = serial_output.write_frame(&adjust_levels(&frame.frame));
             //     // let tracks_display = format!(
@@ -144,15 +205,17 @@ Current Cue: {:?}", track.id, track.beat_offset, track.last_cue)).block(block),
         let mut i: i64 = 0;
         let mut last_fw = 0;
         let mut start = time::Instant::now();
+        // self.restore_terminal()?;
         loop {
-            self.tick();
-            if event::poll(Duration::from_millis(250))? {
+            self.tick(i % 10 == 0)?;
+            if event::poll(Duration::from_millis(1))? {
                 if let Event::Key(key) = event::read()? {
                     if KeyCode::Char('q') == key.code {
                         break;
                     }
                 }
             }
+            i += 1;
         }
         self.restore_terminal()?;
         Ok(())

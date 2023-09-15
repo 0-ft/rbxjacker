@@ -42,6 +42,7 @@ mcp2221 = "0.1.1"
 embedded-hal = "0.2.7"
 pwm-pca9685 = "0.3.1"
 shared-bus = "0.3.0"
+regex = "1.9.5"
 # process-memory = "0.5.0"
 # serde-xml-rs = "0.6.0"
 
