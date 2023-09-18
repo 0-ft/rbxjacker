@@ -28,3 +28,13 @@ pub fn EW3_LIGHT_MAP() -> HashMap<String, u32> {
     // map.insert("TREES 4".to_string(), 75);
     map
 }
+
+pub fn EW3_DEVICE_MAP() -> HashMap<u8, u8> {
+    return HashMap::from([
+        (0, 0x41),
+        (16, 0x44),
+        (32, 0x43),
+        (48, 0x42),
+        (64, 0x40)
+    ])
+}

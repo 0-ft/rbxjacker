@@ -2,6 +2,7 @@ use std::error::Error;
 use std::io::{self, Stdout};
 use std::time;
 mod shows;
+use ew3::EW3_DEVICE_MAP;
 use shows::{levels_to_graph, ShowsManager};
 use std::env;
 use std::thread;
@@ -45,7 +46,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // let mut serial_output = SerialLightOutput::make(&port.expect("no serial port found"));
     // serial_output.connect();
     let output_map = EW3_LIGHT_MAP();
-    let mut mcp = MCPOutput::new(vec![0x44, 0x41, 0x43, 0x42], output_map)?;
+    let mut mcp = MCPOutput::new(EW3_DEVICE_MAP(), output_map)?;
 
     // println!("finished setup");
     // show_in_window();

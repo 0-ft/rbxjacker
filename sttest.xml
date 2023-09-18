@@ -18083,15 +18083,13 @@
            Composer="" Album="Big Fish Theory" Grouping="" Genre="Rap/Hip Hop"
            Kind="MP3 File" Size="8300505" TotalTime="197" DiscNumber="1"
            TrackNumber="1" Year="2017" AverageBpm="131.00" DateAdded="2020-12-21"
-           BitRate="320" SampleRate="44100" Comments="" PlayCount="7" Rating="204"
+           BitRate="320" SampleRate="44100" Comments="" PlayCount="8" Rating="204"
            Location="file://localhost/D:/dj%20tmp/Contents/Vince%20Staples/Big%20Fish%20Theory/Vince%20Staples%20-%20Crabs%20In%20A%20Bucket.mp3"
            Remixer="" Tonality="10A" Label="Def Jam Recordings" Mix="">
       <TEMPO Inizio="0.394" Bpm="131.00" Metro="4/4" Battito="1"/>
       <TEMPO Inizio="15.051" Bpm="131.00" Metro="4/4" Battito="1"/>
-      <POSITION_MARK Name="EWB15" Type="0" Start="29.707" Num="0" Red="40" Green="226"
-                     Blue="20"/>
-      <POSITION_MARK Name="EWALLTEST" Type="0" Start="59.020" Num="1" Red="40" Green="226"
-                     Blue="20"/>
+      <POSITION_MARK Name="EWSTROBETEST" Type="0" Start="29.707" Num="0" Red="40"
+                     Green="226" Blue="20"/>
       <POSITION_MARK Name="EWH16" Type="0" Start="124.974" Num="2" Red="40" Green="226"
                      Blue="20"/>
       <POSITION_MARK Name="EWM2" Type="0" Start="117.646" Num="6" Red="40" Green="226"

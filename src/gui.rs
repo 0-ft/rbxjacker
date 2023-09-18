@@ -150,6 +150,7 @@ Current Cue: {:?}",
             // thread::sleep(time::Duration::from_millis(20));
             // println!("{:?} {:?}", rekordbox_update.track_1, rekordbox_update.track_2);
             let frame = self.get_frame(&rekordbox_update);
+            
             self.output.write_frame_mapped(&frame);
             if (refresh_ui) {
                 self.ui(rekordbox_update, &frame)?;
