@@ -6,8 +6,6 @@ use std::{convert::TryInto, fmt};
 use sysinfo::{PidExt, ProcessExt, SystemExt};
 use roxmltree::Document;
 
-use crate::shows::GRAPH_CHARS;
-
 const TRACK_1_OFFSET: [u32; 4] = [0x03FB2B08, 0x0, 0x230, 0x148];
 const TRACK_2_OFFSET: [u32; 4] = [0x03FB2B08, 0x8, 0x230, 0x148];
 
