@@ -11,17 +11,11 @@ use crossterm::{
     execute,
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
-use itertools::Itertools;
 use ratatui::{
     prelude::*,
     widgets::{block::title, *},
 };
 
-use crate::{
-    rekordbox::{RekordboxAccess, RekordboxUpdate, TrackState},
-    serial::SerialLightOutput,
-    shows::{levels_to_graph, LightingOutput, ShowsManager},
-};
 type Frame<'a> = ratatui::Frame<'a, CrosstermBackend<Stdout>>;
 
 pub struct Tuber {

@@ -8,7 +8,6 @@ use roxmltree::Document;
 
 use crate::shows::GRAPH_CHARS;
 
-// const TRACK_1_OFFSET: [u32; 6] = [0x03FB2B08, 0x0, 0x240, 0x78, 0x108, 0x148];
 const TRACK_1_OFFSET: [u32; 4] = [0x03FB2B08, 0x0, 0x230, 0x148];
 const TRACK_2_OFFSET: [u32; 4] = [0x03FB2B08, 0x8, 0x230, 0x148];
 
@@ -21,19 +20,11 @@ const TRACK_2_ARTIST: [u32; 5] = [0x03FA6B10, 0x788, 0xF8, 0x118, 0x0];
 const TRACK_1_ID: [u32; 4] = [0x03F71650, 0x158, 0x0, 0x34];
 const TRACK_2_ID: [u32; 2] = [0x03F93898, 0x200];
 
-// const CROSSFADER: [u32; 7] = [0x03F4C1A0, 0x208, 0x20, 0x150, 0x0, 0x468, 0x28];
 const CROSSFADER: [u32; 8] = [0x03FA7740, 0x8, 0x180, 0x28, 0x150, 0x0, 0x468, 0x28];
 
 const TRACK_1_FADER: [u32; 8] = [0x03FA7740, 0x8, 0x180, 0x28, 0x150, 0x0, 0x410, 0x28];
-// const TRACK_1_FADER: [u32; 1] = [0x03F7E3CC];
-// const TRACK_2_FADER: [u32; 1] = [0x03F7E3D4];
 const TRACK_2_FADER: [u32; 8] = [0x03FA7740, 0x8, 0x180, 0x28, 0x150, 0x8, 0x410, 0x28];
 
-// // #[inline]
-// fn vec_to_arr<T, const N: usize>(v: Vec<T>) -> [T; N] {
-//     v.try_into()
-//         .unwrap_or_else(|v: Vec<T>| panic!("Expected a Vec of length {} but it was {}", N, v.len()))
-// }
 
 #[inline]
 fn le_f64(bytes: Vec<u8>) -> f64 {
@@ -76,23 +67,15 @@ fn open_module(name: &str, module_name: &str) -> Option<ModuleHandle> {
     let proc = processes.next()?;
 
     let pid = proc.pid();
-    // println!("found process {:?}", pid);
     let modules = modules_by_name(pid)?;
     let module = modules.into_iter().find(|m| m.0.eq(module_name))?;
 
-    // println!("found module at {:#x?}", module.1);
     let handle = pid.as_u32().try_into().ok()?;
     return Some(ModuleHandle {
         process_handle: handle,
         module_base: module.1,
     });
 }
-
-// fn open_module_2(name: &str, module_name: &str) -> Option<(ProcessHandle, usize)> {
-//     let process = Process::from_name("rekordbox.exe").ok()?;
-//     let module = process.module("rekordbox.exe").ok()?;
-//     return (process.handle(), module.handle() as usize);
-// }
 
 struct ModuleHandle {
     process_handle: ProcessHandle,
